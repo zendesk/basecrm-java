@@ -28,31 +28,23 @@ public class LeadsService extends BaseService {
     }
 
     public Lead create(Lead lead) {
-        if (lead == null) {
-            throw new IllegalArgumentException("lead parameter must not be null");
-        }
+        checkNotNull(lead, "lead parameter must not be null");
+
 
         String serialized = JsonSerializer.serialize(lead, Views.ReadWrite.class);
         return JsonDeserializer.deserialize(this.httpClient.post("/leads", serialized).getBody(), Lead.class);
     }
 
     public Lead create(Map<String, Object> attributes) {
-        if (attributes == null) {
-            throw new IllegalArgumentException("attributes parameter must not be null");
-        }
+        checkNotNull(attributes, "attributes parameter must not be null");
 
         String serialized = JsonSerializer.serialize(attributes);
         return JsonDeserializer.deserialize(this.httpClient.post("/leads", serialized).getBody(), Lead.class);
     }
 
     public Lead update(Lead lead) {
-        if (lead == null) {
-            throw new IllegalArgumentException("lead parameter must not be null");
-        }
-
-        if (lead.getId() == 0) {
-            throw new IllegalArgumentException("lead must have id attribute set");
-        }
+        checkNotNull(lead, "lead parameter must not be null");
+        checkArgument(lead.getId() > 0, "lead must have id attribute set");
 
         String serialized = JsonSerializer.serialize(lead, Views.ReadWrite.class);
         return JsonDeserializer.deserialize(this.httpClient.put(String.format(Locale.US, "/leads/%d", lead.getId()), serialized).getBody(), Lead.class);
@@ -60,19 +52,16 @@ public class LeadsService extends BaseService {
 
 
     public Lead update(long leadId, Map<String, Object> attributes) {
-        if (attributes == null) {
-            throw new IllegalArgumentException("attributes parameter must not be null");
-        }
-
-        if (leadId == 0) {
-            throw new IllegalArgumentException("leadId must not not be 0");
-        }
+        checkNotNull(attributes, "attributes parameter must not be null");
+        checkArgument(leadId > 0, "leadId must be a valid id");
 
         String serialized = JsonSerializer.serialize(attributes);
         return JsonDeserializer.deserialize(this.httpClient.put(String.format(Locale.US, "/leads/%d", leadId), serialized).getBody(), Lead.class);
     }
 
     public boolean delete(long leadId) {
+       checkArgument(leadId > 0, "leadId must be a valid id");
+
        return this.httpClient.delete(String.format(Locale.US, "/leads/%d", leadId), null).getHttpStatus() == 204;
     }
 

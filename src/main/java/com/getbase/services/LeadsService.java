@@ -6,9 +6,7 @@ import com.getbase.serializer.JsonDeserializer;
 import com.getbase.serializer.JsonSerializer;
 import com.getbase.serializer.Views;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class LeadsService extends BaseService {
@@ -23,6 +21,7 @@ public class LeadsService extends BaseService {
     public List<Lead> all(QueryParamBuilder builder) {
         return all(builder.build());
     }
+
 
     public Lead get(long leadId) {
         return JsonDeserializer.deserialize(this.httpClient.get(String.format("/leads/%d", leadId), null).getBody(), Lead.class);

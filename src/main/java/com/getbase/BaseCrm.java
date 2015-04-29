@@ -1,15 +1,28 @@
 package com.getbase;
 
-import com.getbase.http.HttpClient;
+
+import com.getbase.models.Lead;
+import com.getbase.services.LeadsService;
+
+import java.util.List;
 
 public class BaseCrm {
     public static void main(String[] args) {
         Client client = new Client(new Configuration.Builder().
-                accessToken("0536d6526cbf676fdddac05df66ec87094db83cf4fb0493404480289fad7b016").
+                accessToken(System.getenv("BASECRM_ACCESS_TOKEN")).
+                verbose().
+                userAgent(Configuration.DEFAULT_USER_AGENT + "+tests").
                 build());
 
-        HttpClient httpClient = client.getHttpClient();
+        List<Lead> leads = client.leads().all(new LeadsService.QueryParamBuilder().page(1).perPage(10));
+        leads.stream().forEach(System.out::println);
 
-        System.out.println("Hello");
+        Lead mark = new Lead();
+        mark.setFirstName("Mark");
+        mark.setLastName("Johnson");
+
+        long markId = client.leads().create(mark).getId();
+
+        client.leads().delete(markId);
     }
 }

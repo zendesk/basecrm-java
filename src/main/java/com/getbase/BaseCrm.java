@@ -14,8 +14,11 @@ public class BaseCrm {
                 userAgent(Configuration.DEFAULT_USER_AGENT + "+tests").
                 build());
 
-        List<Lead> leads = client.leads().all(new LeadsService.QueryParamBuilder().page(1).perPage(10));
-        leads.stream().forEach(System.out::println);
+        client.leads().all(new LeadsService.QueryParamBuilder().
+                page(1).
+                perPage(10)).
+                stream().
+                forEach(System.out::println);
 
         Lead mark = new Lead();
         mark.setFirstName("Mark");

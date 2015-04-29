@@ -24,7 +24,7 @@ public class LeadsService extends BaseService {
 
 
     public Lead get(long leadId) {
-        return JsonDeserializer.deserialize(this.httpClient.get(String.format("/leads/%d", leadId), null).getBody(), Lead.class);
+        return JsonDeserializer.deserialize(this.httpClient.get(String.format(Locale.US, "/leads/%d", leadId), null).getBody(), Lead.class);
     }
 
     public Lead create(Lead lead) {
@@ -55,7 +55,7 @@ public class LeadsService extends BaseService {
         }
 
         String serialized = JsonSerializer.serialize(lead, Views.ReadWrite.class);
-        return JsonDeserializer.deserialize(this.httpClient.put(String.format("/leads/%d", lead.getId()), serialized).getBody(), Lead.class);
+        return JsonDeserializer.deserialize(this.httpClient.put(String.format(Locale.US, "/leads/%d", lead.getId()), serialized).getBody(), Lead.class);
     }
 
 
@@ -69,11 +69,11 @@ public class LeadsService extends BaseService {
         }
 
         String serialized = JsonSerializer.serialize(attributes);
-        return JsonDeserializer.deserialize(this.httpClient.put(String.format("/leads/%d", leadId), serialized).getBody(), Lead.class);
+        return JsonDeserializer.deserialize(this.httpClient.put(String.format(Locale.US, "/leads/%d", leadId), serialized).getBody(), Lead.class);
     }
 
     public boolean delete(long leadId) {
-       return this.httpClient.delete(String.format("/leads/%d", leadId), null).getHttpStatus() == 204;
+       return this.httpClient.delete(String.format(Locale.US, "/leads/%d", leadId), null).getHttpStatus() == 204;
     }
 
     public static class QueryParamBuilder {

@@ -44,7 +44,7 @@ class LeadsServiceTest extends Specification {
         getClient().leads().create(["first_name": "Mark", "last_name": "Johnson"])
 
         when:
-        def leads = getClient().leads().list(new LeadsService.QueryParamBuilder().page(1).perPage(1))
+        def leads = getClient().leads().list(new LeadsService.SearchCriteria().page(1).perPage(1))
 
         then:
         leads.size() > 0
@@ -56,7 +56,7 @@ class LeadsServiceTest extends Specification {
 
         when:
         //getClient().leads().all().page().perPage().stream().forEach(l -> ...)
-        def leads = getClient().leads().list(new LeadsService.QueryParamBuilder()
+        def leads = getClient().leads().list(new LeadsService.SearchCriteria()
                 .page(1)
                 .perPage(1)
                 .firstName(searched.getFirstName())

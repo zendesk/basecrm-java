@@ -18,8 +18,8 @@ public class LeadsService extends BaseService {
         return JsonDeserializer.deserializeList(this.httpClient.get("/leads", params).getBody(), Lead.class);
     }
 
-    public List<Lead> list(QueryParamBuilder builder) {
-        return list(builder.build());
+    public List<Lead> list(SearchCriteria criteria) {
+        return list(criteria.build());
     }
 
 
@@ -65,52 +65,52 @@ public class LeadsService extends BaseService {
        return this.httpClient.delete(String.format(Locale.US, "/leads/%d", leadId), null).getHttpStatus() == 204;
     }
 
-    public static class QueryParamBuilder {
+    public static class SearchCriteria {
         private Map<String, Object> queryParams;
 
-        public QueryParamBuilder() {
+        public SearchCriteria() {
             this.queryParams = new HashMap<String, Object>();
         }
 
-        public QueryParamBuilder page(long page) {
+        public SearchCriteria page(long page) {
             queryParams.put("page", page);
             return this;
         }
 
-        public QueryParamBuilder perPage(long perPage) {
+        public SearchCriteria perPage(long perPage) {
             queryParams.put("per_page", perPage);
             return this;
         }
 
-        public QueryParamBuilder sortBy(String criteria, String order) {
+        public SearchCriteria sortBy(String criteria, String order) {
             queryParams.put("sort_by", criteria + ":" + order);
             return this;
         }
 
-        public QueryParamBuilder sortBy(String criteria) {
+        public SearchCriteria sortBy(String criteria) {
             return sortBy(criteria, "asc");
         }
 
-        public QueryParamBuilder ids(List<Integer> ids) {
+        public SearchCriteria ids(List<Integer> ids) {
             queryParams.put("ids", ids);
             return this;
         }
 
-        public QueryParamBuilder ids(long... ids) {
+        public SearchCriteria ids(long... ids) {
             return ids(ids);
         }
 
-        public QueryParamBuilder firstName(String firstName) {
+        public SearchCriteria firstName(String firstName) {
             queryParams.put("first_name", firstName);
             return this;
         }
 
-        public QueryParamBuilder lastName(String lastName) {
+        public SearchCriteria lastName(String lastName) {
             queryParams.put("last_name", lastName);
             return this;
         }
 
-        public QueryParamBuilder addressCity(String city) {
+        public SearchCriteria addressCity(String city) {
             queryParams.put("address[city]", city);
             return this;
         }

@@ -85,7 +85,7 @@ public class HttpClient extends com.getbase.http.HttpClient {
         return response;
     }
 
-    public static final javax.ws.rs.client.Client createJerseyClient(final Configuration config) {
+    protected javax.ws.rs.client.Client createJerseyClient(final Configuration config) {
         // setup client
         ClientConfig clientConfig = new ClientConfig();
 

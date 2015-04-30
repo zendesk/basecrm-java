@@ -8,17 +8,4 @@ public abstract class BaseService {
     public BaseService(HttpClient httpClient) {
         this.httpClient = httpClient;
     }
-
-    protected <T> T checkNotNull(T reference, String message) {
-        if (reference == null) {
-            throw new NullPointerException(message);
-        }
-        return reference;
-    }
-
-    protected void checkArgument(boolean expression, String message) {
-        if (!expression) {
-            throw new IllegalArgumentException(message);
-        }
-    }
 }

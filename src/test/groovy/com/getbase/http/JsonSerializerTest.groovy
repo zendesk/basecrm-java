@@ -49,8 +49,8 @@ class JsonSerializerTest extends Specification {
     def "Serialize - entity with lots of attributes"() {
         given:
         def lead = new Lead()
-        lead.setFirstName("Mark")
-        lead.setLastName("Johnson")
+        lead.firstName = "Mark"
+        lead.lastName = "Johnson"
 
         when:
         def json = JsonSerializer.serialize(lead, Views.ReadWrite.class)

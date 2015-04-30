@@ -15,13 +15,13 @@ class LeadsServiceTest extends Specification {
     def getConfiguration() {
         new Configuration.Builder()
                 .verbose()
-                .accessToken(getAccessToken())
+                .accessToken(accessToken)
                 .userAgent(Configuration.DEFAULT_USER_AGENT + "+tests")
                 .build()
     }
 
     def getClient() {
-        new Client(getConfiguration())
+        new Client(configuration)
     }
 
     def nextRand() {
@@ -30,10 +30,10 @@ class LeadsServiceTest extends Specification {
 
     def "List - with params"() {
         given:
-        getClient().leads().create(["first_name": "Mark", "last_name": "Johnson"])
+        client.leads().create(["first_name": "Mark", "last_name": "Johnson"])
 
         when:
-        def leads = getClient().leads().list(["page": 1, "per_page": 1])
+        def leads = client.leads().list(["page": 1, "per_page": 1])
 
         then:
         leads.size() > 0
@@ -41,10 +41,10 @@ class LeadsServiceTest extends Specification {
 
     def "List - with query param builder"() {
         given:
-        getClient().leads().create(["first_name": "Mark", "last_name": "Johnson"])
+        client.leads().create(["first_name": "Mark", "last_name": "Johnson"])
 
         when:
-        def leads = getClient().leads().list(new LeadsService.SearchCriteria().page(1).perPage(1))
+        def leads = client.leads().list(new LeadsService.SearchCriteria().page(1).perPage(1))
 
         then:
         leads.size() > 0
@@ -52,45 +52,45 @@ class LeadsServiceTest extends Specification {
 
     def "List - scopes to params"() {
         given:
-        def searched = getClient().leads().create(["first_name": "Mark " + nextRand(), "last_name": "Johnson " + nextRand()])
+        def searched = client.leads().create(["first_name": "Mark " + nextRand(), "last_name": "Johnson " + nextRand()])
 
         when:
         //getClient().leads().all().page().perPage().stream().forEach(l -> ...)
-        def leads = getClient().leads().list(new LeadsService.SearchCriteria()
+        def leads = client.leads().list(new LeadsService.SearchCriteria()
                 .page(1)
                 .perPage(1)
-                .firstName(searched.getFirstName())
-                .lastName(searched.getLastName()))
+                .firstName(searched.firstName)
+                .lastName(searched.lastName))
 
         then:
         leads.size() == 1
-        leads.first().getId() == searched.getId()
+        leads.first().id == searched.id
     }
 
     def "Get"() {
         given:
-        def searched = getClient().leads().create(["first_name": "Mark", "last_name": "Johnson"])
+        def searched = client.leads().create(["first_name": "Mark", "last_name": "Johnson"])
 
         when:
-        def found = getClient().leads().get(searched.getId())
+        def found = client.leads().get(searched.id)
 
         then:
-        found.getId() == searched.getId()
+        found.id == searched.id
     }
 
     def "Create - with Lead entity"() {
         given:
         def lead = new Lead()
-        lead.setFirstName("Mark")
-        lead.setLastName("Johnson")
+        lead.firstName = "Mark"
+        lead.lastName = "Johnson"
 
         when:
-        def created = getClient().leads().create(lead)
+        def created = client.leads().create(lead)
 
         then:
-        created.getId() > 0
-        created.getFirstName() == lead.getFirstName()
-        created.getLastName() == lead.getLastName()
+        created.id > 0
+        created.firstName == lead.firstName
+        created.lastName == lead.lastName
     }
 
     def "Create - with attributes"() {
@@ -98,45 +98,45 @@ class LeadsServiceTest extends Specification {
         def attributes = ["first_name": "Mark", "last_name": "Johnson"]
 
         when:
-        def lead = getClient().leads().create(attributes)
+        def lead = client.leads().create(attributes)
 
         then:
-        lead.getId() > 0
-        lead.getFirstName() == "Mark"
-        lead.getLastName() == "Johnson"
+        lead.id > 0
+        lead.firstName == "Mark"
+        lead.lastName == "Johnson"
     }
 
     def "Update - with Lead entity"() {
         given:
-        def lead = getClient().leads().create(["first_name": "Mark", "last_name": "Johnson"])
+        def lead = client.leads().create(["first_name": "Mark", "last_name": "Johnson"])
 
         when:
-        lead.setTitle("CEO")
-        def updated = getClient().leads().update(lead)
+        lead.title = "CEO"
+        def updated = client.leads().update(lead)
 
         then:
-        updated.getId() == lead.getId()
-        updated.getTitle() == "CEO"
+        updated.id == lead.id
+        updated.title == "CEO"
     }
 
     def "Update - with attributes"() {
         given:
-        def lead = getClient().leads().create(["first_name": "Mark", "last_name": "Johnson"])
+        def lead = client.leads().create(["first_name": "Mark", "last_name": "Johnson"])
 
         when:
-        def updated = getClient().leads().update(lead.getId(), ["title": "CEO"])
+        def updated = client.leads().update(lead.getId(), ["title": "CEO"])
 
         then:
-        updated.getId() == lead.getId()
-        updated.getTitle() == "CEO"
+        updated.id == lead.id
+        updated.title == "CEO"
     }
 
     def "Delete"() {
         given:
-        def leadId = getClient().leads().create(["first_name": "Mark", "last_name": "Johnson"]).getId()
+        def leadId = client.leads().create(["first_name": "Mark", "last_name": "Johnson"]).getId()
 
         when:
-        def result = getClient().leads().delete(leadId)
+        def result = client.leads().delete(leadId)
 
         then:
         result

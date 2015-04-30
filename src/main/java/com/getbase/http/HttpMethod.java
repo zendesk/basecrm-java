@@ -11,7 +11,7 @@ public enum HttpMethod {
 
     private final String name;
 
-    private HttpMethod(String method) {
+    HttpMethod(String method) {
         this.name = method;
     }
 

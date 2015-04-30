@@ -21,7 +21,7 @@ public class LeadsService extends BaseService {
     }
 
     public List<Lead> list(SearchCriteria criteria) {
-        return list(criteria.build());
+        return list(criteria.asMap());
     }
 
 
@@ -118,8 +118,8 @@ public class LeadsService extends BaseService {
             return this;
         }
 
-        public Map<String, Object> build() {
-            return queryParams;
+        public Map<String, Object> asMap() {
+            return Collections.unmodifiableMap(queryParams);
         }
     }
 }

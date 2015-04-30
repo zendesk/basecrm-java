@@ -1,6 +1,12 @@
 package com.getbase.exceptions;
 
 public class BaseError {
+    private String code;
+    private String message;
+    private String details;
+    private String resource;
+    private String field;
+
     public String getCode() {
         return code;
     }
@@ -57,9 +63,4 @@ public class BaseError {
         return result;
     }
 
-    private String code;
-    private String message;
-    private String details;
-    private String resource;
-    private String field;
 }

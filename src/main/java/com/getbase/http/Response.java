@@ -3,9 +3,9 @@ package com.getbase.http;
 import java.util.Map;
 
 public class Response {
-
     private int httpStatus;
     private String body;
+
     private Map<String, String> headers;
 
     public Response(int httpStatus, String body, Map<String, String> headers) {
@@ -35,6 +35,15 @@ public class Response {
 
     public String getBody() {
         return body;
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "httpStatus=" + httpStatus +
+                ", body='" + body + '\'' +
+                ", headers=" + headers +
+                '}';
     }
 
 }

@@ -5,17 +5,20 @@ import com.getbase.exceptions.ConnectionException;
 import com.getbase.http.HttpMethod;
 import com.getbase.http.Request;
 import com.getbase.http.Response;
+import com.getbase.utils.Joiner;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.filter.LoggingFilter;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 public class HttpClient extends com.getbase.http.HttpClient {
@@ -41,10 +44,9 @@ public class HttpClient extends com.getbase.http.HttpClient {
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 
         // assign headers
-        request.getHeaders().
-                entrySet().
-                stream().
-                forEach(h -> invocationBuilder.header(h.getKey(), h.getValue()));
+        for (Map.Entry<String, String> h : request.getHeaders().entrySet()) {
+            invocationBuilder.header(h.getKey(), h.getValue());
+        }
 
         // perform request
         Invocation invocation;
@@ -70,12 +72,10 @@ public class HttpClient extends com.getbase.http.HttpClient {
         }
 
         // flatten response headers
-        Map<String, String> responseHeaders = new HashMap<>();
-        jerseyResponse.getStringHeaders().
-                entrySet().
-                stream().
-                forEach(h -> responseHeaders.put(h.getKey(), h.getValue().stream().collect(Collectors.joining(";"))));
-
+        Map<String, String> responseHeaders = new HashMap<String, String>();
+        for (Map.Entry<String, List<String>> h : jerseyResponse.getStringHeaders().entrySet()) {
+            responseHeaders.put(h.getKey(), Joiner.join(";", h.getValue()));
+        }
 
         // prepare basecrm.http response
         Response response = new Response(jerseyResponse.getStatus(),
@@ -85,7 +85,7 @@ public class HttpClient extends com.getbase.http.HttpClient {
         return response;
     }
 
-    public static javax.ws.rs.client.Client createJerseyClient(Configuration config) {
+    public static final javax.ws.rs.client.Client createJerseyClient(final Configuration config) {
         // setup client
         ClientConfig clientConfig = new ClientConfig();
 
@@ -96,7 +96,12 @@ public class HttpClient extends com.getbase.http.HttpClient {
         javax.ws.rs.client.Client client;
 
         if (config.isVerifySSL()) {
-            client = ClientBuilder.newBuilder().withConfig(clientConfig).hostnameVerifier((s, sslSession) -> true).build();
+            client = ClientBuilder.newBuilder().withConfig(clientConfig).hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String s, SSLSession sslSession) {
+                    return config.isVerifySSL();
+                }
+            }).build();
         } else {
             client = ClientBuilder.newClient(clientConfig);
         }

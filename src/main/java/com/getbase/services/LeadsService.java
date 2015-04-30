@@ -69,7 +69,7 @@ public class LeadsService extends BaseService {
         private Map<String, Object> queryParams;
 
         public QueryParamBuilder() {
-            this.queryParams = new HashMap<>();
+            this.queryParams = new HashMap<String, Object>();
         }
 
         public QueryParamBuilder page(long page) {

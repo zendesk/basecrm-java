@@ -1,16 +1,17 @@
 package com.getbase.http;
 
+import com.getbase.utils.Joiner;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Request {
     private HttpMethod method = HttpMethod.GET;
     private String url;
-    private Map<String, Object> queryParameters = new HashMap<>();
-    private Map<String, String> headers = new HashMap<>();
+    private Map<String, Object> queryParameters = new HashMap<String, Object>();
+    private Map<String, String> headers = new HashMap<String, String>();
     private String body;
 
     public HttpMethod getMethod() {
@@ -73,7 +74,7 @@ public class Request {
                 return this;
             }
 
-            String value = values.stream().map(Object::toString).collect(Collectors.joining(","));
+            String value = Joiner.join(",", values);
             this.request.queryParameters.put(key, value);
 
             return this;

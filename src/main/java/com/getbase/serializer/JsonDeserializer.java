@@ -45,12 +45,12 @@ public abstract class JsonDeserializer {
             throw new SerializationException(e);
         }
 
-        List<T> items = new ArrayList<>();
+        List<T> items = new ArrayList<T>();
         if (itemsNode != null) {
-            itemsNode.forEach(listItemNode -> {
+            for (JsonNode listItemNode : itemsNode) {
                 T item = mapper.convertValue(listItemNode.get("data"), type);
                 items.add(item);
-            });
+            }
         }
 
         return items;
@@ -64,12 +64,12 @@ public abstract class JsonDeserializer {
             throw new SerializationException(e);
         }
 
-        List<BaseError> errors = new ArrayList<>();
+        List<BaseError> errors = new ArrayList<BaseError>();
         if (errorsNode != null) {
-            errorsNode.forEach(errorNode -> {
+            for (JsonNode errorNode : errorsNode) {
                 BaseError error = mapper.convertValue(errorNode.get("error"), BaseError.class);
                 errors.add(error);
-            });
+            }
         }
 
         return errors;

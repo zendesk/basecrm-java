@@ -43,7 +43,9 @@ public abstract class HttpClient {
 
 
         if (params != null) {
-            params.entrySet().stream().forEach(q -> builder.param(q.getKey(), q.getValue()));
+            for (Map.Entry<String, Object> q : params.entrySet()) {
+                builder.param(q.getKey(), q.getValue());
+            }
         }
 
         builder.header("Accept", "application/json").

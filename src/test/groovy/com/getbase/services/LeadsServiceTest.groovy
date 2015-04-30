@@ -13,11 +13,11 @@ class LeadsServiceTest extends Specification {
     }
 
     def getConfiguration() {
-        new Configuration.Builder().
-                verbose().
-                accessToken(getAccessToken()).
-                userAgent(Configuration.DEFAULT_USER_AGENT + "+tests").
-                build()
+        new Configuration.Builder()
+                .verbose()
+                .accessToken(getAccessToken())
+                .userAgent(Configuration.DEFAULT_USER_AGENT + "+tests")
+                .build()
     }
 
     def getClient() {
@@ -56,11 +56,11 @@ class LeadsServiceTest extends Specification {
 
         when:
         //getClient().leads().all().page().perPage().stream().forEach(l -> ...)
-        def leads = getClient().leads().list(new LeadsService.QueryParamBuilder().
-                page(1).
-                perPage(1).
-                firstName(searched.getFirstName()).
-                lastName(searched.getLastName()))
+        def leads = getClient().leads().list(new LeadsService.QueryParamBuilder()
+                .page(1)
+                .perPage(1)
+                .firstName(searched.getFirstName())
+                .lastName(searched.getLastName()))
 
         then:
         leads.size() == 1
@@ -139,6 +139,6 @@ class LeadsServiceTest extends Specification {
         def result = getClient().leads().delete(leadId)
 
         then:
-        result == true
+        result
     }
 }

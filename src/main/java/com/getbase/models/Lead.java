@@ -4,8 +4,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.getbase.serializer.Views;
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.getbase.utils.Precondition.*;
 
 public class Lead {
     protected @JsonView(Views.ReadOnly.class) Long id;
@@ -28,8 +32,8 @@ public class Lead {
     protected @JsonView(Views.ReadWrite.class) String linkedin;
     protected @JsonView(Views.ReadWrite.class) String skype;
     protected @JsonView(Views.ReadWrite.class) Address address;
-    protected @JsonView(Views.ReadWrite.class) List<String> tags;
-    protected @JsonView(Views.ReadWrite.class) Map<String, Object> customFields;
+    protected @JsonView(Views.ReadWrite.class) List<String> tags = new ArrayList<String>();
+    protected @JsonView(Views.ReadWrite.class) Map<String, Object> customFields = new HashMap<String, Object>();
     protected @JsonView(Views.ReadOnly.class) DateTime createdAt;
     protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
 
@@ -202,14 +206,17 @@ public class Lead {
     }
 
     public void setTags(List<String> tags) {
+        checkNotNull(tags, "tags must not be null");
         this.tags = tags;
     }
 
     public void setCustomFields(Map<String, Object> customFields) {
+        checkNotNull(customFields, "customFields must not be null");
         this.customFields = customFields;
     }
 
-    public void setCustomField(String k, Object v) {
-        this.customFields.put(k, v);
+    public void setCustomField(String fieldName, Object fieldValue) {
+        checkNotNull(fieldName, "custom field's field name must not be null");
+        this.customFields.put(fieldName, fieldValue);
     }
 }

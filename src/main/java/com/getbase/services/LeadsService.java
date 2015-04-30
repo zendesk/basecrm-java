@@ -5,7 +5,6 @@ import com.getbase.models.Lead;
 import com.getbase.serializer.JsonDeserializer;
 import com.getbase.serializer.JsonSerializer;
 import com.getbase.serializer.Views;
-import com.getbase.utils.Precondition;
 
 import java.util.*;
 

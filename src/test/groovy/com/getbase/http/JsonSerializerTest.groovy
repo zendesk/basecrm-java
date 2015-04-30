@@ -56,7 +56,7 @@ class JsonSerializerTest extends Specification {
         def json = JsonSerializer.serialize(lead, Views.ReadWrite.class)
 
         then:
-        json == '{"data":{"first_name":"Mark","last_name":"Johnson"}}'
+        json == '{"data":{"first_name":"Mark","last_name":"Johnson","tags":[],"custom_fields":{}}}'
     }
 
     def "Serialize - HashMap attributes"() {

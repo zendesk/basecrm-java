@@ -27,7 +27,7 @@ public abstract class JsonDeserializer {
     private JsonDeserializer(){
     }
 
-    static public <T> T deserialize(String s, Class<T> type) {
+    public static <T> T deserialize(String s, Class<T> type) {
         JsonNode node = null;
         try {
             node = mapper.readTree(s).get("data");
@@ -37,7 +37,7 @@ public abstract class JsonDeserializer {
         return mapper.convertValue(node, type);
     }
 
-    static public <T> List<T> deserializeList(String s, Class<T> type) {
+     public static <T> List<T> deserializeList(String s, Class<T> type) {
         JsonNode itemsNode = null;
         try {
             itemsNode = mapper.readTree(s).get("items");
@@ -56,7 +56,7 @@ public abstract class JsonDeserializer {
         return items;
     }
 
-    static public List<BaseError> deserializeErrors(String s) {
+    public static List<BaseError> deserializeErrors(String s) {
         JsonNode errorsNode = null;
         try {
             errorsNode = mapper.readTree(s).get("errors");

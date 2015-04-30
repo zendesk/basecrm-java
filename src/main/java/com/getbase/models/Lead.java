@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Lead {
-    protected @JsonView(Views.ReadOnly.class) long id;
-    protected @JsonView(Views.ReadOnly.class) long creatorId;
-    protected @JsonView(Views.ReadOnly.class) long ownerId;
+    protected @JsonView(Views.ReadOnly.class) Long id;
+    protected @JsonView(Views.ReadOnly.class) Long creatorId;
+    protected @JsonView(Views.ReadOnly.class) Long ownerId;
     protected @JsonView(Views.ReadWrite.class) String firstName;
     protected @JsonView(Views.ReadWrite.class) String lastName;
     protected @JsonView(Views.ReadWrite.class) String organizationName;
@@ -33,15 +33,15 @@ public class Lead {
     protected @JsonView(Views.ReadOnly.class) DateTime createdAt;
     protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public long getCreatorId() {
+    public Long getCreatorId() {
         return creatorId;
     }
 
-    public long getOwnerId() {
+    public Long getOwnerId() {
         return ownerId;
     }
 

@@ -44,7 +44,8 @@ public class LeadsService extends BaseService {
 
     public Lead update(Lead lead) {
         checkNotNull(lead, "lead parameter must not be null");
-        checkArgument(lead.getId() > 0, "lead must have id attribute set");
+        checkNotNull(lead.getId(), "lead must have id attribute set");
+        checkArgument(lead.getId() > 0, "lead id must be a valid id");
 
         String serialized = JsonSerializer.serialize(lead, Views.ReadWrite.class);
         return JsonDeserializer.deserialize(this.httpClient.put(String.format(Locale.US, "/leads/%d", lead.getId()), serialized).getBody(), Lead.class);

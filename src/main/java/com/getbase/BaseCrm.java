@@ -4,7 +4,6 @@ package com.getbase;
 import com.getbase.models.Lead;
 import com.getbase.services.LeadsService;
 
-import java.util.List;
 
 public class BaseCrm {
     public static void main(String[] args) {

@@ -14,6 +14,9 @@ public class Request {
     private Map<String, String> headers = new HashMap<String, String>();
     private String body;
 
+    private Request() {
+    }
+
     public HttpMethod getMethod() {
         return method;
     }

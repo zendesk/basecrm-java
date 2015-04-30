@@ -1,6 +1,7 @@
 package com.getbase.serializer;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -24,22 +25,27 @@ public abstract class JsonSerializer {
     }
 
     public static String serialize(Object entity, Class<?> viewClass) {
-        String data = null;
         try {
-            data = mapper.writerWithView(viewClass).writeValueAsString(entity);
+            return mapper.writerWithView(viewClass).writeValueAsString(new Envelope(entity));
         } catch (JsonProcessingException e) {
             throw new SerializationException(e);
         }
-        return String.format("{\"data\":%s}", data);
     }
 
     public static String serialize(Object entity) {
-        String data = null;
         try {
-            data = mapper.writeValueAsString(entity);
+            return mapper.writeValueAsString(new Envelope(entity));
         } catch (JsonProcessingException e) {
             throw new SerializationException(e);
         }
-        return String.format("{\"data\":%s}", data);
+    }
+
+    static class Envelope {
+        @JsonView(Views.ReadWrite.class)
+        Object data;
+
+        Envelope(Object entity) {
+            this.data = entity;
+        }
     }
 }

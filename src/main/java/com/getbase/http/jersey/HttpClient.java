@@ -50,7 +50,7 @@ public class HttpClient extends com.getbase.http.HttpClient {
 
         // perform request
         Invocation invocation;
-        javax.ws.rs.core.Response jerseyResponse;
+        javax.ws.rs.core.Response jerseyResponse = null;
         System.out.println(request.toString());
         if (request.getBody() != null && !request.getBody().isEmpty() &&
                 (
@@ -66,23 +66,29 @@ public class HttpClient extends com.getbase.http.HttpClient {
         }
 
         try {
-            jerseyResponse = invocation.invoke();
-        } catch (Exception e) {
-            throw new ConnectionException(e);
+            try {
+                jerseyResponse = invocation.invoke();
+            } catch (Exception e) {
+                throw new ConnectionException(e);
+            }
+
+            // flatten response headers
+            Map<String, String> responseHeaders = new HashMap<String, String>();
+            for (Map.Entry<String, List<String>> h : jerseyResponse.getStringHeaders().entrySet()) {
+                responseHeaders.put(h.getKey(), Joiner.join(";", h.getValue()));
+            }
+
+            // prepare basecrm.http response
+            Response response = new Response(jerseyResponse.getStatus(),
+                    jerseyResponse.readEntity(String.class),
+                    responseHeaders);
+
+            return response;
+        } finally {
+            if (jerseyResponse != null) {
+                jerseyResponse.close();
+            }
         }
-
-        // flatten response headers
-        Map<String, String> responseHeaders = new HashMap<String, String>();
-        for (Map.Entry<String, List<String>> h : jerseyResponse.getStringHeaders().entrySet()) {
-            responseHeaders.put(h.getKey(), Joiner.join(";", h.getValue()));
-        }
-
-        // prepare basecrm.http response
-        Response response = new Response(jerseyResponse.getStatus(),
-                jerseyResponse.readEntity(String.class),
-                responseHeaders);
-
-        return response;
     }
 
     protected javax.ws.rs.client.Client createJerseyClient(final Configuration config) {

@@ -28,35 +28,35 @@ class LeadsServiceTest extends Specification {
         Long.toString(new Random().nextLong())
     }
 
-    def "All - with params"() {
+    def "List - with params"() {
         given:
         getClient().leads().create(["first_name": "Mark", "last_name": "Johnson"])
 
         when:
-        def leads = getClient().leads().all(["page": 1, "per_page": 1])
+        def leads = getClient().leads().list(["page": 1, "per_page": 1])
 
         then:
         leads.size() > 0
     }
 
-    def "All - with query param builder"() {
+    def "List - with query param builder"() {
         given:
         getClient().leads().create(["first_name": "Mark", "last_name": "Johnson"])
 
         when:
-        def leads = getClient().leads().all(new LeadsService.QueryParamBuilder().page(1).perPage(1))
+        def leads = getClient().leads().list(new LeadsService.QueryParamBuilder().page(1).perPage(1))
 
         then:
         leads.size() > 0
     }
 
-    def "All - scopes to params"() {
+    def "List - scopes to params"() {
         given:
         def searched = getClient().leads().create(["first_name": "Mark " + nextRand(), "last_name": "Johnson " + nextRand()])
 
         when:
         //getClient().leads().all().page().perPage().stream().forEach(l -> ...)
-        def leads = getClient().leads().all(new LeadsService.QueryParamBuilder().
+        def leads = getClient().leads().list(new LeadsService.QueryParamBuilder().
                 page(1).
                 perPage(1).
                 firstName(searched.getFirstName()).

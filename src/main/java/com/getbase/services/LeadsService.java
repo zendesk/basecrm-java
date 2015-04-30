@@ -14,12 +14,12 @@ public class LeadsService extends BaseService {
         super(httpClient);
     }
 
-    public List<Lead> all(Map<String, Object> params) {
+    public List<Lead> list(Map<String, Object> params) {
         return JsonDeserializer.deserializeList(this.httpClient.get("/leads", params).getBody(), Lead.class);
     }
 
-    public List<Lead> all(QueryParamBuilder builder) {
-        return all(builder.build());
+    public List<Lead> list(QueryParamBuilder builder) {
+        return list(builder.build());
     }
 
 

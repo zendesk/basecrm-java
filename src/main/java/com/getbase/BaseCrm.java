@@ -14,7 +14,7 @@ public class BaseCrm {
                 userAgent(Configuration.DEFAULT_USER_AGENT + "+tests").
                 build());
 
-        client.leads().all(new LeadsService.QueryParamBuilder().
+        client.leads().list(new LeadsService.QueryParamBuilder().
                 page(1).
                 perPage(10)).
                 stream().

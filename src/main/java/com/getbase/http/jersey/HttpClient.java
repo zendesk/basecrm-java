@@ -2,6 +2,7 @@ package com.getbase.http.jersey;
 
 import com.getbase.Configuration;
 import com.getbase.exceptions.ConnectionException;
+import com.getbase.exceptions.RequestException;
 import com.getbase.http.HttpMethod;
 import com.getbase.http.Request;
 import com.getbase.http.Response;
@@ -32,6 +33,10 @@ public class HttpClient extends com.getbase.http.HttpClient {
 
     @Override
     public Response rawRequest(Request request) {
+        if (!request.getMethod().isBodySupported() && request.getBody() != null) {
+            throw new IllegalArgumentException("Provided HTTP method is not allowed to send body");
+        }
+
         // set target url
         WebTarget webTarget = client.target(request.getUrl());
 

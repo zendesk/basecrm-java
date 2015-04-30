@@ -16,13 +16,16 @@ public abstract class Joiner {
             return values.get(0).toString();
         }
 
+        if (on == null) on = "";
+
         StringBuilder builder = new StringBuilder();
 
         Iterator<? extends Object> iterator = values.iterator();
         builder.append(iterator.next().toString());
 
         while(iterator.hasNext()) {
-            builder.append(on).append(iterator.next().toString());
+            Object o = iterator.next();
+            builder.append(on).append(o == null ? "null" : o.toString());
         }
 
         return builder.toString();

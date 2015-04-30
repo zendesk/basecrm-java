@@ -11,11 +11,9 @@ import java.util.List;
 
 public abstract class JsonDeserializer {
     private static final ObjectMapper mapper;
-    private static final PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy namingStrategy;
 
     static {
         mapper = new ObjectMapper();
-        namingStrategy = new PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy();
 
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

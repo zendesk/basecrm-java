@@ -6,6 +6,7 @@ import com.getbase.http.Request;
 import com.getbase.http.Response;
 import com.getbase.utils.Joiner;
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.filter.LoggingFilter;
 
 import javax.net.ssl.HostnameVerifier;
@@ -95,6 +96,9 @@ public class HttpClient extends com.getbase.http.HttpClient {
         if (config.isVerbose()) {
             clientConfig.register(new LoggingFilter());
         }
+
+        clientConfig.property(ClientProperties.CONNECT_TIMEOUT, config.getTimeout() * 1000);
+        clientConfig.property(ClientProperties.READ_TIMEOUT, config.getTimeout() * 1000);
 
         javax.ws.rs.client.Client client;
 

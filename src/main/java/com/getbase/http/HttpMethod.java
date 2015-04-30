@@ -1,30 +1,18 @@
 package com.getbase.http;
 
+import java.util.EnumSet;
+
 public enum HttpMethod {
-    HEAD ("HEAD"),
-    GET ("GET"),
-    POST ("POST"),
-    PUT ("PUT"),
-    PATCH ("PATCH"),
-    DELETE ("DELETE");
+    HEAD,
+    GET,
+    POST,
+    PUT,
+    PATCH,
+    DELETE;
 
-
-    private final String name;
-
-    HttpMethod(String method) {
-        this.name = method;
-    }
-
-    public boolean equalsName(String other) {
-        return (other == null) ? false : this.name.equals(other);
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
+    private static final EnumSet<HttpMethod> bodySupported = EnumSet.of(POST, PUT, PATCH);
 
     public boolean isBodySupported() {
-        return name == "POST" || name == "PUT" || name == "PATCH";
+        return bodySupported.contains(this);
     }
 }

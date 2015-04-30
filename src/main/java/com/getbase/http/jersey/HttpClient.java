@@ -2,8 +2,6 @@ package com.getbase.http.jersey;
 
 import com.getbase.Configuration;
 import com.getbase.exceptions.ConnectionException;
-import com.getbase.exceptions.RequestException;
-import com.getbase.http.HttpMethod;
 import com.getbase.http.Request;
 import com.getbase.http.Response;
 import com.getbase.utils.Joiner;
@@ -58,10 +56,10 @@ public class HttpClient extends com.getbase.http.HttpClient {
         javax.ws.rs.core.Response jerseyResponse = null;
 
         if (request.getBody() != null && !request.getBody().isEmpty() && request.getMethod().isBodySupported()) {
-            invocation = invocationBuilder.build(request.getMethod().toString(),
+            invocation = invocationBuilder.build(request.getMethod().name(),
                     Entity.json(request.getBody()));
         } else {
-            invocation = invocationBuilder.build(request.getMethod().toString());
+            invocation = invocationBuilder.build(request.getMethod().name());
         }
 
         try {

@@ -26,7 +26,7 @@ public class LeadsService extends BaseService {
 
 
     public Lead get(long leadId) {
-        return JsonDeserializer.deserialize(this.httpClient.get(String.format(Locale.US, "/leads/%d", leadId), null).getBody(), Lead.class);
+        return JsonDeserializer.deserialize(this.httpClient.get("/leads/" + leadId, null).getBody(), Lead.class);
     }
 
     public Lead create(Lead lead) {
@@ -50,7 +50,7 @@ public class LeadsService extends BaseService {
         checkArgument(lead.getId() > 0, "lead id must be a valid id");
 
         String serialized = JsonSerializer.serialize(lead, Views.ReadWrite.class);
-        return JsonDeserializer.deserialize(this.httpClient.put(String.format(Locale.US, "/leads/%d", lead.getId()), serialized).getBody(), Lead.class);
+        return JsonDeserializer.deserialize(this.httpClient.put("/leads/" + lead.getId(), serialized).getBody(), Lead.class);
     }
 
 
@@ -59,13 +59,13 @@ public class LeadsService extends BaseService {
         checkArgument(leadId > 0, "leadId must be a valid id");
 
         String serialized = JsonSerializer.serialize(attributes);
-        return JsonDeserializer.deserialize(this.httpClient.put(String.format(Locale.US, "/leads/%d", leadId), serialized).getBody(), Lead.class);
+        return JsonDeserializer.deserialize(this.httpClient.put("/leads/" + leadId, serialized).getBody(), Lead.class);
     }
 
     public boolean delete(long leadId) {
        checkArgument(leadId > 0, "leadId must be a valid id");
 
-       return this.httpClient.delete(String.format(Locale.US, "/leads/%d", leadId), null).getHttpStatus() == 204;
+       return this.httpClient.delete("/leads/" + leadId, null).getHttpStatus() == 204;
     }
 
     public static class SearchCriteria {

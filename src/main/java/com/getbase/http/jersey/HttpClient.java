@@ -51,14 +51,8 @@ public class HttpClient extends com.getbase.http.HttpClient {
         // perform request
         Invocation invocation;
         javax.ws.rs.core.Response jerseyResponse = null;
-        System.out.println(request.toString());
-        if (request.getBody() != null && !request.getBody().isEmpty() &&
-                (
-                        request.getMethod() == HttpMethod.POST ||
-                        request.getMethod() == HttpMethod.PUT ||
-                        request.getMethod() == HttpMethod.PATCH)
-                ) {
 
+        if (request.getBody() != null && !request.getBody().isEmpty() && request.getMethod().isBodySupported()) {
             invocation = invocationBuilder.build(request.getMethod().toString(),
                     Entity.json(request.getBody()));
         } else {

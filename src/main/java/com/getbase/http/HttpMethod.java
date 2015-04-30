@@ -23,4 +23,8 @@ public enum HttpMethod {
     public String toString() {
         return this.name;
     }
+
+    public boolean isBodySupported() {
+        return name == "POST" || name == "PUT" || name == "PATCH";
+    }
 }

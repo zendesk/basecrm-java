@@ -19,27 +19,16 @@ import java.util.stream.Collectors;
 
 
 public class HttpClient extends com.getbase.http.HttpClient {
+    private javax.ws.rs.client.Client client;
+
     public HttpClient(Configuration config) {
         super(config);
+
+        this.client = createJerseyClient(this.config);
     }
 
     @Override
     public Response rawRequest(Request request) {
-        // setup client
-        ClientConfig clientConfig = new ClientConfig();
-
-        if (this.config.isVerbose()) {
-            clientConfig.register(new LoggingFilter());
-        }
-
-        javax.ws.rs.client.Client client;
-
-        if (this.config.isVerifySSL()) {
-            client = ClientBuilder.newBuilder().withConfig(clientConfig).hostnameVerifier((s, sslSession) -> true).build();
-        } else {
-            client = ClientBuilder.newClient(clientConfig);
-        }
-
         // set target url
         WebTarget webTarget = client.target(request.getUrl());
 
@@ -94,5 +83,24 @@ public class HttpClient extends com.getbase.http.HttpClient {
                 responseHeaders);
 
         return response;
+    }
+
+    public static javax.ws.rs.client.Client createJerseyClient(Configuration config) {
+        // setup client
+        ClientConfig clientConfig = new ClientConfig();
+
+        if (config.isVerbose()) {
+            clientConfig.register(new LoggingFilter());
+        }
+
+        javax.ws.rs.client.Client client;
+
+        if (config.isVerifySSL()) {
+            client = ClientBuilder.newBuilder().withConfig(clientConfig).hostnameVerifier((s, sslSession) -> true).build();
+        } else {
+            client = ClientBuilder.newClient(clientConfig);
+        }
+
+        return client;
     }
 }

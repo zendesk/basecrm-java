@@ -28,7 +28,6 @@ class JsonDeserializerTest extends Specification {
         "getTags"               | ["important"]
         "getCreatedAt"          | new DateTime(2014, 8, 27, 16, 32, 56, UTC)
         "getCustomFields"       | ["known_via": "Tom"]
-        "getAddress"            | new Address("2726 Smith Street", null, null, null, null)
     }
 
     def "DeserializeList"() {

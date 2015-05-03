@@ -1,14 +1,28 @@
+// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
+
 package com.getbase;
 
 import com.getbase.http.HttpClient;
-import com.getbase.services.LeadsService;
+import com.getbase.services.*;
 
 public class Client {
 
     private final Configuration config;
     private final HttpClient httpClient;
 
-    private LeadsService leads;
+    private AccountsService accountsService;
+    private AssociatedContactsService associatedContactsService;
+    private ContactsService contactsService;
+    private DealsService dealsService;
+    private LeadsService leadsService;
+    private LossReasonsService lossReasonsService;
+    private NotesService notesService;
+    private PipelinesService pipelinesService;
+    private SourcesService sourcesService;
+    private StagesService stagesService;
+    private TagsService tagsService;
+    private TasksService tasksService;
+    private UsersService usersService;
 
     public Client(Configuration config) {
         this(config, new com.getbase.http.jersey.HttpClient(config));
@@ -26,11 +40,95 @@ public class Client {
     public HttpClient getHttpClient() {
         return this.httpClient;
     }
-
-    public LeadsService leads() {
-        if (this.leads == null) {
-            this.leads = new LeadsService(this.httpClient);
+   
+    public AccountsService accounts() {
+        if (this.accountsService == null) {
+            this.accountsService = new AccountsService(this.httpClient);
         }
-        return this.leads;
+        return this.accountsService;
+    }
+   
+    public AssociatedContactsService associatedContacts() {
+        if (this.associatedContactsService == null) {
+            this.associatedContactsService = new AssociatedContactsService(this.httpClient);
+        }
+        return this.associatedContactsService;
+    }
+   
+    public ContactsService contacts() {
+        if (this.contactsService == null) {
+            this.contactsService = new ContactsService(this.httpClient);
+        }
+        return this.contactsService;
+    }
+   
+    public DealsService deals() {
+        if (this.dealsService == null) {
+            this.dealsService = new DealsService(this.httpClient);
+        }
+        return this.dealsService;
+    }
+   
+    public LeadsService leads() {
+        if (this.leadsService == null) {
+            this.leadsService = new LeadsService(this.httpClient);
+        }
+        return this.leadsService;
+    }
+   
+    public LossReasonsService lossReasons() {
+        if (this.lossReasonsService == null) {
+            this.lossReasonsService = new LossReasonsService(this.httpClient);
+        }
+        return this.lossReasonsService;
+    }
+   
+    public NotesService notes() {
+        if (this.notesService == null) {
+            this.notesService = new NotesService(this.httpClient);
+        }
+        return this.notesService;
+    }
+   
+    public PipelinesService pipelines() {
+        if (this.pipelinesService == null) {
+            this.pipelinesService = new PipelinesService(this.httpClient);
+        }
+        return this.pipelinesService;
+    }
+   
+    public SourcesService sources() {
+        if (this.sourcesService == null) {
+            this.sourcesService = new SourcesService(this.httpClient);
+        }
+        return this.sourcesService;
+    }
+   
+    public StagesService stages() {
+        if (this.stagesService == null) {
+            this.stagesService = new StagesService(this.httpClient);
+        }
+        return this.stagesService;
+    }
+   
+    public TagsService tags() {
+        if (this.tagsService == null) {
+            this.tagsService = new TagsService(this.httpClient);
+        }
+        return this.tagsService;
+    }
+   
+    public TasksService tasks() {
+        if (this.tasksService == null) {
+            this.tasksService = new TasksService(this.httpClient);
+        }
+        return this.tasksService;
+    }
+   
+    public UsersService users() {
+        if (this.usersService == null) {
+            this.usersService = new UsersService(this.httpClient);
+        }
+        return this.usersService;
     }
 }

@@ -3,7 +3,7 @@
 package com.getbase.services;
 
 import com.getbase.http.HttpClient;
-import com.getbase.models.Lead;
+import com.getbase.models.Contact;
 import com.getbase.serializer.JsonDeserializer;
 import com.getbase.serializer.JsonSerializer;
 import com.getbase.serializer.Views;
@@ -13,70 +13,70 @@ import java.util.*;
 import static com.getbase.utils.Precondition.*;
 
 
-public class LeadsService extends BaseService {
-  public LeadsService(HttpClient httpClient) {
+public class ContactsService extends BaseService {
+  public ContactsService(HttpClient httpClient) {
     super(httpClient);
   }
 
-  public List<Lead> list(Map<String, Object> params) {
-    String url = "/leads";
-    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Lead.class);
+  public List<Contact> list(Map<String, Object> params) {
+    String url = "/contacts";
+    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Contact.class);
   }
 
-  public List<Lead> list(SearchCriteria criteria) {
+  public List<Contact> list(SearchCriteria criteria) {
     return list(criteria.asMap());
   }
 
 
-  public Lead create(Lead lead) {
-    checkNotNull(lead, "lead parameter must not be null");
+  public Contact create(Contact contact) {
+    checkNotNull(contact, "contact parameter must not be null");
 
-    String url = "/leads";
-    String serialized = JsonSerializer.serialize(lead, Views.ReadWrite.class);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Lead.class);
+    String url = "/contacts";
+    String serialized = JsonSerializer.serialize(contact, Views.ReadWrite.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Contact.class);
   }
 
-  public Lead create(Map<String, Object> attributes) {
+  public Contact create(Map<String, Object> attributes) {
     checkNotNull(attributes, "attributes parameter must not be null");
     
-    String url = "/leads";
+    String url = "/contacts";
     String serialized = JsonSerializer.serialize(attributes);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Lead.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Contact.class);
   }
 
 
-  public Lead get(long id) {
+  public Contact get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/leads/%d", id); 
-    return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), Lead.class);
+    String url = String.format(Locale.US, "/contacts/%d", id); 
+    return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), Contact.class);
   }
 
 
-  public Lead update(Lead lead) {
-    checkNotNull(lead, "lead parameter must not be null");
-    checkNotNull(lead.getId(), "lead must have id attribute set");
-    checkArgument(lead.getId() > 0, "lead id must be a valid id");
+  public Contact update(Contact contact) {
+    checkNotNull(contact, "contact parameter must not be null");
+    checkNotNull(contact.getId(), "contact must have id attribute set");
+    checkArgument(contact.getId() > 0, "contact id must be a valid id");
 
-    String url = String.format(Locale.US, "/leads/%d", lead.getId());
-    String serialized = JsonSerializer.serialize(lead, Views.ReadWrite.class);
-    return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Lead.class);
+    String url = String.format(Locale.US, "/contacts/%d", contact.getId());
+    String serialized = JsonSerializer.serialize(contact, Views.ReadWrite.class);
+    return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Contact.class);
   }
 
-  public Lead update(long id, Map<String, Object> attributes) {
+  public Contact update(long id, Map<String, Object> attributes) {
     checkArgument(id > 0, "id must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
 
-    String url = String.format(Locale.US, "/leads/%d", id);
+    String url = String.format(Locale.US, "/contacts/%d", id);
     String serialized = JsonSerializer.serialize(attributes);
-    return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Lead.class);
+    return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Contact.class);
   }
 
 
   public boolean delete(long id) {
     checkArgument(id > 0, "id must be a valid id");
     
-    String url = String.format(Locale.US, "/leads/%d", id); 
+    String url = String.format(Locale.US, "/contacts/%d", id); 
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 
@@ -117,13 +117,8 @@ public class LeadsService extends BaseService {
       return ids(ids);
     }
 
-    public SearchCriteria creatorId(long creatorId) {
-      queryParams.put("creator_id", creatorId);
-      return this;
-    }
-
-    public SearchCriteria ownerId(long ownerId) {
-      queryParams.put("owner_id", ownerId);
+    public SearchCriteria contactId(long contactId) {
+      queryParams.put("contact_id", contactId);
       return this;
     }
 
@@ -142,8 +137,18 @@ public class LeadsService extends BaseService {
       return this;
     }
 
+    public SearchCriteria email(String email) {
+      queryParams.put("email", email);
+      return this;
+    }
+
     public SearchCriteria firstName(String firstName) {
       queryParams.put("first_name", firstName);
+      return this;
+    }
+
+    public SearchCriteria isOrganization(boolean isOrganization) {
+      queryParams.put("is_organization", isOrganization);
       return this;
     }
 
@@ -152,13 +157,8 @@ public class LeadsService extends BaseService {
       return this;
     }
 
-    public SearchCriteria organizationName(String organizationName) {
-      queryParams.put("organization_name", organizationName);
-      return this;
-    }
-
-    public SearchCriteria status(String status) {
-      queryParams.put("status", status);
+    public SearchCriteria name(String name) {
+      queryParams.put("name", name);
       return this;
     }
 

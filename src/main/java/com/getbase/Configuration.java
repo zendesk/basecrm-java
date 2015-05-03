@@ -1,8 +1,9 @@
 package com.getbase;
 
+import static com.getbase.BaseCRM.*;
+
 public class Configuration {
 
-    public static final String VERSION = "1.0.0";
     public static final String PRODUCTION_URL = "https://api.getbase.com";
     public static final String DEFAULT_USER_AGENT = "BaseCRM/v2 Java/" + VERSION;
     public static final int DEFAULT_TIMEOUT = 30;

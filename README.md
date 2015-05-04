@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.getbase.basecrm-java.1.0.0"
+  compile "com.getbase:basecrm-java:1.0.0"
 }
 ```
 

@@ -13,7 +13,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 sourceCompatibility = 1.6
-version = '1.0.0'
+targetCompatibility = 1.6
+version = '1.0.1'
 group = 'com.getbase'
 
 repositories {

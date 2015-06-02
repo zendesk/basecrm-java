@@ -69,4 +69,15 @@ class JsonDeserializerTest extends Specification {
         expectedLen | expectedCodes | json
         1           | ["blank"]     | '{"errors": [{"error": {"resource": "contact", "field": "/data/last_name", "code": "blank"}}]}'
     }
+
+    def "DeserializeRaw"() {
+        given:
+        def json = '{"data":{"id": 1}}'
+
+        when:
+        def attributes = JsonDeserializer.deserializeRaw(json)
+
+        then:
+        attributes == ["data": ["id": 1]]
+    }
 }

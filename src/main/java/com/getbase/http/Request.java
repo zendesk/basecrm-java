@@ -92,6 +92,11 @@ public class Request {
             return this;
         }
 
+        public Builder headers(Map<String, String> headers) {
+            this.request.headers.putAll(headers);
+            return this;
+        }
+
         public Builder body(String body) {
             this.request.body = body;
             return this;

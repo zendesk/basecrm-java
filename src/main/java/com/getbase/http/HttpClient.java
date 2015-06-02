@@ -33,10 +33,19 @@ public abstract class HttpClient {
         return request(HttpMethod.DELETE, url, params, null);
     }
 
+
     public Response request(HttpMethod method,
                             String url,
                             Map<String, Object> params,
                             String body) throws RequestException, ResourceException, ServerException {
+        return request(method, url, params, null, body);
+    }
+
+    public Response request(HttpMethod method,
+                            String url,
+                            Map<String, Object> params,
+                            Map<String, String> headers,
+                            String body) {
         Request.Builder builder = new Request.Builder().
                 method(method).
                 url(this.config.getBaseUrl() + API_VERSION + url);
@@ -54,6 +63,10 @@ public abstract class HttpClient {
 
         if (body != null) {
             builder.header("Content-Type", "application/json").body(body);
+        }
+
+        if (headers != null) {
+            builder.headers(headers);
         }
 
         Response response = rawRequest(builder.build());
@@ -91,6 +104,5 @@ public abstract class HttpClient {
         } else {
             throw new UnknownResponseException("Unhandled HTTP error response.", response);
         }
-
     }
 }

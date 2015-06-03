@@ -34,6 +34,10 @@ public abstract class JsonDeserializer {
         return JacksonProvider.getMapper().convertValue(node, type);
     }
 
+    public static <T> T deserialize(Map<String, Object> attributes, Class<T> type) {
+        return JacksonProvider.getMapper().convertValue(attributes, type);
+    }
+
      public static <T> List<T> deserializeList(String s, Class<T> type) {
         JsonNode itemsNode = null;
         try {

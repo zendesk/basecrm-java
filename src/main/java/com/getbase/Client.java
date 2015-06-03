@@ -4,6 +4,7 @@ package com.getbase;
 
 import com.getbase.http.HttpClient;
 import com.getbase.services.*;
+import com.getbase.sync.SyncService;
 
 public class Client {
 
@@ -23,6 +24,8 @@ public class Client {
     private TagsService tagsService;
     private TasksService tasksService;
     private UsersService usersService;
+
+    private SyncService syncService;
 
     public Client(Configuration config) {
         this(config, new com.getbase.http.jersey.HttpClient(config));
@@ -130,5 +133,12 @@ public class Client {
             this.usersService = new UsersService(this.httpClient);
         }
         return this.usersService;
+    }
+
+    public SyncService sync() {
+        if (this.syncService == null) {
+            this.syncService = new SyncService(this.httpClient);
+        }
+        return this.syncService;
     }
 }

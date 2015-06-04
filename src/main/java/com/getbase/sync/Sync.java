@@ -3,7 +3,6 @@ package com.getbase.sync;
 import com.getbase.Client;
 import com.getbase.serializer.JsonDeserializer;
 import com.getbase.utils.BiPredicate;
-import com.getbase.utils.Predicate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +20,7 @@ public class Sync {
         this.streamObservable = new StreamObservable();
     }
 
-    public <T> Sync subscribe(Class<T> type, Predicate<T> predicate) {
+    public <T> Sync subscribe(Class<T> type, BiPredicate<Meta, T> predicate) {
         this.streamObservable.subscribe(type, predicate);
         return this;
     }
@@ -53,9 +52,9 @@ public class Sync {
     }
 
     private static class StreamObservable implements BiPredicate<Meta, Map<String, Object>> {
-        private final Map<Class, Predicate> observers = new HashMap<Class, Predicate>();
+        private final Map<Class, BiPredicate> observers = new HashMap<Class, BiPredicate>();
 
-        public <T> void subscribe(Class<T> type, Predicate<T> predicate) {
+        public <T> void subscribe(Class<T> type, BiPredicate<Meta, T> predicate) {
             this.observers.put(type, predicate);
         }
 
@@ -75,10 +74,10 @@ public class Sync {
 
         private boolean notifyPredicate(Meta meta, Map<String, Object> data) throws ClassNotFoundException {
             Class<?> clazz = meta.getType().getClassType();
-            Predicate predicate = this.observers.get(clazz);
+            BiPredicate predicate = this.observers.get(clazz);
 
             // we haven't seen predicate for that type, skip ack, give it a try next time
-            return predicate != null && predicate.test(JsonDeserializer.deserialize(data, clazz));
+            return predicate != null && predicate.test(meta, JsonDeserializer.deserialize(data, clazz));
         }
 
         public boolean isEmpty(){
@@ -86,7 +85,7 @@ public class Sync {
         }
 
         @Override
-        public boolean apply(Meta meta, Map<String, Object> data) {
+        public boolean test(Meta meta, Map<String, Object> data) {
             return notify(meta, data);
         }
     }

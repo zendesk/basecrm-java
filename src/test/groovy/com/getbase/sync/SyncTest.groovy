@@ -50,7 +50,14 @@ class SyncTest extends Specification {
         def sync = new Sync(client, deviceUUID)
 
         when:
-        def status = sync.subscribe(User.class, { user ->
+        def status = sync.subscribe(User.class, { meta, user ->
+            assert meta != null
+
+            assert meta.type.type == "user"
+            assert meta.type.isSupported()
+            assert meta.type.getClassName() == "com.getbase.models.User"
+            assert meta.type.getClassType() == User
+
             assert user != null
             assert user instanceof User
             assert user.id == 1

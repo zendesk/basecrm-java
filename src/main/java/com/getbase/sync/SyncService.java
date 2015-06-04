@@ -103,7 +103,7 @@ public class SyncService extends BaseService {
 
             List<Queue> queues = new ArrayList<Queue>();
 
-            for (Map<String, Object> item : (List<Map<String, Object>>)attributes.get("items")) {
+            for (Map<String, Object> item : (List<Map<String, Object>>)attributes.get("queues")) {
                 queues.add(QueueDeserializer.deserialize(item));
             }
 
@@ -122,10 +122,10 @@ public class SyncService extends BaseService {
 
             Map<String, Object> attributes = (Map<String, Object>)root.get("data");
             String name = (String)attributes.get("name");
-            Long pages = (Long)attributes.get("pages");
-            Long totalCount = (Long)attributes.get("total_count");
+            Integer pages = (Integer)attributes.get("pages");
+            Integer totalCount = (Integer)attributes.get("total_count");
 
-            return new Queue(name, pages, totalCount);
+            return new Queue(name, pages.longValue(), totalCount.longValue());
         }
     }
 }

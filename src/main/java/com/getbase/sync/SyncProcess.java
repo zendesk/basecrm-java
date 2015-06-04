@@ -73,7 +73,7 @@ public class SyncProcess {
             Map<String, Object> data = (Map<String, Object>) item.get("data");
 
             // Notify observer
-            if (predicate.apply(meta, data)) {
+            if (this.predicate.apply(meta, data)) {
                 // Add to acknowledged objects
                 ackKeys.add(meta.getSync().getAckKey());
             }

@@ -14,7 +14,7 @@ public abstract class Word {
         StringBuilder builder = new StringBuilder();
         for (String part : parts) {
             if (!part.isEmpty())
-                builder.append(part.toUpperCase());
+                builder.append(part.substring(0, 1).toUpperCase()  + part.substring(1));
         }
 
         return builder.toString().trim();

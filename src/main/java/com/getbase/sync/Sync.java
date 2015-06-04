@@ -29,7 +29,7 @@ public class Sync {
     public boolean fetch() {
         // there are no observers attached, fetching won't ack fetched data
         if (this.streamObservable.isEmpty()) {
-            throw new IllegalStateException("you have got observers attached - use fetch method without input arguments");
+            throw new IllegalStateException("you have no observers attached - use subscribe first");
         }
 
         return fetchInternal(this.streamObservable);

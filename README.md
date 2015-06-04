@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.getbase:basecrm-java:1.0.1"
+  compile "com.getbase:basecrm-java:1.1.0"
 }
 ```
 
@@ -42,7 +42,7 @@ The following builder options are available while instantiating a client:
 
  * __accessToken__: Personal access token
  * __baseUrl__: Base url for the api. Default: `https://api.getbase.com`
- * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.0.1`
+ * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.1.0`
  * __timeout__: Request timeout. Default: `30` seconds
  * __verbose__: Verbose/debug mode. Default: `false`
  * __verifySSL__: Whether to skip SSL verification or not. Default: `true`
@@ -112,6 +112,37 @@ boolean deleted = client.deals().delete(id);
 ```
 
 There other non-CRUD operations supported as well. Please contact corresponding service files for in-depth documentation.
+
+## Sync API
+
+The following sample code shows how to perform a full synchronization flow using high-level wrapper.
+
+First of all you need an instance of `com.getbase.Client`. High-level `com.getbase.sync.Sync` wrapper uses `com.getbase.sync.SyncService` to interact with the Sync API.
+In addition to the client instance, you must provide a device's UUID within `deviceUUID` parameter. The device's UUID must not change between synchronization session, otherwise the sync service will not recognize the device and will send all the data again.
+
+```java
+import com.getbase.*;
+import com.getbase.sync.*;
+
+Client client = new Client(new Configuration.Builder()
+                .accessToken(System.getenv("BASECRM_ACCESS_TOKEN"))
+                .build());
+
+String deviceUUID = System.getenv("BASECRM_DEVICE_UUID");
+Sync sync = new Sync(client, deviceUUID);
+```
+
+Now you have two options. Either subscribe to stream of all resources using a single observer, or subscribe to each resource separately and call `fetch` without arguments.
+
+```java
+import com.getbase.models.*;
+
+sync.subscribe(Lead.class, (meta, lead) -> return true)
+    .subscribe(Contact.class, (meta, contact) -> return true)
+    .fetch();
+```
+
+Notice that, when you return `true` from the predicate, the wrapper will eventually ack the data.
 
 ## Resources and actions
 

@@ -5,9 +5,7 @@ import com.getbase.serializer.JsonDeserializer;
 import com.getbase.utils.BiPredicate;
 import com.getbase.utils.Predicate;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.getbase.utils.Precondition.*;
@@ -46,57 +44,12 @@ public class Sync {
         return fetchInternal(predicate);
     }
 
-    @SuppressWarnings("unchecked")
     protected boolean fetchInternal(BiPredicate<Meta, Map<String, Object>> predicate) {
         checkNotNull(predicate, "predicate parameter must not be null");
 
-        // Set up a new synchronization session for a UUID for the device
-        Session session = this.client.sync().start(this.deviceUUID);
-
-        // Check if there is anything to synchronize
-        if (session == null || session.getId() == null) {
-            return false;
-        }
-
-        // Drain the main queue until there is no more data (empty array)
-        while (true) {
-            // Fetch from the main queue
-            List<Map<String, Object>> items = this.client.sync().fetch(this.deviceUUID, session.getId());
-
-            // Nothing more to synchronize ?
-            if (items == null || items.isEmpty()) {
-                break;
-            }
-
-            List<String> ackKeys = new ArrayList<String>();
-
-            // Notify about new data
-            for (Map<String, Object> item : items) {
-
-                // Extract meta data and deserialize to POJO
-                Map<String, Object> metaAttributes = (Map<String, Object>)item.get("meta");
-                Meta meta = JsonDeserializer.deserialize(metaAttributes, Meta.class);
-
-                // Insanity check
-                if (meta == null || meta.getSync() == null || meta.getSync().getAckKey() == null) {
-                    continue;
-                }
-
-                // Extract data
-                Map<String, Object> data = (Map<String, Object>)item.get("data");
-
-                // Notify observer
-                if (predicate.apply(meta, data)) {
-                    // Add to acknowledged objects
-                    ackKeys.add(meta.getSync().getAckKey());
-                }
-            }
-
-            // As we fetch new data, we need to send acknowledgement keys, if any ...
-            this.client.sync().ack(this.deviceUUID, ackKeys);
-        }
-
-        return true;
+        SyncProcess syncProcess = new SyncProcess(client, deviceUUID, predicate);
+        
+        return syncProcess.run();
     }
 
     private static class StreamObservable implements BiPredicate<Meta, Map<String, Object>> {

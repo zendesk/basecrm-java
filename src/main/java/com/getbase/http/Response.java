@@ -19,6 +19,10 @@ public class Response {
         this.body = body;
     }
 
+    public Response(int httpStatus) {
+        this.httpStatus = httpStatus;
+    }
+
     public int getHttpStatus() {
         return httpStatus;
     }

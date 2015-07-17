@@ -10,7 +10,10 @@ The library is available via [JCenter](https://bintray.com/bintray/jcenter). To 
 
 ```groovy
 repositories {
-  jcenter()
+    jcenter()
+    maven {
+        url  "http://dl.bintray.com/basecrm/maven"
+    }
 }
 
 dependencies {
@@ -137,8 +140,8 @@ Now you have two options. Either subscribe to stream of all resources using a si
 ```java
 import com.getbase.models.*;
 
-sync.subscribe(Lead.class, (meta, lead) -> return true)
-    .subscribe(Contact.class, (meta, contact) -> return true)
+sync.subscribe(Lead.class, (meta, lead) -> true)
+    .subscribe(Contact.class, (meta, contact) -> true)
     .fetch();
 ```
 

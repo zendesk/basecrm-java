@@ -6,12 +6,16 @@ import com.getbase.http.Response;
 import com.getbase.serializer.JsonDeserializer;
 import com.getbase.serializer.JsonSerializer;
 import com.getbase.services.BaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 import static com.getbase.utils.Precondition.*;
 
 public class SyncService extends BaseService {
+    private static final Logger log = LoggerFactory.getLogger(SyncService.class);
+
     public static final String DEVICE_HEADER = "X-Basecrm-Device-UUID";
 
     public SyncService(HttpClient httpClient) {
@@ -29,7 +33,10 @@ public class SyncService extends BaseService {
                 buildHeaders(deviceUUID),
                 null);
 
-        if (response.getHttpStatus() == 204) return null;
+        if (response.getHttpStatus() == 204) {
+            log.info("Received 204 from sync start. Nothing to fetch.");
+            return null;
+        }
         return SessionDeserializer.deserialize(JsonDeserializer.deserializeRaw(response.getBody()));
     }
 
@@ -49,6 +56,7 @@ public class SyncService extends BaseService {
 
         // nothing new to synchronize
         if (response.getHttpStatus() == 204) {
+            log.info("Received 204 from sync queue. Completing sync process.");
             return null;
         }
 
@@ -56,10 +64,16 @@ public class SyncService extends BaseService {
 
         // sanity check
         if (attributes == null || attributes.get("items") == null) {
+            log.warn("Empty response or response does not contain items field. Response status: {}. Response body: {}",
+                    response.getHttpStatus(), response.getBody());
             return null;
         }
 
-        return (List<Map<String, Object>>)attributes.get("items");
+        final List<Map<String, Object>> items = (List<Map<String, Object>>) attributes.get("items");
+        if (items.isEmpty()) {
+            log.warn("Empty items collection received in sync with HTTP status {}", response.getHttpStatus());
+        }
+        return items;
     }
 
     public boolean ack(String deviceUUID, List<String> ackKeys) {
@@ -81,7 +95,14 @@ public class SyncService extends BaseService {
                 buildHeaders(deviceUUID),
                 serialized);
 
-        return response.getHttpStatus() == 202;
+        boolean acked = response.getHttpStatus() == 202;
+
+        if (!acked) {
+            log.warn("Ack request was not accepted. Http status: {}. Response body: {}", response.getHttpStatus(),
+                    response.getBody());
+        }
+
+        return acked;
     }
 
     private Map<String, String> buildHeaders(String deviceUUID) {

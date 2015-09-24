@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkArgument;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 public class SyncService extends BaseService {
     private static final Logger log = LoggerFactory.getLogger(SyncService.class);
@@ -37,7 +38,16 @@ public class SyncService extends BaseService {
             log.info("Received 204 from sync start. Nothing to fetch.");
             return null;
         }
-        return SessionDeserializer.deserialize(JsonDeserializer.deserializeRaw(response.getBody()));
+
+        final Session session = SessionDeserializer.deserialize(JsonDeserializer.deserializeRaw(response.getBody()));
+
+        if (session != null) {
+            log.info("Started sync process with pending queues: {}", session.getQueues());
+        } else {
+            log.warn("Sync process will not be started due to missing session data: {}", response);
+        }
+
+        return session;
     }
 
     @SuppressWarnings("unchecked")
@@ -64,9 +74,13 @@ public class SyncService extends BaseService {
 
         // sanity check
         if (attributes == null || attributes.get("items") == null) {
-            log.warn("Empty response or response does not contain items field. Response status: {}. Response body: {}",
-                    response.getHttpStatus(), response.getBody());
+            log.warn("Empty sync response or response does not contain items field. Response : {}", response);
             return null;
+        }
+
+        final Map<String, Object> meta = (Map<String, Object>) attributes.get("meta");
+        if (meta != null) {
+            log.info("Received {} items out of {} remaining.", meta.get("count"), meta.get("count_left"));
         }
 
         final List<Map<String, Object>> items = (List<Map<String, Object>>) attributes.get("items");
@@ -100,6 +114,8 @@ public class SyncService extends BaseService {
         if (!acked) {
             log.warn("Ack request was not accepted. Http status: {}. Response body: {}", response.getHttpStatus(),
                     response.getBody());
+        } else {
+            log.info("Items acknowledged.");
         }
 
         return acked;

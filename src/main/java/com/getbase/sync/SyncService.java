@@ -78,16 +78,23 @@ public class SyncService extends BaseService {
             return null;
         }
 
-        final Map<String, Object> meta = (Map<String, Object>) attributes.get("meta");
-        if (meta != null) {
-            log.info("Received {} items out of {} remaining.", meta.get("count"), meta.get("count_left"));
-        }
+        logSyncProgress(attributes);
 
         final List<Map<String, Object>> items = (List<Map<String, Object>>) attributes.get("items");
         if (items.isEmpty()) {
             log.warn("Empty items collection received in sync with HTTP status {}", response.getHttpStatus());
         }
         return items;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void logSyncProgress(Map<String, Object> attributes) {
+        if (log.isDebugEnabled()) {
+            final Map<String, Object> meta = (Map<String, Object>) attributes.get("meta");
+            if (meta != null) {
+                log.debug("Received {} items out of {} remaining.", meta.get("count"), meta.get("count_left"));
+            }
+        }
     }
 
     public boolean ack(String deviceUUID, List<String> ackKeys) {
@@ -115,7 +122,7 @@ public class SyncService extends BaseService {
             log.warn("Ack request was not accepted. Http status: {}. Response body: {}", response.getHttpStatus(),
                     response.getBody());
         } else {
-            log.info("Items acknowledged.");
+            log.debug("Items acknowledged.");
         }
 
         return acked;

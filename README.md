@@ -304,6 +304,8 @@ Actions:
 * Retrieve a single user - `client.users().get()`
 * Retrieve an authenticating user - `client.users().self()`
 
+## Logging
+BaseCRM client uses Simple Logging Facade for Java (SLF4J) to track some diagnostic information. SLF4J is a logging facade that can work with various logging frameworks, such as java.util.logging, logback and log4j. BaseCRM client does not impose any particular logging framework and lets end user to plug-in desired framework at the deployment time. To learn how to provide logging binding refer to SLF4J [manual](http://www.slf4j.org/manual.html#swapping).
 
 ## License
 MIT

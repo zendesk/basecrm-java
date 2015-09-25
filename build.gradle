@@ -25,7 +25,6 @@ repositories {
     }
 }
 
-
 dependencies {
     compile group: "org.glassfish.jersey.core", name: "jersey-client", version: "2.17"
     compile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.5.0"
@@ -92,5 +91,12 @@ bintray {
         licenses = ['MIT']
         labels = ['base crm', 'api', 'http', 'v2', 'client', 'HTTP client']
         publicDownloadNumbers = true
+    }
+}
+
+test {
+    if (!System.getenv('BASECRM_ACCESS_TOKEN')) {
+        //put your access token here
+        environment 'BASECRM_ACCESS_TOKEN': ''
     }
 }

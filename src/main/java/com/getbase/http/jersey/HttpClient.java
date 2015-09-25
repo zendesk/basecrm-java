@@ -8,20 +8,25 @@ import com.getbase.utils.Joiner;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.filter.LoggingFilter;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.currentTimeMillis;
 
 public class HttpClient extends com.getbase.http.HttpClient {
+
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(HttpClient.class);
+
     private javax.ws.rs.client.Client client;
 
     public HttpClient(Configuration config) {
@@ -64,9 +69,19 @@ public class HttpClient extends com.getbase.http.HttpClient {
         }
 
         try {
+            final long start = currentTimeMillis();
             try {
                 jerseyResponse = invocation.invoke();
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Received HTTP {} for {} {} after {} milliseconds", jerseyResponse.getStatus(),
+                            request.getMethod(), request.getUrl(), currentTimeMillis() - start);
+                }
             } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Received exception {} for {} {} after {} milliseconds", e,  request.getMethod(),
+                            request.getUrl(), currentTimeMillis() - start);
+                }
                 throw new ConnectionException(e);
             }
 

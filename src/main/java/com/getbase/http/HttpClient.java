@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 
-import static java.lang.System.currentTimeMillis;
 import static java.util.Collections.emptyList;
 
 public abstract class HttpClient {
@@ -77,13 +76,7 @@ public abstract class HttpClient {
             builder.headers(headers);
         }
 
-        final long start = currentTimeMillis();
         Response response = rawRequest(builder.build());
-
-        if (log.isDebugEnabled()) {
-            log.debug("Received HTTP {} for {} {} after {} milliseconds", response.getHttpStatus(), method, url,
-                    currentTimeMillis() - start);
-        }
 
         if (response.getHttpStatus() < 200 || response.getHttpStatus() >= 300) {
             handleErrorResponse(response);

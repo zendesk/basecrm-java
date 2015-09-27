@@ -8,6 +8,7 @@ import com.getbase.utils.Joiner;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.filter.LoggingFilter;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
@@ -27,7 +28,14 @@ public class HttpClient extends com.getbase.http.HttpClient {
     public HttpClient(Configuration config) {
         super(config);
 
+        redirectJerseyClientJulToSlf4j();
+
         this.client = createJerseyClient(this.config);
+    }
+
+    private void redirectJerseyClientJulToSlf4j() {
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
     }
 
     @Override

@@ -13,6 +13,8 @@ import java.util.*;
 
 import static com.getbase.utils.Precondition.checkArgument;
 import static com.getbase.utils.Precondition.checkNotNull;
+import static javax.ws.rs.core.Response.Status.ACCEPTED;
+import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 
 public class SyncService extends BaseService {
     private static final Logger log = LoggerFactory.getLogger(SyncService.class);
@@ -34,7 +36,7 @@ public class SyncService extends BaseService {
                 buildHeaders(deviceUUID),
                 null);
 
-        if (response.getHttpStatus() == 204) {
+        if (noConent(response)) {
             log.info("Received 204 from sync start. Nothing to fetch.");
             return null;
         }
@@ -65,7 +67,7 @@ public class SyncService extends BaseService {
                 null);
 
         // nothing new to synchronize
-        if (response.getHttpStatus() == 204) {
+        if (noConent(response)) {
             log.info("Received 204 from sync queue. Completing sync process.");
             return null;
         }
@@ -85,6 +87,10 @@ public class SyncService extends BaseService {
             log.warn("Empty items collection received in sync with HTTP status {}", response.getHttpStatus());
         }
         return items;
+    }
+
+    private boolean noConent(Response response) {
+        return response.getHttpStatus() == NO_CONTENT.getStatusCode();
     }
 
     @SuppressWarnings("unchecked")
@@ -116,13 +122,13 @@ public class SyncService extends BaseService {
                 buildHeaders(deviceUUID),
                 serialized);
 
-        boolean acked = response.getHttpStatus() == 202;
+        boolean acked = response.getHttpStatus() == ACCEPTED.getStatusCode();
 
         if (!acked) {
-            log.warn("Ack request was not accepted. Http status: {}. Response body: {}", response.getHttpStatus(),
-                    response.getBody());
+            log.warn("Ack request was not accepted for {}. Http status: {}. Response body: {}", ackKeys,
+                    response.getHttpStatus(), response.getBody());
         } else {
-            log.debug("Items acknowledged.");
+            log.debug("{} items acknowledged.", ackKeys.size());
         }
 
         return acked;

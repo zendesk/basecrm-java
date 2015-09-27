@@ -8,14 +8,15 @@ import com.getbase.utils.Joiner;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.filter.LoggingFilter;
-import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.List;
@@ -23,19 +24,15 @@ import java.util.Map;
 
 
 public class HttpClient extends com.getbase.http.HttpClient {
+
+    private static final Logger log = LoggerFactory.getLogger(HttpClient.class);
+
     private javax.ws.rs.client.Client client;
 
     public HttpClient(Configuration config) {
         super(config);
 
-        redirectJerseyClientJulToSlf4j();
-
         this.client = createJerseyClient(this.config);
-    }
-
-    private void redirectJerseyClientJulToSlf4j() {
-        SLF4JBridgeHandler.removeHandlersForRootLogger();
-        SLF4JBridgeHandler.install();
     }
 
     @Override
@@ -102,7 +99,7 @@ public class HttpClient extends com.getbase.http.HttpClient {
         ClientConfig clientConfig = new ClientConfig();
 
         if (config.isVerbose()) {
-            clientConfig.register(new LoggingFilter());
+            clientConfig.register(new LoggingFilter(new Slf4jAdapter(log), false));
         }
 
         clientConfig.property(ClientProperties.CONNECT_TIMEOUT, config.getTimeout() * 1000);
@@ -122,5 +119,23 @@ public class HttpClient extends com.getbase.http.HttpClient {
         }
 
         return client;
+    }
+
+    /**
+     * Redirects all info messages logged by LoggingFilter to SLF4J logger. Current implementation of LoggingFilter
+     * uses only info level. This is less intrusive solution than jul-to-slf4j bridge that can impact performance.
+     */
+    protected static class Slf4jAdapter extends java.util.logging.Logger {
+        private final Logger logger;
+
+        Slf4jAdapter(Logger logger) {
+            super("jersey", null);
+            this.logger = logger;
+        }
+
+        @Override
+        public void info(String msg) {
+            logger.info(msg);
+        }
     }
 }

@@ -125,10 +125,10 @@ public class HttpClient extends com.getbase.http.HttpClient {
      * Redirects all info messages logged by LoggingFilter to SLF4J logger. Current implementation of LoggingFilter
      * uses only info level. This is less intrusive solution than jul-to-slf4j bridge that can impact performance.
      */
-    protected static class Slf4jAdapter extends java.util.logging.Logger {
+    public static class Slf4jAdapter extends java.util.logging.Logger {
         private final Logger logger;
 
-        Slf4jAdapter(Logger logger) {
+        public Slf4jAdapter(Logger logger) {
             super("jersey", null);
             this.logger = logger;
         }

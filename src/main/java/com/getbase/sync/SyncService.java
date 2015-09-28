@@ -10,6 +10,7 @@ import com.getbase.services.BaseService;
 import java.util.*;
 
 import static com.getbase.utils.Precondition.*;
+import static java.util.Collections.emptyList;
 
 public class SyncService extends BaseService {
     public static final String DEVICE_HEADER = "X-Basecrm-Device-UUID";
@@ -54,9 +55,9 @@ public class SyncService extends BaseService {
 
         Map<String, Object> attributes = JsonDeserializer.deserializeRaw(response.getBody());
 
-        // sanity check
+        // make sure we only complete on 204
         if (attributes == null || attributes.get("items") == null) {
-            return null;
+            return emptyList();
         }
 
         return (List<Map<String, Object>>)attributes.get("items");

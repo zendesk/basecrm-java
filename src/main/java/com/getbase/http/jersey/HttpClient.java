@@ -11,10 +11,7 @@ import org.glassfish.jersey.filter.LoggingFilter;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +22,13 @@ public class HttpClient extends com.getbase.http.HttpClient {
     private javax.ws.rs.client.Client client;
 
     public HttpClient(Configuration config) {
+        this(config, new DefaultBuilder());
+    }
+
+    public HttpClient(Configuration config, Builder builder) {
         super(config);
 
-        this.client = createJerseyClient(this.config);
+        this.client = builder.build(this.config);
     }
 
     @Override
@@ -89,30 +90,33 @@ public class HttpClient extends com.getbase.http.HttpClient {
         }
     }
 
-    protected javax.ws.rs.client.Client createJerseyClient(final Configuration config) {
-        // setup client
-        ClientConfig clientConfig = new ClientConfig();
+    protected static class DefaultBuilder implements Builder {
 
-        if (config.isVerbose()) {
-            clientConfig.register(new LoggingFilter());
+        public Client build(final Configuration config) {
+            // setup client
+            ClientConfig clientConfig = new ClientConfig();
+
+            if (config.isVerbose()) {
+                clientConfig.register(new LoggingFilter());
+            }
+
+            clientConfig.property(ClientProperties.CONNECT_TIMEOUT, config.getTimeout() * 1000);
+            clientConfig.property(ClientProperties.READ_TIMEOUT, config.getTimeout() * 1000);
+
+            javax.ws.rs.client.Client client;
+
+            if (config.isVerifySSL()) {
+                client = ClientBuilder.newBuilder().withConfig(clientConfig).hostnameVerifier(new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String s, SSLSession sslSession) {
+                        return config.isVerifySSL();
+                    }
+                }).build();
+            } else {
+                client = ClientBuilder.newClient(clientConfig);
+            }
+
+            return client;
         }
-
-        clientConfig.property(ClientProperties.CONNECT_TIMEOUT, config.getTimeout() * 1000);
-        clientConfig.property(ClientProperties.READ_TIMEOUT, config.getTimeout() * 1000);
-
-        javax.ws.rs.client.Client client;
-
-        if (config.isVerifySSL()) {
-            client = ClientBuilder.newBuilder().withConfig(clientConfig).hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String s, SSLSession sslSession) {
-                    return config.isVerifySSL();
-                }
-            }).build();
-        } else {
-            client = ClientBuilder.newClient(clientConfig);
-        }
-
-        return client;
     }
 }

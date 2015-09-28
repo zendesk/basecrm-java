@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.currentTimeMillis;
 
 public class HttpClient extends com.getbase.http.HttpClient {
 
@@ -69,9 +70,19 @@ public class HttpClient extends com.getbase.http.HttpClient {
         }
 
         try {
+            final long start = currentTimeMillis();
             try {
                 jerseyResponse = invocation.invoke();
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Received HTTP {} for {} {} after {} milliseconds", jerseyResponse.getStatus(),
+                            request.getMethod(), request.getUrl(), currentTimeMillis() - start);
+                }
             } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Received exception {} for {} {} after {} milliseconds", e,  request.getMethod(),
+                            request.getUrl(), currentTimeMillis() - start);
+                }
                 throw new ConnectionException(e);
             }
 

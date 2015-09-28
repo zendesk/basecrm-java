@@ -2,10 +2,12 @@ package com.getbase.http
 
 import com.getbase.Configuration
 import com.getbase.exceptions.ConnectionException
+import com.getbase.exceptions.RateLimitException
 import com.getbase.exceptions.RequestException
 import com.getbase.serializer.JsonDeserializer
 import spock.lang.Specification
 
+import static java.util.concurrent.Executors.newFixedThreadPool
 
 class HttpClientTest extends Specification {
 
@@ -147,5 +149,27 @@ class HttpClientTest extends Specification {
 
         then:
         thrown ConnectionException
+    }
+
+    def "Request - rate limit error"() {
+        given:
+        def exceptions = []
+        def tasks = (1..30).collect {
+            return {
+                try {
+                    getClient().get("/users/self", null)
+                } catch (Exception e) {
+                    assert e instanceof RateLimitException
+                    exceptions << e.class
+                }
+            }
+        }
+
+        when:
+        newFixedThreadPool(30).invokeAll(tasks)
+        sleep(1000)
+
+        then:
+        exceptions.contains(RateLimitException)
     }
 }

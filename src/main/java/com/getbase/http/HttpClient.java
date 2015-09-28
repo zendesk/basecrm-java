@@ -3,10 +3,17 @@ package com.getbase.http;
 import com.getbase.Configuration;
 import com.getbase.exceptions.*;
 import com.getbase.serializer.JsonDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.emptyList;
+
 public abstract class HttpClient {
+    private static final Logger log = LoggerFactory.getLogger(HttpClient.class);
+
     public static final String API_VERSION = "/v2";
     public static final String X_REQUEST_ID = "X-Request-Id";
 
@@ -83,26 +90,28 @@ public abstract class HttpClient {
     private void handleErrorResponse(Response response) throws ResourceException, RequestException, ServerException {
         int responseCode = response.getHttpStatus();
 
-        if (!response.isJSON()) {
-            throw new UnknownResponseException("Unknown HTTP error response. JSON expected", response);
-        }
-
         if (responseCode == 422) {
-            throw new ResourceException(responseCode,
-                                        response.getHeaders().get(X_REQUEST_ID),
-                                        JsonDeserializer.deserializeErrors(response.getBody()));
+            throw new ResourceException(responseCode, tryGetRequestId(response), tryGetErrors(response));
         } else if (responseCode == 429) {
             throw new RateLimitException();
         } else if (responseCode >= 400 && responseCode < 500) {
-            throw new RequestException(responseCode,
-                    response.getHeaders().get(X_REQUEST_ID),
-                    JsonDeserializer.deserializeErrors(response.getBody()));
+            throw new RequestException(responseCode, tryGetRequestId(response), tryGetErrors(response));
         } else if (responseCode >= 500 && responseCode < 600) {
-            throw new ServerException(responseCode,
-                    response.getHeaders().get(X_REQUEST_ID),
-                    JsonDeserializer.deserializeErrors(response.getBody()));
+            throw new ServerException(responseCode, tryGetRequestId(response), tryGetErrors(response));
         } else {
-            throw new UnknownResponseException("Unhandled HTTP error response.", response);
+            throw new UnknownResponseException("Unhandled HTTP error " + response, response);
+        }
+    }
+
+    private String tryGetRequestId(Response response) {
+        return response.getHeaders().getOrDefault(X_REQUEST_ID, "unknown");
+    }
+
+    private List<BaseError> tryGetErrors(Response response) {
+        if (response.isJSON()) {
+            return JsonDeserializer.deserializeErrors(response.getBody());
+        } else {
+            return emptyList();
         }
     }
 }

@@ -305,7 +305,7 @@ Actions:
 * Retrieve an authenticating user - `client.users().self()`
 
 ## Advanced Topic - Instrumenting HTTP Client
-BASE API client uses Jersey HTTP Client that can be instrumented using [client filters mechanism](https://jersey.java.net/documentation/latest/filters-and-interceptors.html#d0e9771). This might be helpful if for example you want to publish performance metrics for every request, etc. In order to instrument a client or provide some additional configuration you need to implement `com.getbase.http.jersey.Builer` interface and pass it when constructing `com.getbase.http.jersey.HttpClient`.
+Base API client uses Jersey HTTP Client that can be instrumented using [client filters mechanism](https://jersey.java.net/documentation/latest/filters-and-interceptors.html#d0e9771). This might be helpful if for example you want to publish performance metrics for every request, etc. In order to instrument a client or provide some additional configuration you need to implement `com.getbase.http.jersey.Builer` interface and pass it when constructing `com.getbase.http.jersey.HttpClient`.
 
 Here is an example of client filter that publishes performance metrics:
 ```java

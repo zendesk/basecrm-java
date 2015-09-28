@@ -104,7 +104,8 @@ public abstract class HttpClient {
     }
 
     private String tryGetRequestId(Response response) {
-        return response.getHeaders().getOrDefault(X_REQUEST_ID, "unknown");
+        final String requestId = response.getHeaders().get(X_REQUEST_ID);
+        return requestId != null ? requestId : "unknown";
     }
 
     private List<BaseError> tryGetErrors(Response response) {

@@ -361,7 +361,7 @@ public class InstrumentedHttpClientBuilder implements Builder {
 
 Finally you need to pass your `Builder` when constructing a `Client`.
 ```java
- final HttpClient httpClient = new HttpClient(config, new InstrumentedHttpClientBuilder(properties, filters));
+ final HttpClient httpClient = new HttpClient(config, new InstrumentedHttpClientBuilder(requestMetricsFilter));
  Client client = new Client(config, httpClient);
 ```
 

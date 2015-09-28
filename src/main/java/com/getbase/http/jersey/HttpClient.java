@@ -8,6 +8,8 @@ import com.getbase.utils.Joiner;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.filter.LoggingFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
@@ -19,6 +21,9 @@ import java.util.Map;
 
 
 public class HttpClient extends com.getbase.http.HttpClient {
+
+    private static final Logger log = LoggerFactory.getLogger(HttpClient.class);
+
     private javax.ws.rs.client.Client client;
 
     public HttpClient(Configuration config) {
@@ -58,8 +63,7 @@ public class HttpClient extends com.getbase.http.HttpClient {
         javax.ws.rs.core.Response jerseyResponse = null;
 
         if (request.getBody() != null && !request.getBody().isEmpty() && request.getMethod().isBodySupported()) {
-            invocation = invocationBuilder.build(request.getMethod().name(),
-                    Entity.json(request.getBody()));
+            invocation = invocationBuilder.build(request.getMethod().name(), Entity.json(request.getBody()));
         } else {
             invocation = invocationBuilder.build(request.getMethod().name());
         }
@@ -97,7 +101,7 @@ public class HttpClient extends com.getbase.http.HttpClient {
             ClientConfig clientConfig = new ClientConfig();
 
             if (config.isVerbose()) {
-                clientConfig.register(new LoggingFilter());
+                clientConfig.register(new LoggingFilter(new Slf4jAdapter(log), false));
             }
 
             clientConfig.property(ClientProperties.CONNECT_TIMEOUT, config.getTimeout() * 1000);
@@ -117,6 +121,24 @@ public class HttpClient extends com.getbase.http.HttpClient {
             }
 
             return client;
+        }
+    }
+
+    /**
+     * Redirects all info messages logged by LoggingFilter to SLF4J logger. Current implementation of LoggingFilter
+     * uses only info level. This is less intrusive solution than jul-to-slf4j bridge that can impact performance.
+     */
+    public static class Slf4jAdapter extends java.util.logging.Logger {
+        private final Logger logger;
+
+        public Slf4jAdapter(Logger logger) {
+            super("jersey", null);
+            this.logger = logger;
+        }
+
+        @Override
+        public void info(String msg) {
+            logger.info(msg);
         }
     }
 }

@@ -147,6 +147,11 @@ sync.subscribe(Lead.class, (meta, lead) -> true)
 
 Notice that, when you return `true` from the predicate, the wrapper will eventually ack the data.
 
+## Logging
+BaseCRM client uses Simple Logging Facade for Java (SLF4J) to track some diagnostic information. SLF4J is a logging facade that can work with various logging frameworks, such as java.util.logging, logback and log4j. BaseCRM client does not impose any particular logging framework and lets end user to plug-in desired framework at the deployment time. To learn how to provide logging binding refer to SLF4J [manual](http://www.slf4j.org/manual.html#swapping).
+
+Note that client verbose traces have also been redirected to SLF4J to allow common log configuration. However, this means you will not be able to see these logs any more unless you provide logger binding as described above.
+
 ## Resources and actions
 
 Documentation for every action can be found in corresponding service files under `src/main/java/com/getbase/services/` directory.

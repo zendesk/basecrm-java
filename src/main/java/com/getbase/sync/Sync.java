@@ -72,6 +72,7 @@ public class Sync {
             }
         }
 
+        @SuppressWarnings("unchecked")
         private boolean notifyPredicate(Meta meta, Map<String, Object> data) throws ClassNotFoundException {
             Class<?> clazz = meta.getType().getClassType();
             BiPredicate predicate = this.observers.get(clazz);

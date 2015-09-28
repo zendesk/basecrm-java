@@ -8,14 +8,12 @@ import com.getbase.utils.Joiner;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.filter.LoggingFilter;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.List;
@@ -25,14 +23,18 @@ import static java.lang.System.currentTimeMillis;
 
 public class HttpClient extends com.getbase.http.HttpClient {
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(HttpClient.class);
+    private static final Logger log = LoggerFactory.getLogger(HttpClient.class);
 
     private javax.ws.rs.client.Client client;
 
     public HttpClient(Configuration config) {
+        this(config, new DefaultBuilder());
+    }
+
+    public HttpClient(Configuration config, Builder builder) {
         super(config);
 
-        this.client = createJerseyClient(this.config);
+        this.client = builder.build(this.config);
     }
 
     @Override
@@ -62,8 +64,7 @@ public class HttpClient extends com.getbase.http.HttpClient {
         javax.ws.rs.core.Response jerseyResponse = null;
 
         if (request.getBody() != null && !request.getBody().isEmpty() && request.getMethod().isBodySupported()) {
-            invocation = invocationBuilder.build(request.getMethod().name(),
-                    Entity.json(request.getBody()));
+            invocation = invocationBuilder.build(request.getMethod().name(), Entity.json(request.getBody()));
         } else {
             invocation = invocationBuilder.build(request.getMethod().name());
         }
@@ -104,30 +105,51 @@ public class HttpClient extends com.getbase.http.HttpClient {
         }
     }
 
-    protected javax.ws.rs.client.Client createJerseyClient(final Configuration config) {
-        // setup client
-        ClientConfig clientConfig = new ClientConfig();
+    protected static class DefaultBuilder implements Builder {
 
-        if (config.isVerbose()) {
-            clientConfig.register(new LoggingFilter());
+        public Client build(final Configuration config) {
+            // setup client
+            ClientConfig clientConfig = new ClientConfig();
+
+            if (config.isVerbose()) {
+                clientConfig.register(new LoggingFilter(new Slf4jAdapter(log), false));
+            }
+
+            clientConfig.property(ClientProperties.CONNECT_TIMEOUT, config.getTimeout() * 1000);
+            clientConfig.property(ClientProperties.READ_TIMEOUT, config.getTimeout() * 1000);
+
+            javax.ws.rs.client.Client client;
+
+            if (config.isVerifySSL()) {
+                client = ClientBuilder.newBuilder().withConfig(clientConfig).hostnameVerifier(new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String s, SSLSession sslSession) {
+                        return config.isVerifySSL();
+                    }
+                }).build();
+            } else {
+                client = ClientBuilder.newClient(clientConfig);
+            }
+
+            return client;
+        }
+    }
+
+    /**
+     * Redirects all info messages logged by LoggingFilter to SLF4J logger. Current implementation of LoggingFilter
+     * uses only info level. This is less intrusive solution than jul-to-slf4j bridge that can impact performance.
+     */
+    public static class Slf4jAdapter extends java.util.logging.Logger {
+        private final Logger logger;
+
+        public Slf4jAdapter(Logger logger) {
+            super("jersey", null);
+            this.logger = logger;
         }
 
-        clientConfig.property(ClientProperties.CONNECT_TIMEOUT, config.getTimeout() * 1000);
-        clientConfig.property(ClientProperties.READ_TIMEOUT, config.getTimeout() * 1000);
-
-        javax.ws.rs.client.Client client;
-
-        if (config.isVerifySSL()) {
-            client = ClientBuilder.newBuilder().withConfig(clientConfig).hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String s, SSLSession sslSession) {
-                    return config.isVerifySSL();
-                }
-            }).build();
-        } else {
-            client = ClientBuilder.newClient(clientConfig);
+        @Override
+        public void info(String msg) {
+            logger.info(msg);
         }
-
-        return client;
     }
 }

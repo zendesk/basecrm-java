@@ -147,6 +147,11 @@ sync.subscribe(Lead.class, (meta, lead) -> true)
 
 Notice that, when you return `true` from the predicate, the wrapper will eventually ack the data.
 
+## Logging
+BaseCRM client uses Simple Logging Facade for Java (SLF4J) to track some diagnostic information. SLF4J is a logging facade that can work with various logging frameworks, such as java.util.logging, logback and log4j. BaseCRM client does not impose any particular logging framework and lets end user to plug-in desired framework at the deployment time. To learn how to provide logging binding refer to SLF4J [manual](http://www.slf4j.org/manual.html#swapping).
+
+Note that client verbose traces have also been redirected to SLF4J to allow common log configuration. However, this means you will not be able to see these logs any more unless you provide logger binding as described above.
+
 ## Resources and actions
 
 Documentation for every action can be found in corresponding service files under `src/main/java/com/getbase/services/` directory.
@@ -304,6 +309,66 @@ Actions:
 * Retrieve a single user - `client.users().get()`
 * Retrieve an authenticating user - `client.users().self()`
 
+## Advanced Topic - Instrumenting HTTP Client
+Base API client uses Jersey HTTP Client that can be instrumented using [client filters mechanism](https://jersey.java.net/documentation/latest/filters-and-interceptors.html#d0e9771). This might be helpful if for example you want to publish performance metrics for every request, etc. In order to instrument a client or provide some additional configuration you need to implement `com.getbase.http.jersey.Builer` interface and pass it when constructing `com.getbase.http.jersey.HttpClient`.
+
+Here is an example of client filter that publishes performance metrics:
+```java
+public class RequestMetricsFilter implements ClientRequestFilter, ClientResponseFilter {
+
+    private static final String TIMER_CONTEXT_PROPERTY_NAME = "RequestMetricsFilter.timer";
+
+    private final MetricNamingStrategy naming;
+
+    private final MetricRegistry metricRegistry;
+
+    public RequestMetricsFilter(MetricNamingStrategy naming, MetricRegistry metricRegistry) {
+        this.naming = naming;
+        this.metricRegistry = metricRegistry;
+    }
+
+    @Override
+    public void filter(ClientRequestContext requestContext) throws IOException {
+        final String name = naming.from(Client.class, requestContext.getUri(), requestContext.getMethod());
+        final Timer.Context timer = metricRegistry.timer(name).time();
+        requestContext.setProperty(TIMER_CONTEXT_PROPERTY_NAME, timer);
+    }
+
+    @Override
+    public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) throws IOException {
+        final Object timer = requestContext.getProperty(TIMER_CONTEXT_PROPERTY_NAME);
+        if (timer != null) {
+            final Timer.Context timerContext = (Timer.Context) timer;
+            timerContext.stop();
+            requestContext.removeProperty(TIMER_CONTEXT_PROPERTY_NAME);
+        }
+    }
+
+}
+```
+
+Then you need to register this filter in Jersey `ClientConfig` in your `Builder.build` method:
+```java
+public class InstrumentedHttpClientBuilder implements Builder {
+
+    @Override
+    public Client build(Configuration config) {
+        ClientConfig clientConfig = new ClientConfig();
+
+        clientConfig.register(requestMetricsFilter);
+        
+        \\do additional client config here 
+        
+        return newClient(clientConfig);
+    }
+}
+```
+
+Finally you need to pass your `Builder` when constructing a `Client`.
+```java
+ final HttpClient httpClient = new HttpClient(config, new InstrumentedHttpClientBuilder(requestMetricsFilter));
+ Client client = new Client(config, httpClient);
+```
 
 ## License
 MIT

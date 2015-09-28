@@ -304,6 +304,66 @@ Actions:
 * Retrieve a single user - `client.users().get()`
 * Retrieve an authenticating user - `client.users().self()`
 
+## Advanced Topic - Instrumenting HTTP Client
+BASE API client uses Jersey HTTP Client that can be instrumented using [client filters mechanism](https://jersey.java.net/documentation/latest/filters-and-interceptors.html#d0e9771). This might be helpful if for example you want to publish performance metrics for every request, etc. In order to instrument a client or provide some additional configuration you need to implement `com.getbase.http.jersey.Builer` interface and pass it when constructing `com.getbase.http.jersey.HttpClient`.
+
+Here is an example of client filter that publishes performance metrics:
+```java
+public class RequestMetricsFilter implements ClientRequestFilter, ClientResponseFilter {
+
+    private static final String TIMER_CONTEXT_PROPERTY_NAME = "RequestMetricsFilter.timer";
+
+    private final MetricNamingStrategy naming;
+
+    private final MetricRegistry metricRegistry;
+
+    public RequestMetricsFilter(MetricNamingStrategy naming, MetricRegistry metricRegistry) {
+        this.naming = naming;
+        this.metricRegistry = metricRegistry;
+    }
+
+    @Override
+    public void filter(ClientRequestContext requestContext) throws IOException {
+        final String name = naming.from(Client.class, requestContext.getUri(), requestContext.getMethod());
+        final Timer.Context timer = metricRegistry.timer(name).time();
+        requestContext.setProperty(TIMER_CONTEXT_PROPERTY_NAME, timer);
+    }
+
+    @Override
+    public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) throws IOException {
+        final Object timer = requestContext.getProperty(TIMER_CONTEXT_PROPERTY_NAME);
+        if (timer != null) {
+            final Timer.Context timerContext = (Timer.Context) timer;
+            timerContext.stop();
+            requestContext.removeProperty(TIMER_CONTEXT_PROPERTY_NAME);
+        }
+    }
+
+}
+```
+
+Then you need to register this filter in Jersey `ClientConfig` in your `Builder.build` method:
+```java
+public class InstrumentedHttpClientBuilder implements Builder {
+
+    @Override
+    public Client build(Configuration config) {
+        ClientConfig clientConfig = new ClientConfig();
+
+        clientConfig.register(requestMetricsFilter);
+        
+        \\do additional client config here 
+        
+        return newClient(clientConfig);
+    }
+}
+```
+
+Finally you need to pass your `Builder` when constructing a `Client`.
+```java
+ final HttpClient httpClient = new HttpClient(config, new InstrumentedHttpClientBuilder(properties, filters));
+ Client client = new Client(config, httpClient);
+```
 
 ## License
 MIT

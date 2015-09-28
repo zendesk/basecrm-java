@@ -155,4 +155,92 @@ class SyncTest extends Specification {
         then:
         status
     }
+
+    def "fetch continues even if empty item collection returned"() {
+        given:
+        def session = new Session(sessionId, [new Queue('main', 2, 2)])
+        def items1 = [[
+                             "data": [
+                                     "id": 1
+                             ],
+                             "meta": [
+                                     "type": "user",
+                                     "sync": [
+                                             "event_type": "created",
+                                             "ack_key": "User-1234-1",
+                                             "revision": 1
+                                     ]
+                             ]
+                     ]]
+        def items2 = [[
+                              "data": [
+                                      "id": 2
+                              ],
+                              "meta": [
+                                      "type": "user",
+                                      "sync": [
+                                              "event_type": "created",
+                                              "ack_key": "User-1234-2",
+                                              "revision": 1
+                                      ]
+                              ]
+                      ]]
+
+        def syncService = Mock(SyncService)
+        1 * syncService.start(deviceUUID) >> session
+        4 * syncService.fetch(deviceUUID, sessionId) >>> [items1, [], items2, null]
+        1 * syncService.ack(deviceUUID, ['User-1234-1']) >> true
+        1 * syncService.ack(deviceUUID, ['User-1234-2']) >> true
+
+        def client = new Client(new Configuration.Builder().accessToken(deviceUUID).build())
+        client.syncService = syncService
+
+        def sync = new Sync(client, deviceUUID)
+        def index = 0
+
+        when:
+        def status = sync.fetchInternal(
+                { meta, data ->
+                    def response1 = {
+                        assert meta != null
+                        assert data != null
+
+                        assert meta.type.type == "user"
+                        assert meta.type.isSupported()
+                        assert meta.type.getClassName() == "com.getbase.models.User"
+                        assert meta.type.getClassType() == User
+
+                        assert meta.sync.eventType == "created"
+                        assert meta.sync.ackKey == "User-1234-1"
+                        assert meta.sync.revision == 1
+
+                        assert data == ["id": 1]
+                        return true
+                    }
+
+                    def response2 = {
+                        assert meta != null
+                        assert data != null
+
+                        assert meta.type.type == "user"
+                        assert meta.type.isSupported()
+                        assert meta.type.getClassName() == "com.getbase.models.User"
+                        assert meta.type.getClassType() == User
+
+                        assert meta.sync.eventType == "created"
+                        assert meta.sync.ackKey == "User-1234-2"
+                        assert meta.sync.revision == 1
+
+                        assert data == ["id": 2]
+                        return true
+                    }
+
+                    def responses = [response1, response2]
+                    return responses[index++]()
+                })
+
+        then:
+        index == 2
+        status
+    }
 }

@@ -44,7 +44,7 @@ public class SyncProcess {
     private boolean fetchMore() {
         nextItems = this.client.sync().fetch(this.deviceUUID, session.getId());
 
-        return nextItems != null && !nextItems.isEmpty();
+        return nextItems != null;
     }
 
     // Drain the main queue until there is no more data (empty array)

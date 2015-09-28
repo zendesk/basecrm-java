@@ -13,6 +13,7 @@ import java.util.*;
 
 import static com.getbase.utils.Precondition.checkArgument;
 import static com.getbase.utils.Precondition.checkNotNull;
+import static java.util.Collections.emptyList;
 import static javax.ws.rs.core.Response.Status.ACCEPTED;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 
@@ -74,10 +75,10 @@ public class SyncService extends BaseService {
 
         Map<String, Object> attributes = JsonDeserializer.deserializeRaw(response.getBody());
 
-        // sanity check
+        // make sure we only complete on 204
         if (attributes == null || attributes.get("items") == null) {
             log.warn("Empty sync response or response does not contain items field. Response : {}", response);
-            return null;
+            return emptyList();
         }
 
         logSyncProgress(attributes);

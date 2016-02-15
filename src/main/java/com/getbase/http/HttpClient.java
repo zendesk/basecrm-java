@@ -3,6 +3,7 @@ package com.getbase.http;
 import com.getbase.Configuration;
 import com.getbase.exceptions.*;
 import com.getbase.serializer.JsonDeserializer;
+import com.getbase.utils.Precondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,8 @@ public abstract class HttpClient {
     public static final String X_REQUEST_ID = "X-Request-Id";
 
     protected final Configuration config;
+
+    protected String apiVersion = API_VERSION;
 
     public HttpClient(Configuration config) {
         this.config = config;
@@ -55,7 +58,7 @@ public abstract class HttpClient {
                             String body) {
         Request.Builder builder = new Request.Builder().
                 method(method).
-                url(this.config.getBaseUrl() + API_VERSION + url);
+                url(this.config.getBaseUrl() + apiVersion + url);
 
 
         if (params != null) {
@@ -83,6 +86,11 @@ public abstract class HttpClient {
         }
 
         return response;
+    }
+
+    public void setApiVersion(String apiVersion) {
+        Precondition.checkNotNull(apiVersion, "apiVersion must not be null");
+        this.apiVersion = apiVersion;
     }
 
     public abstract Response rawRequest(Request request);

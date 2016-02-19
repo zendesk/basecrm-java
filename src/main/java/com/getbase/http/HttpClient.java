@@ -69,7 +69,8 @@ public abstract class HttpClient {
 
         builder.header("Accept", "application/json").
                 header("Authorization", "Bearer " + this.config.getAccessToken()).
-                header("User-Agent", this.config.getUserAgent());
+                header("User-Agent", this.config.getUserAgent()).
+                header("X-Client-Type", "api");
 
         if (body != null) {
             builder.header("Content-Type", "application/json").body(body);

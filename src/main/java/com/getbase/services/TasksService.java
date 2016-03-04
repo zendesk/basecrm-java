@@ -19,7 +19,7 @@ public class TasksService extends BaseService {
   }
 
   public List<Task> list(Map<String, Object> params) {
-    String url = "/tasks";
+    String url = "/v2/tasks";
     return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Task.class);
   }
 
@@ -31,7 +31,7 @@ public class TasksService extends BaseService {
   public Task create(Task task) {
     checkNotNull(task, "task parameter must not be null");
 
-    String url = "/tasks";
+    String url = "/v2/tasks";
     String serialized = JsonSerializer.serialize(task, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Task.class);
   }
@@ -39,7 +39,7 @@ public class TasksService extends BaseService {
   public Task create(Map<String, Object> attributes) {
     checkNotNull(attributes, "attributes parameter must not be null");
     
-    String url = "/tasks";
+    String url = "/v2/tasks";
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Task.class);
   }
@@ -48,7 +48,7 @@ public class TasksService extends BaseService {
   public Task get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/tasks/%d", id); 
+    String url = String.format(Locale.US, "/v2/tasks/%d", id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), Task.class);
   }
 
@@ -58,7 +58,7 @@ public class TasksService extends BaseService {
     checkNotNull(task.getId(), "task must have id attribute set");
     checkArgument(task.getId() > 0, "task id must be a valid id");
 
-    String url = String.format(Locale.US, "/tasks/%d", task.getId());
+    String url = String.format(Locale.US, "/v2/tasks/%d", task.getId());
     String serialized = JsonSerializer.serialize(task, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Task.class);
   }
@@ -67,7 +67,7 @@ public class TasksService extends BaseService {
     checkArgument(id > 0, "id must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
 
-    String url = String.format(Locale.US, "/tasks/%d", id);
+    String url = String.format(Locale.US, "/v2/tasks/%d", id);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Task.class);
   }
@@ -76,7 +76,7 @@ public class TasksService extends BaseService {
   public boolean delete(long id) {
     checkArgument(id > 0, "id must be a valid id");
     
-    String url = String.format(Locale.US, "/tasks/%d", id); 
+    String url = String.format(Locale.US, "/v2/tasks/%d", id);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 

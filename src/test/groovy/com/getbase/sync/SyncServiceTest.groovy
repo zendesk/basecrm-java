@@ -16,7 +16,7 @@ class SyncServiceTest extends Specification {
 
         def httpClient = Mock(HttpClient)
         1 * httpClient.request(HttpMethod.POST,
-                "/sync/start",
+                "/v2/sync/start",
                 null,
                 ['X-Basecrm-Device-UUID': deviceUUID],
                 null) >> httpResponse
@@ -37,7 +37,7 @@ class SyncServiceTest extends Specification {
 
         def httpClient = Mock(HttpClient)
         1 * httpClient.request(HttpMethod.POST,
-                "/sync/start",
+                "/v2/sync/start",
                 null,
                 ['X-Basecrm-Device-UUID': deviceUUID],
                 null) >> httpResponse
@@ -60,7 +60,7 @@ class SyncServiceTest extends Specification {
 
         def httpClient = Mock(HttpClient)
         1 * httpClient.request(HttpMethod.GET,
-                "/sync/${sessionId}/queues/main",
+                "/v2/sync/${sessionId}/queues/main",
                 null,
                 ['X-Basecrm-Device-UUID': deviceUUID],
                 null) >> httpResponse
@@ -81,7 +81,7 @@ class SyncServiceTest extends Specification {
 
         def httpClient = Mock(HttpClient)
         1 * httpClient.request(HttpMethod.GET,
-                "/sync/${sessionId}/queues/main",
+                "/v2/sync/${sessionId}/queues/main",
                 null,
                 ['X-Basecrm-Device-UUID': deviceUUID],
                 null) >> httpResponse
@@ -126,7 +126,7 @@ class SyncServiceTest extends Specification {
 
         def httpClient = Mock(HttpClient)
         1 * httpClient.request(HttpMethod.POST,
-                "/sync/ack",
+                "/v2/sync/ack",
                 null,
                 ['X-Basecrm-Device-UUID': deviceUUID],
                 '{"data":{"ack_keys":["User-1234-1"]}}') >> httpResponse

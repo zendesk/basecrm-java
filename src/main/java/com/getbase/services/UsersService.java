@@ -19,7 +19,7 @@ public class UsersService extends BaseService {
   }
 
   public List<User> list(Map<String, Object> params) {
-    String url = "/users";
+    String url = "/v2/users";
     return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), User.class);
   }
 
@@ -31,13 +31,13 @@ public class UsersService extends BaseService {
   public User get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/users/%d", id); 
+    String url = String.format(Locale.US, "/v2/users/%d", id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), User.class);
   }
 
 
   public User self() {
-    return JsonDeserializer.deserialize(this.httpClient.get("/users/self", null).getBody(), User.class);
+    return JsonDeserializer.deserialize(this.httpClient.get("/v2/users/self", null).getBody(), User.class);
   }
 
 

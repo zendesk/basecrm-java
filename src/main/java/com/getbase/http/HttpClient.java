@@ -14,7 +14,6 @@ import static java.util.Collections.emptyList;
 public abstract class HttpClient {
     private static final Logger log = LoggerFactory.getLogger(HttpClient.class);
 
-    public static final String API_VERSION = "/v2";
     public static final String X_REQUEST_ID = "X-Request-Id";
 
     protected final Configuration config;
@@ -55,7 +54,7 @@ public abstract class HttpClient {
                             String body) {
         Request.Builder builder = new Request.Builder().
                 method(method).
-                url(this.config.getBaseUrl() + API_VERSION + url);
+                url(this.config.getBaseUrl() + url);
 
 
         if (params != null) {
@@ -66,7 +65,9 @@ public abstract class HttpClient {
 
         builder.header("Accept", "application/json").
                 header("Authorization", "Bearer " + this.config.getAccessToken()).
-                header("User-Agent", this.config.getUserAgent());
+                header("User-Agent", this.config.getUserAgent()).
+                header("X-Client-Type", "api");
+
 
         if (body != null) {
             builder.header("Content-Type", "application/json").body(body);

@@ -19,7 +19,7 @@ public class NotesService extends BaseService {
   }
 
   public List<Note> list(Map<String, Object> params) {
-    String url = "/notes";
+    String url = "/v2/notes";
     return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Note.class);
   }
 
@@ -31,7 +31,7 @@ public class NotesService extends BaseService {
   public Note create(Note note) {
     checkNotNull(note, "note parameter must not be null");
 
-    String url = "/notes";
+    String url = "/v2/notes";
     String serialized = JsonSerializer.serialize(note, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Note.class);
   }
@@ -39,7 +39,7 @@ public class NotesService extends BaseService {
   public Note create(Map<String, Object> attributes) {
     checkNotNull(attributes, "attributes parameter must not be null");
     
-    String url = "/notes";
+    String url = "/v2/notes";
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Note.class);
   }
@@ -48,7 +48,7 @@ public class NotesService extends BaseService {
   public Note get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/notes/%d", id); 
+    String url = String.format(Locale.US, "/v2/notes/%d", id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), Note.class);
   }
 
@@ -58,7 +58,7 @@ public class NotesService extends BaseService {
     checkNotNull(note.getId(), "note must have id attribute set");
     checkArgument(note.getId() > 0, "note id must be a valid id");
 
-    String url = String.format(Locale.US, "/notes/%d", note.getId());
+    String url = String.format(Locale.US, "/v2/notes/%d", note.getId());
     String serialized = JsonSerializer.serialize(note, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Note.class);
   }
@@ -67,7 +67,7 @@ public class NotesService extends BaseService {
     checkArgument(id > 0, "id must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
 
-    String url = String.format(Locale.US, "/notes/%d", id);
+    String url = String.format(Locale.US, "/v2/notes/%d", id);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Note.class);
   }
@@ -76,7 +76,7 @@ public class NotesService extends BaseService {
   public boolean delete(long id) {
     checkArgument(id > 0, "id must be a valid id");
     
-    String url = String.format(Locale.US, "/notes/%d", id); 
+    String url = String.format(Locale.US, "/v2/notes/%d", id);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 

@@ -44,7 +44,7 @@ class HttpClientTest extends Specification {
 
     def "Get"() {
         when:
-        def response = getClient().get("/users/self", null)
+        def response = getClient().get("/v2/users/self", null)
 
         then:
         response.getHttpStatus() == 200
@@ -57,7 +57,7 @@ class HttpClientTest extends Specification {
 
     def "Get - sends invalid query parameters"() {
         when:
-        getClient().get("/users/self", ["unknown": "param"])
+        getClient().get("/v2/users/self", ["unknown": "param"])
 
         then:
         RequestException ex = thrown()
@@ -69,7 +69,7 @@ class HttpClientTest extends Specification {
 
     def "Post"() {
         when:
-        def response = getClient().post("/leads", '{"data": {"last_name": "Johnson"}}')
+        def response = getClient().post("/v2/leads", '{"data": {"last_name": "Johnson"}}')
 
         then:
         response.getHttpStatus() == 200
@@ -82,7 +82,7 @@ class HttpClientTest extends Specification {
 
     def "Post - sends invalid payload"() {
         when:
-        getClient().post("/leads", '{"data": {}}')
+        getClient().post("/v2/leads", '{"data": {}}')
 
         then:
         com.getbase.exceptions.ResourceException ex = thrown()
@@ -93,10 +93,10 @@ class HttpClientTest extends Specification {
 
     def "Put"() {
         given:
-        def leadId = getId(getClient().post("/leads", '{"data": {"last_name": "Johnson"}}').getBody())
+        def leadId = getId(getClient().post("/v2/leads", '{"data": {"last_name": "Johnson"}}').getBody())
 
         when:
-        def response = getClient().put("/leads/${leadId}", '{"data": {"first_name": "Mark"}}')
+        def response = getClient().put("/v2/leads/${leadId}", '{"data": {"first_name": "Mark"}}')
 
         then:
         response.getHttpStatus() == 200
@@ -110,10 +110,10 @@ class HttpClientTest extends Specification {
 
     def "Delete"() {
         given:
-        def leadId = getId(getClient().post("/leads", '{"data": {"last_name": "Johnson"}}').getBody())
+        def leadId = getId(getClient().post("/v2/leads", '{"data": {"last_name": "Johnson"}}').getBody())
 
         when:
-        def response = getClient().delete("/leads/${leadId}", null)
+        def response = getClient().delete("/v2/leads/${leadId}", null)
 
         then:
         response.getHttpStatus() == 204
@@ -126,7 +126,7 @@ class HttpClientTest extends Specification {
         def client = new com.getbase.http.jersey.HttpClient(new Configuration.Builder().accessToken("INVALID").verbose().build())
 
         when:
-        client.request(HttpMethod.GET, "/users/self", null, null)
+        client.request(HttpMethod.GET, "/v2/users/self", null, null)
 
         then:
         RequestException ex = thrown()
@@ -145,7 +145,7 @@ class HttpClientTest extends Specification {
                 build())
 
         when:
-        client.request(HttpMethod.GET, "/users/self", null, null)
+        client.request(HttpMethod.GET, "/v2/users/self", null, null)
 
         then:
         thrown ConnectionException
@@ -157,7 +157,7 @@ class HttpClientTest extends Specification {
         def tasks = (1..30).collect {
             return {
                 try {
-                    getClient().get("/users/self", null)
+                    getClient().get("/v2/users/self", null)
                 } catch (Exception e) {
                     assert e instanceof RateLimitException
                     exceptions << e.class

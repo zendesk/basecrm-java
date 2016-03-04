@@ -19,7 +19,7 @@ public class StagesService extends BaseService {
   }
 
   public List<Stage> list(Map<String, Object> params) {
-    String url = "/stages";
+    String url = "/v2/stages";
     return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Stage.class);
   }
 

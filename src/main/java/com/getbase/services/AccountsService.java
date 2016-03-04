@@ -19,7 +19,7 @@ public class AccountsService extends BaseService {
   }
 
   public Account self() {
-    return JsonDeserializer.deserialize(this.httpClient.get("/accounts/self", null).getBody(), Account.class);
+    return JsonDeserializer.deserialize(this.httpClient.get("/v2/accounts/self", null).getBody(), Account.class);
   }
 
 

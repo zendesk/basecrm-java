@@ -14,13 +14,16 @@ import static com.getbase.utils.Precondition.*;
 
 
 public class TasksService extends BaseService {
+
+  private final String TASKS_URL = "/v2/tasks";
+  private final String TASK_URL = "/v2/tasks/%d";
+
   public TasksService(HttpClient httpClient) {
     super(httpClient);
   }
 
   public List<Task> list(Map<String, Object> params) {
-    String url = "/tasks";
-    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Task.class);
+    return JsonDeserializer.deserializeList(this.httpClient.get(TASKS_URL, params).getBody(), Task.class);
   }
 
   public List<Task> list(SearchCriteria criteria) {
@@ -31,24 +34,22 @@ public class TasksService extends BaseService {
   public Task create(Task task) {
     checkNotNull(task, "task parameter must not be null");
 
-    String url = "/tasks";
     String serialized = JsonSerializer.serialize(task, Views.ReadWrite.class);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Task.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(TASKS_URL, serialized).getBody(), Task.class);
   }
 
   public Task create(Map<String, Object> attributes) {
     checkNotNull(attributes, "attributes parameter must not be null");
-    
-    String url = "/tasks";
+
     String serialized = JsonSerializer.serialize(attributes);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Task.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(TASKS_URL, serialized).getBody(), Task.class);
   }
 
 
   public Task get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/tasks/%d", id); 
+    String url = String.format(Locale.US, TASK_URL, id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), Task.class);
   }
 
@@ -58,7 +59,7 @@ public class TasksService extends BaseService {
     checkNotNull(task.getId(), "task must have id attribute set");
     checkArgument(task.getId() > 0, "task id must be a valid id");
 
-    String url = String.format(Locale.US, "/tasks/%d", task.getId());
+    String url = String.format(Locale.US, TASK_URL, task.getId());
     String serialized = JsonSerializer.serialize(task, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Task.class);
   }
@@ -67,7 +68,7 @@ public class TasksService extends BaseService {
     checkArgument(id > 0, "id must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
 
-    String url = String.format(Locale.US, "/tasks/%d", id);
+    String url = String.format(Locale.US, TASK_URL, id);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Task.class);
   }
@@ -76,7 +77,7 @@ public class TasksService extends BaseService {
   public boolean delete(long id) {
     checkArgument(id > 0, "id must be a valid id");
     
-    String url = String.format(Locale.US, "/tasks/%d", id); 
+    String url = String.format(Locale.US, TASK_URL, id);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 

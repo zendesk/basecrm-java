@@ -14,13 +14,16 @@ import static com.getbase.utils.Precondition.*;
 
 
 public class ContactsService extends BaseService {
+
+  private static final String CONTACTS_URL = "/v2/contacts";
+  private static final String CONTACT_URL = "/v2/contacts/%d";
+
   public ContactsService(HttpClient httpClient) {
     super(httpClient);
   }
 
   public List<Contact> list(Map<String, Object> params) {
-    String url = "/contacts";
-    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Contact.class);
+    return JsonDeserializer.deserializeList(this.httpClient.get(CONTACTS_URL, params).getBody(), Contact.class);
   }
 
   public List<Contact> list(SearchCriteria criteria) {
@@ -31,24 +34,22 @@ public class ContactsService extends BaseService {
   public Contact create(Contact contact) {
     checkNotNull(contact, "contact parameter must not be null");
 
-    String url = "/contacts";
     String serialized = JsonSerializer.serialize(contact, Views.ReadWrite.class);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Contact.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(CONTACTS_URL, serialized).getBody(), Contact.class);
   }
 
   public Contact create(Map<String, Object> attributes) {
     checkNotNull(attributes, "attributes parameter must not be null");
-    
-    String url = "/contacts";
+
     String serialized = JsonSerializer.serialize(attributes);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Contact.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(CONTACTS_URL, serialized).getBody(), Contact.class);
   }
 
 
   public Contact get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/contacts/%d", id); 
+    String url = String.format(Locale.US, CONTACT_URL, id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), Contact.class);
   }
 
@@ -58,7 +59,7 @@ public class ContactsService extends BaseService {
     checkNotNull(contact.getId(), "contact must have id attribute set");
     checkArgument(contact.getId() > 0, "contact id must be a valid id");
 
-    String url = String.format(Locale.US, "/contacts/%d", contact.getId());
+    String url = String.format(Locale.US, CONTACT_URL, contact.getId());
     String serialized = JsonSerializer.serialize(contact, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Contact.class);
   }
@@ -67,7 +68,7 @@ public class ContactsService extends BaseService {
     checkArgument(id > 0, "id must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
 
-    String url = String.format(Locale.US, "/contacts/%d", id);
+    String url = String.format(Locale.US, CONTACT_URL, id);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Contact.class);
   }
@@ -76,7 +77,7 @@ public class ContactsService extends BaseService {
   public boolean delete(long id) {
     checkArgument(id > 0, "id must be a valid id");
     
-    String url = String.format(Locale.US, "/contacts/%d", id); 
+    String url = String.format(Locale.US, CONTACT_URL, id);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 

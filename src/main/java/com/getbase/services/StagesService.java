@@ -5,22 +5,23 @@ package com.getbase.services;
 import com.getbase.http.HttpClient;
 import com.getbase.models.Stage;
 import com.getbase.serializer.JsonDeserializer;
-import com.getbase.serializer.JsonSerializer;
-import com.getbase.serializer.Views;
 
-import java.util.*;
-
-import static com.getbase.utils.Precondition.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class StagesService extends BaseService {
+
+  private final String STAGES_URL = "/v2/stages";
+
   public StagesService(HttpClient httpClient) {
     super(httpClient);
   }
 
   public List<Stage> list(Map<String, Object> params) {
-    String url = "/stages";
-    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Stage.class);
+    return JsonDeserializer.deserializeList(this.httpClient.get(STAGES_URL, params).getBody(), Stage.class);
   }
 
   public List<Stage> list(SearchCriteria criteria) {

@@ -30,7 +30,7 @@ public class SyncService extends BaseService {
         checkNotNull(deviceUUID, "deviceUUID parameter must not be null");
         checkArgument(!deviceUUID.trim().isEmpty(), "deviceUUID must not be empty");
 
-        String url = "/sync/start";
+        String url = "/v2/sync/start";
         Response response = this.httpClient.request(HttpMethod.POST,
                 url,
                 null,
@@ -60,7 +60,7 @@ public class SyncService extends BaseService {
         checkNotNull(sessionId, "sessionId parameter must not be null");
         checkArgument(!sessionId.trim().isEmpty(), "sessionId must not be empty");
 
-        String url = String.format(Locale.US, "/sync/%s/queues/main", sessionId);
+        String url = String.format(Locale.US, "/v2/sync/%s/queues/main", sessionId);
         Response response = this.httpClient.request(HttpMethod.GET,
                 url,
                 null,
@@ -111,7 +111,7 @@ public class SyncService extends BaseService {
 
         if (ackKeys.isEmpty()) return true;
 
-        String url = "/sync/ack";
+        String url = "/v2/sync/ack";
 
         Map<String, Object> attributes = new HashMap<String, Object>();
         attributes.put("ack_keys", ackKeys);

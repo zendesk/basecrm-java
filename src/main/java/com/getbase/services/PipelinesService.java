@@ -5,22 +5,20 @@ package com.getbase.services;
 import com.getbase.http.HttpClient;
 import com.getbase.models.Pipeline;
 import com.getbase.serializer.JsonDeserializer;
-import com.getbase.serializer.JsonSerializer;
-import com.getbase.serializer.Views;
 
 import java.util.*;
 
-import static com.getbase.utils.Precondition.*;
-
 
 public class PipelinesService extends BaseService {
+
+  private final String PIPELINES_URL = "/v2/pipelines";
+
   public PipelinesService(HttpClient httpClient) {
     super(httpClient);
   }
 
   public List<Pipeline> list(Map<String, Object> params) {
-    String url = "/pipelines";
-    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Pipeline.class);
+    return JsonDeserializer.deserializeList(this.httpClient.get(PIPELINES_URL, params).getBody(), Pipeline.class);
   }
 
   public List<Pipeline> list(SearchCriteria criteria) {

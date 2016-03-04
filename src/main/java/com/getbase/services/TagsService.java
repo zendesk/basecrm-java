@@ -14,13 +14,16 @@ import static com.getbase.utils.Precondition.*;
 
 
 public class TagsService extends BaseService {
+
+  private final String TAGS_URL = "/v2/tags";
+  private final String TAG_URL = "/v2/tags/%d";
+
   public TagsService(HttpClient httpClient) {
     super(httpClient);
   }
 
   public List<Tag> list(Map<String, Object> params) {
-    String url = "/tags";
-    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Tag.class);
+    return JsonDeserializer.deserializeList(this.httpClient.get(TAGS_URL, params).getBody(), Tag.class);
   }
 
   public List<Tag> list(SearchCriteria criteria) {
@@ -31,24 +34,22 @@ public class TagsService extends BaseService {
   public Tag create(Tag tag) {
     checkNotNull(tag, "tag parameter must not be null");
 
-    String url = "/tags";
     String serialized = JsonSerializer.serialize(tag, Views.ReadWrite.class);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Tag.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(TAGS_URL, serialized).getBody(), Tag.class);
   }
 
   public Tag create(Map<String, Object> attributes) {
     checkNotNull(attributes, "attributes parameter must not be null");
-    
-    String url = "/tags";
+
     String serialized = JsonSerializer.serialize(attributes);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Tag.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(TAGS_URL, serialized).getBody(), Tag.class);
   }
 
 
   public Tag get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/tags/%d", id); 
+    String url = String.format(Locale.US, TAG_URL, id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), Tag.class);
   }
 
@@ -58,7 +59,7 @@ public class TagsService extends BaseService {
     checkNotNull(tag.getId(), "tag must have id attribute set");
     checkArgument(tag.getId() > 0, "tag id must be a valid id");
 
-    String url = String.format(Locale.US, "/tags/%d", tag.getId());
+    String url = String.format(Locale.US, TAG_URL, tag.getId());
     String serialized = JsonSerializer.serialize(tag, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Tag.class);
   }
@@ -67,7 +68,7 @@ public class TagsService extends BaseService {
     checkArgument(id > 0, "id must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
 
-    String url = String.format(Locale.US, "/tags/%d", id);
+    String url = String.format(Locale.US, TAG_URL, id);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Tag.class);
   }
@@ -76,7 +77,7 @@ public class TagsService extends BaseService {
   public boolean delete(long id) {
     checkArgument(id > 0, "id must be a valid id");
     
-    String url = String.format(Locale.US, "/tags/%d", id); 
+    String url = String.format(Locale.US, TAG_URL, id);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 

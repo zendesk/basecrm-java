@@ -5,22 +5,28 @@ package com.getbase.services;
 import com.getbase.http.HttpClient;
 import com.getbase.models.User;
 import com.getbase.serializer.JsonDeserializer;
-import com.getbase.serializer.JsonSerializer;
-import com.getbase.serializer.Views;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkArgument;
 
 
 public class UsersService extends BaseService {
+
+  private static final String USERS_URL = "/v2/users";
+  private static final String USER_URL = "/v2/users/%d";
+  private static final String USERS_SELF_URL = "/v2/users/self";
+
   public UsersService(HttpClient httpClient) {
     super(httpClient);
   }
 
   public List<User> list(Map<String, Object> params) {
-    String url = "/users";
-    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), User.class);
+    return JsonDeserializer.deserializeList(this.httpClient.get(USERS_URL, params).getBody(), User.class);
   }
 
   public List<User> list(SearchCriteria criteria) {
@@ -31,13 +37,13 @@ public class UsersService extends BaseService {
   public User get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/users/%d", id); 
+    String url = String.format(Locale.US, USER_URL, id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), User.class);
   }
 
 
   public User self() {
-    return JsonDeserializer.deserialize(this.httpClient.get("/users/self", null).getBody(), User.class);
+    return JsonDeserializer.deserialize(this.httpClient.get(USERS_SELF_URL, null).getBody(), User.class);
   }
 
 

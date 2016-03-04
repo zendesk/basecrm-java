@@ -14,13 +14,16 @@ import static com.getbase.utils.Precondition.*;
 
 
 public class LossReasonsService extends BaseService {
+
+  private final String LOSS_REASONS_URL = "/v2/loss_reasons";
+  private final String LOSS_REASON_URL = "/v2/loss_reasons/%d";
+
   public LossReasonsService(HttpClient httpClient) {
     super(httpClient);
   }
 
   public List<LossReason> list(Map<String, Object> params) {
-    String url = "/loss_reasons";
-    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), LossReason.class);
+    return JsonDeserializer.deserializeList(this.httpClient.get(LOSS_REASONS_URL, params).getBody(), LossReason.class);
   }
 
   public List<LossReason> list(SearchCriteria criteria) {
@@ -31,24 +34,22 @@ public class LossReasonsService extends BaseService {
   public LossReason create(LossReason lossReason) {
     checkNotNull(lossReason, "lossReason parameter must not be null");
 
-    String url = "/loss_reasons";
     String serialized = JsonSerializer.serialize(lossReason, Views.ReadWrite.class);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), LossReason.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(LOSS_REASONS_URL, serialized).getBody(), LossReason.class);
   }
 
   public LossReason create(Map<String, Object> attributes) {
     checkNotNull(attributes, "attributes parameter must not be null");
-    
-    String url = "/loss_reasons";
+
     String serialized = JsonSerializer.serialize(attributes);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), LossReason.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(LOSS_REASONS_URL, serialized).getBody(), LossReason.class);
   }
 
 
   public LossReason get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/loss_reasons/%d", id); 
+    String url = String.format(Locale.US, LOSS_REASON_URL, id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), LossReason.class);
   }
 
@@ -58,7 +59,7 @@ public class LossReasonsService extends BaseService {
     checkNotNull(lossReason.getId(), "lossReason must have id attribute set");
     checkArgument(lossReason.getId() > 0, "lossReason id must be a valid id");
 
-    String url = String.format(Locale.US, "/loss_reasons/%d", lossReason.getId());
+    String url = String.format(Locale.US, LOSS_REASON_URL, lossReason.getId());
     String serialized = JsonSerializer.serialize(lossReason, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), LossReason.class);
   }
@@ -67,7 +68,7 @@ public class LossReasonsService extends BaseService {
     checkArgument(id > 0, "id must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
 
-    String url = String.format(Locale.US, "/loss_reasons/%d", id);
+    String url = String.format(Locale.US, LOSS_REASON_URL, id);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), LossReason.class);
   }
@@ -76,7 +77,7 @@ public class LossReasonsService extends BaseService {
   public boolean delete(long id) {
     checkArgument(id > 0, "id must be a valid id");
     
-    String url = String.format(Locale.US, "/loss_reasons/%d", id); 
+    String url = String.format(Locale.US, LOSS_REASON_URL, id);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 

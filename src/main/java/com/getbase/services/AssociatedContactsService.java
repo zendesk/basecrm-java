@@ -14,6 +14,9 @@ import static com.getbase.utils.Precondition.*;
 
 
 public class AssociatedContactsService extends BaseService {
+
+  private static final String DEAL_URL = "/v2/deals/%d";
+
   public AssociatedContactsService(HttpClient httpClient) {
     super(httpClient);
   }
@@ -21,7 +24,7 @@ public class AssociatedContactsService extends BaseService {
   public List<AssociatedContact> list(long dealId, Map<String, Object> params) {
     checkArgument(dealId > 0, "dealId must be a valid id");
 
-    String url = String.format(Locale.US, "/deals/%d/associated_contacts", dealId);
+    String url = String.format(Locale.US, DEAL_URL + "/associated_contacts", dealId);
     return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), AssociatedContact.class);
   }
 
@@ -34,7 +37,7 @@ public class AssociatedContactsService extends BaseService {
     checkArgument(dealId > 0, "dealId must be a valid id");
     checkNotNull(associatedContact, "associatedContact parameter must not be null");
 
-    String url = String.format(Locale.US, "/deals/%d/associated_contacts", dealId);
+    String url = String.format(Locale.US, DEAL_URL + "/associated_contacts", dealId);
     String serialized = JsonSerializer.serialize(associatedContact, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), AssociatedContact.class);
   }
@@ -43,7 +46,7 @@ public class AssociatedContactsService extends BaseService {
     checkArgument(dealId > 0, "dealId must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
     
-    String url = String.format(Locale.US, "/deals/%d/associated_contacts", dealId);
+    String url = String.format(Locale.US, DEAL_URL + "/associated_contacts", dealId);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), AssociatedContact.class);
   }
@@ -53,7 +56,7 @@ public class AssociatedContactsService extends BaseService {
     checkArgument(dealId > 0, "dealId must be a valid id");
     checkArgument(contactId > 0, "contactId must be a valid id");
     
-    String url = String.format(Locale.US, "/deals/%d/associated_contacts/%d", dealId, contactId); 
+    String url = String.format(Locale.US, DEAL_URL + "/associated_contacts/%d", dealId, contactId);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 

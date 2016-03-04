@@ -14,13 +14,16 @@ import static com.getbase.utils.Precondition.*;
 
 
 public class LeadsService extends BaseService {
+
+  private static final String LEADS_URL = "/v2/leads";
+  private static final String LEAD_URL = "/v2/leads/%d";
+
   public LeadsService(HttpClient httpClient) {
     super(httpClient);
   }
 
   public List<Lead> list(Map<String, Object> params) {
-    String url = "/leads";
-    return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Lead.class);
+    return JsonDeserializer.deserializeList(this.httpClient.get(LEADS_URL, params).getBody(), Lead.class);
   }
 
   public List<Lead> list(SearchCriteria criteria) {
@@ -31,24 +34,22 @@ public class LeadsService extends BaseService {
   public Lead create(Lead lead) {
     checkNotNull(lead, "lead parameter must not be null");
 
-    String url = "/leads";
     String serialized = JsonSerializer.serialize(lead, Views.ReadWrite.class);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Lead.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(LEADS_URL, serialized).getBody(), Lead.class);
   }
 
   public Lead create(Map<String, Object> attributes) {
     checkNotNull(attributes, "attributes parameter must not be null");
-    
-    String url = "/leads";
+
     String serialized = JsonSerializer.serialize(attributes);
-    return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Lead.class);
+    return JsonDeserializer.deserialize(this.httpClient.post(LEADS_URL, serialized).getBody(), Lead.class);
   }
 
 
   public Lead get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/leads/%d", id); 
+    String url = String.format(Locale.US, LEAD_URL, id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), Lead.class);
   }
 
@@ -58,7 +59,7 @@ public class LeadsService extends BaseService {
     checkNotNull(lead.getId(), "lead must have id attribute set");
     checkArgument(lead.getId() > 0, "lead id must be a valid id");
 
-    String url = String.format(Locale.US, "/leads/%d", lead.getId());
+    String url = String.format(Locale.US, LEAD_URL, lead.getId());
     String serialized = JsonSerializer.serialize(lead, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Lead.class);
   }
@@ -67,7 +68,7 @@ public class LeadsService extends BaseService {
     checkArgument(id > 0, "id must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
 
-    String url = String.format(Locale.US, "/leads/%d", id);
+    String url = String.format(Locale.US, LEAD_URL, id);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Lead.class);
   }
@@ -76,7 +77,7 @@ public class LeadsService extends BaseService {
   public boolean delete(long id) {
     checkArgument(id > 0, "id must be a valid id");
     
-    String url = String.format(Locale.US, "/leads/%d", id); 
+    String url = String.format(Locale.US, LEAD_URL, id);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 

@@ -9,15 +9,20 @@ import java.util.List;
 import java.util.Map;
 
 public class SyncProcess {
-    private Session session;
-    private BiPredicate<Meta, Map<String, Object>> predicate;
-    private String deviceUUID;
+
     private Client client;
+    private String deviceUUID;
+    private SessionManager sessionManager;
+    private BiPredicate<Meta, Map<String, Object>> predicate;
+
+    private Session session;
     private List<Map<String, Object>> nextItems;
 
-    public SyncProcess(Client client, String deviceUUID, BiPredicate<Meta, Map<String, Object>> predicate) {
+    public SyncProcess(Client client, String deviceUUID, SessionManager sessionManager,
+                       BiPredicate<Meta, Map<String, Object>> predicate) {
         this.client = client;
         this.deviceUUID = deviceUUID;
+        this.sessionManager = sessionManager;
         this.predicate = predicate;
     }
 
@@ -30,15 +35,24 @@ public class SyncProcess {
             process();
         }
 
+        sessionManager.clearSession(deviceUUID);
         return true;
     }
 
+
     private boolean init() {
         // Set up a new synchronization session for a UUID for the device
-        session = this.client.sync().start(this.deviceUUID);
+        session = sessionManager.getSession(deviceUUID);
+        if (session == null) {
+            session = client.sync().start(deviceUUID);
+        }
 
         // Check if there is anything to synchronize
-        return session != null && session.getId() != null;
+        if (session != null && session.getId() != null) {
+            sessionManager.setSession(deviceUUID, session);
+            return true;
+        }
+        return false;
     }
 
     private boolean fetchMore() {

@@ -1,11 +1,27 @@
 ## CHANGELOG
 
-### v1.2.0 (2015-09-28)
+### v1.3.0 (2016-03-15)
+
+**Features and Improvements**
+
+* `com.getbase.sync.SessionManager` class to make feasible sharing single sync session between threads / nodes [#11](https://github.com/basecrm/basecrm-java/pull/11)
+    * refer to README for details on Sync session sharing
+
+* HttpClient is sending additional header: "X-Client-Type: api" [#13](https://github.com/basecrm/basecrm-java/pull/13) 
+
+* Api version prefix management moved from HttpClient to BaseService implementations [#13](https://github.com/basecrm/basecrm-java/pull/13)
+
+* Descriptive message in BaseException instead of null [#12](https://github.com/basecrm/basecrm-java/pull/12)
 
 **Bug Fixes**
 
-* Complete sync process only when 204 status code is returned
-    * Previous version of the client was exiting a sync process in case of an empty item list returned from API, even though HTTP status code 204 (No Content) was not returned. An empty list may be returned in some exceptional cases such as timeouts, but that does not mean the end of sync process - more items will be sent in a next batch. Current version fixes the problem of premature sync exit and waits for explicit termination code (204).
+* Services SearchCriteria ids method with vararg long infinite loop was removed [#14](https://github.com/basecrm/basecrm-java/pull/14)
+
+* Services SearchCriteria ids method with List<Integer> replaced by List<Long> [#14](https://github.com/basecrm/basecrm-java/pull/14)
+    * All models ids are Long so client will be able to reach any id > `Integer.MAX_VALUE`
+    * **This is actually a breaking change**, all ids method calls with `List<Integer>` must be replaced by `List<Long>`
+
+### v1.2.0 (2015-09-28)
 
 **Features and Improvements**
 
@@ -16,6 +32,11 @@
 
 * Jersey HTTP client now allows to plug-in a custom configuration and filters
     * refer to README for details on HTTP Client Instrumentation
+
+**Bug Fixes**
+
+* Complete sync process only when 204 status code is returned
+    * Previous version of the client was exiting a sync process in case of an empty item list returned from API, even though HTTP status code 204 (No Content) was not returned. An empty list may be returned in some exceptional cases such as timeouts, but that does not mean the end of sync process - more items will be sent in a next batch. Current version fixes the problem of premature sync exit and waits for explicit termination code (204).
 
 ### v1.1.0 (2015-06-05)
 

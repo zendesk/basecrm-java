@@ -19,7 +19,7 @@ public class PipelinesService extends BaseService {
   }
 
   public List<Pipeline> list(Map<String, Object> params) {
-    String url = "/pipelines";
+    String url = "/v2/pipelines";
     return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Pipeline.class);
   }
 

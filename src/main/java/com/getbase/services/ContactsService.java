@@ -19,7 +19,7 @@ public class ContactsService extends BaseService {
   }
 
   public List<Contact> list(Map<String, Object> params) {
-    String url = "/contacts";
+    String url = "/v2/contacts";
     return JsonDeserializer.deserializeList(this.httpClient.get(url, params).getBody(), Contact.class);
   }
 
@@ -31,7 +31,7 @@ public class ContactsService extends BaseService {
   public Contact create(Contact contact) {
     checkNotNull(contact, "contact parameter must not be null");
 
-    String url = "/contacts";
+    String url = "/v2/contacts";
     String serialized = JsonSerializer.serialize(contact, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Contact.class);
   }
@@ -39,7 +39,7 @@ public class ContactsService extends BaseService {
   public Contact create(Map<String, Object> attributes) {
     checkNotNull(attributes, "attributes parameter must not be null");
     
-    String url = "/contacts";
+    String url = "/v2/contacts";
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), Contact.class);
   }
@@ -48,7 +48,7 @@ public class ContactsService extends BaseService {
   public Contact get(long id) {
     checkArgument(id > 0, "id must be a valid id");
 
-    String url = String.format(Locale.US, "/contacts/%d", id); 
+    String url = String.format(Locale.US, "/v2/contacts/%d", id);
     return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), Contact.class);
   }
 
@@ -58,7 +58,7 @@ public class ContactsService extends BaseService {
     checkNotNull(contact.getId(), "contact must have id attribute set");
     checkArgument(contact.getId() > 0, "contact id must be a valid id");
 
-    String url = String.format(Locale.US, "/contacts/%d", contact.getId());
+    String url = String.format(Locale.US, "/v2/contacts/%d", contact.getId());
     String serialized = JsonSerializer.serialize(contact, Views.ReadWrite.class);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Contact.class);
   }
@@ -67,7 +67,7 @@ public class ContactsService extends BaseService {
     checkArgument(id > 0, "id must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
 
-    String url = String.format(Locale.US, "/contacts/%d", id);
+    String url = String.format(Locale.US, "/v2/contacts/%d", id);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.put(url, serialized).getBody(), Contact.class);
   }
@@ -76,7 +76,7 @@ public class ContactsService extends BaseService {
   public boolean delete(long id) {
     checkArgument(id > 0, "id must be a valid id");
     
-    String url = String.format(Locale.US, "/contacts/%d", id); 
+    String url = String.format(Locale.US, "/v2/contacts/%d", id);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
 

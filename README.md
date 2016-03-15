@@ -309,6 +309,40 @@ Actions:
 * Retrieve a single user - `client.users().get()`
 * Retrieve an authenticating user - `client.users().self()`
 
+## Advanced Topic - Sync session sharing
+For more advanced use cases when user wants to make data synchronization faster using multiple threads or processes (or uses micro-services instances) it is possible to share a single session between Sync instances.
+To do that user can implement he's own `com.getbase.sync.SessionManager` and pass it to a Sync instance.
+
+```java
+class MySessionManager extends SessionManager {
+
+    private MySessionRepository repository;
+
+    MySessionManager(MySessionRepository repository) {
+        this.repository = repository;
+    }
+
+    public Session getSession(String deviceUUID) {
+        return repository.findByDevice(deviceUUID);
+    }
+
+    public void setSession(String deviceUUID, Session session) {
+        repository.save(deviceUUID, session);
+    }
+
+    public void clearSession(String deviceUUID) {
+        repository.delete(deviceUUID);
+    }
+
+}
+```
+
+Here is an example how to set custom SessionManager:
+
+```java
+Sync sync = new Sync(client, deviceUUID).setSessionManager(mySessionManager);
+```
+
 ## Advanced Topic - Instrumenting HTTP Client
 Base API client uses Jersey HTTP Client that can be instrumented using [client filters mechanism](https://jersey.java.net/documentation/latest/filters-and-interceptors.html#d0e9771). This might be helpful if for example you want to publish performance metrics for every request, etc. In order to instrument a client or provide some additional configuration you need to implement `com.getbase.http.jersey.Builer` interface and pass it when constructing `com.getbase.http.jersey.HttpClient`.
 

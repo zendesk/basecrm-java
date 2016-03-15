@@ -7,21 +7,30 @@ import com.getbase.utils.BiPredicate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 public class Sync {
     protected final Client client;
     protected final String deviceUUID;
     protected final StreamObservable streamObservable;
+    private SessionManager sessionManager;
 
     public Sync(Client client, String deviceUUID) {
         this.client = client;
         this.deviceUUID = deviceUUID;
         this.streamObservable = new StreamObservable();
+        sessionManager = new SessionManager();
     }
 
     public <T> Sync subscribe(Class<T> type, BiPredicate<Meta, T> predicate) {
         this.streamObservable.subscribe(type, predicate);
+        return this;
+    }
+
+    public Sync setSessionManager(SessionManager sessionManager) {
+        checkNotNull(sessionManager, "sessionManager parameter must not be null");
+
+        this.sessionManager = sessionManager;
         return this;
     }
 
@@ -46,7 +55,7 @@ public class Sync {
     protected boolean fetchInternal(BiPredicate<Meta, Map<String, Object>> predicate) {
         checkNotNull(predicate, "predicate parameter must not be null");
 
-        SyncProcess syncProcess = new SyncProcess(client, deviceUUID, predicate);
+        SyncProcess syncProcess = new SyncProcess(client, deviceUUID, sessionManager, predicate);
         
         return syncProcess.run();
     }

@@ -10,6 +10,7 @@ import com.getbase.serializer.Views;
 
 import java.util.*;
 
+import static com.getbase.utils.Lists.asList;
 import static com.getbase.utils.Precondition.*;
 
 
@@ -55,13 +56,13 @@ public class PipelinesService extends BaseService {
       return sortBy(criteria, "asc");
     }
 
-    public SearchCriteria ids(List<Integer> ids) {
+    public SearchCriteria ids(List<Long> ids) {
       queryParams.put("ids", ids);
       return this;
     }
 
-    public SearchCriteria ids(long... ids) {
-      return ids(ids);
+    public SearchCriteria ids(Long... ids) {
+      return ids(asList(ids));
     }
 
     public SearchCriteria name(String name) {

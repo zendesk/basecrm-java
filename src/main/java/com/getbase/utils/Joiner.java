@@ -13,19 +13,22 @@ public abstract class Joiner {
         }
 
         if (values.size() == 1) {
-            return values.get(0).toString();
+            return String.valueOf(values.get(0));
         }
 
-        if (on == null) on = "";
+        if (on == null) {
+            on = "";
+        }
 
         StringBuilder builder = new StringBuilder();
 
         Iterator<? extends Object> iterator = values.iterator();
-        builder.append(iterator.next().toString());
+        builder.append(String.valueOf(iterator.next()));
 
         while(iterator.hasNext()) {
-            Object o = iterator.next();
-            builder.append(on).append(o == null ? "null" : o.toString());
+            builder
+                .append(on)
+                .append(String.valueOf(iterator.next()));
         }
 
         return builder.toString();

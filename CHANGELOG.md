@@ -4,7 +4,7 @@
 
 **Bug Fixes**
 
-* NPE fixed for Joiner
+* NPE fixed for Joiner - for every list starting with null element NPE was thrown [#17](https://github.com/basecrm/basecrm-java/pull/17)
 
 ### v1.3.0 (2016-03-15)
 

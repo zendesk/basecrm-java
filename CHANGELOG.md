@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.3.1 (2016-03-24)
+
+**Bug Fixes**
+
+* NPE fixed for Joiner
+
 ### v1.3.0 (2016-03-15)
 
 **Features and Improvements**

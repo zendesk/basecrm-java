@@ -76,14 +76,14 @@ public class Account {
   @Override
   public String toString() {
     return "Account{" +
-          "id=" + id + 
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "currency='" + currency + '\'' + 
-          "name='" + name + '\'' + 
-          "phone='" + phone + '\'' + 
-          "timeFormat='" + timeFormat + '\'' + 
-          "timezone='" + timezone + '\'' + 
+          "id=" + id +
+          ", createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", currency='" + currency + '\'' +
+          ", name='" + name + '\'' +
+          ", phone='" + phone + '\'' +
+          ", timeFormat='" + timeFormat + '\'' +
+          ", timezone='" + timezone + '\'' +
           "}";
   }
 

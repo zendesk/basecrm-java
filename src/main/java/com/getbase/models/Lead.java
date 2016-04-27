@@ -223,30 +223,30 @@ public class Lead {
   @Override
   public String toString() {
     return "Lead{" +
-          "id=" + id + 
-          "creatorId=" + creatorId + 
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "ownerId=" + ownerId + 
-          "address=" + address + 
-          "description='" + description + '\'' + 
-          "email='" + email + '\'' + 
-          "facebook='" + facebook + '\'' + 
-          "fax='" + fax + '\'' + 
-          "firstName='" + firstName + '\'' + 
-          "industry='" + industry + '\'' + 
-          "lastName='" + lastName + '\'' + 
-          "linkedin='" + linkedin + '\'' + 
-          "mobile='" + mobile + '\'' + 
-          "organizationName='" + organizationName + '\'' + 
-          "phone='" + phone + '\'' + 
-          "skype='" + skype + '\'' + 
-          "status='" + status + '\'' + 
-          "title='" + title + '\'' + 
-          "twitter='" + twitter + '\'' + 
-          "website='" + website + '\'' + 
-          "tags=" + tags + 
-          "customFields=" + customFields + 
+          "id=" + id +
+          ", creatorId=" + creatorId +
+          ", createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", ownerId=" + ownerId +
+          ", address=" + address +
+          ", description='" + description + '\'' +
+          ", email='" + email + '\'' +
+          ", facebook='" + facebook + '\'' +
+          ", fax='" + fax + '\'' +
+          ", firstName='" + firstName + '\'' +
+          ", industry='" + industry + '\'' +
+          ", lastName='" + lastName + '\'' +
+          ", linkedin='" + linkedin + '\'' +
+          ", mobile='" + mobile + '\'' +
+          ", organizationName='" + organizationName + '\'' +
+          ", phone='" + phone + '\'' +
+          ", skype='" + skype + '\'' +
+          ", status='" + status + '\'' +
+          ", title='" + title + '\'' +
+          ", twitter='" + twitter + '\'' +
+          ", website='" + website + '\'' +
+          ", tags=" + tags +
+          ", customFields=" + customFields +
           "}";
   }
 

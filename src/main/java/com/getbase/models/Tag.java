@@ -54,12 +54,12 @@ public class Tag {
   @Override
   public String toString() {
     return "Tag{" +
-          "id=" + id + 
-          "creatorId=" + creatorId + 
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "name='" + name + '\'' + 
-          "resourceType='" + resourceType + '\'' + 
+          "id=" + id +
+          ", creatorId=" + creatorId +
+          ", createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", name='" + name + '\'' +
+          ", resourceType='" + resourceType + '\'' +
           "}";
   }
 

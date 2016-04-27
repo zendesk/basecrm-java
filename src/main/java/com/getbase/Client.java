@@ -24,7 +24,7 @@ public class Client {
     private TagsService tagsService;
     private TasksService tasksService;
     private UsersService usersService;
-
+    private ProductsService productsService;
     private SyncService syncService;
 
     public Client(Configuration config) {
@@ -133,6 +133,13 @@ public class Client {
             this.usersService = new UsersService(this.httpClient);
         }
         return this.usersService;
+    }
+   
+    public ProductsService products() {
+        if (this.productsService == null) {
+            this.productsService = new ProductsService(this.httpClient);
+        }
+        return this.productsService;
     }
 
     public SyncService sync() {

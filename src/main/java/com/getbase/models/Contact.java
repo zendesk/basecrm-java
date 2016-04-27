@@ -250,33 +250,33 @@ public class Contact {
   @Override
   public String toString() {
     return "Contact{" +
-          "id=" + id + 
-          "creatorId=" + creatorId + 
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "contactId=" + contactId + 
-          "ownerId=" + ownerId + 
-          "address=" + address + 
-          "customerStatus='" + customerStatus + '\'' + 
-          "description='" + description + '\'' + 
-          "email='" + email + '\'' + 
-          "facebook='" + facebook + '\'' + 
-          "fax='" + fax + '\'' + 
-          "firstName='" + firstName + '\'' + 
-          "industry='" + industry + '\'' + 
-          "isOrganization=" + isOrganization + 
-          "lastName='" + lastName + '\'' + 
-          "linkedin='" + linkedin + '\'' + 
-          "mobile='" + mobile + '\'' + 
-          "name='" + name + '\'' + 
-          "phone='" + phone + '\'' + 
-          "prospectStatus='" + prospectStatus + '\'' + 
-          "skype='" + skype + '\'' + 
-          "title='" + title + '\'' + 
-          "twitter='" + twitter + '\'' + 
-          "website='" + website + '\'' + 
-          "tags=" + tags + 
-          "customFields=" + customFields + 
+          "id=" + id +
+          ", creatorId=" + creatorId +
+          ", createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", contactId=" + contactId +
+          ", ownerId=" + ownerId +
+          ", address=" + address +
+          ", customerStatus='" + customerStatus + '\'' +
+          ", description='" + description + '\'' +
+          ", email='" + email + '\'' +
+          ", facebook='" + facebook + '\'' +
+          ", fax='" + fax + '\'' +
+          ", firstName='" + firstName + '\'' +
+          ", industry='" + industry + '\'' +
+          ", isOrganization=" + isOrganization +
+          ", lastName='" + lastName + '\'' +
+          ", linkedin='" + linkedin + '\'' +
+          ", mobile='" + mobile + '\'' +
+          ", name='" + name + '\'' +
+          ", phone='" + phone + '\'' +
+          ", prospectStatus='" + prospectStatus + '\'' +
+          ", skype='" + skype + '\'' +
+          ", title='" + title + '\'' +
+          ", twitter='" + twitter + '\'' +
+          ", website='" + website + '\'' +
+          ", tags=" + tags +
+          ", customFields=" + customFields +
           "}";
   }
 

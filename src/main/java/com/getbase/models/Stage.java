@@ -85,15 +85,15 @@ public class Stage {
   @Override
   public String toString() {
     return "Stage{" +
-          "id=" + id + 
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "pipelineId=" + pipelineId + 
-          "active=" + active + 
-          "category='" + category + '\'' + 
-          "likelihood=" + likelihood + 
-          "name='" + name + '\'' + 
-          "position=" + position + 
+          "id=" + id +
+          ", createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", pipelineId=" + pipelineId +
+          ", active=" + active +
+          ", category='" + category + '\'' +
+          ", likelihood=" + likelihood +
+          ", name='" + name + '\'' +
+          ", position=" + position +
           "}";
   }
 

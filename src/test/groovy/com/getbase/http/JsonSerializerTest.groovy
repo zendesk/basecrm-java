@@ -69,4 +69,26 @@ class JsonSerializerTest extends Specification {
         then:
         json == '{"data":{"id":1,"name":"important"}}'
     }
+
+    def "Serialize - HashMap attributes with type name"() {
+        given:
+        def attributes = ["id": 1, "name": "important"]
+
+        when:
+        def json = JsonSerializer.serialize(attributes, "tag")
+
+        then:
+        json == '{"data":{"id":1,"name":"important"},"meta":{"type":"tag"}}'
+    }
+
+    def "Serialize - serializes entity with type name"() {
+        given:
+        def tag = new Tag(1, "important")
+
+        when:
+        def json = JsonSerializer.serialize(tag, Views.ReadWrite.class, "tag")
+
+        then:
+        json == '{"data":{"name":"important"},"meta":{"type":"tag"}}'
+    }
 }

@@ -152,23 +152,23 @@ public class Deal {
   @Override
   public String toString() {
     return "Deal{" +
-          "id=" + id + 
-          "creatorId=" + creatorId + 
-          "organizationId=" + organizationId + 
-          "createdAt=" + createdAt + 
-          "dropboxEmail='" + dropboxEmail + '\'' + 
-          "updatedAt=" + updatedAt + 
-          "contactId=" + contactId + 
-          "lossReasonId=" + lossReasonId + 
-          "ownerId=" + ownerId + 
-          "sourceId=" + sourceId + 
-          "stageId=" + stageId + 
-          "currency='" + currency + '\'' + 
-          "hot=" + hot + 
-          "name='" + name + '\'' + 
-          "value=" + value + 
-          "tags=" + tags + 
-          "customFields=" + customFields + 
+          "id=" + id +
+          ", creatorId=" + creatorId +
+          ", organizationId=" + organizationId +
+          ", createdAt=" + createdAt +
+          ", dropboxEmail='" + dropboxEmail + '\'' +
+          ", updatedAt=" + updatedAt +
+          ", contactId=" + contactId +
+          ", lossReasonId=" + lossReasonId +
+          ", ownerId=" + ownerId +
+          ", sourceId=" + sourceId +
+          ", stageId=" + stageId +
+          ", currency='" + currency + '\'' +
+          ", hot=" + hot +
+          ", name='" + name + '\'' +
+          ", value=" + value +
+          ", tags=" + tags +
+          ", customFields=" + customFields +
           "}";
   }
 

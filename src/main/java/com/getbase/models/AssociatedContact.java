@@ -44,10 +44,10 @@ public class AssociatedContact {
   @Override
   public String toString() {
     return "AssociatedContact{" +
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "contactId=" + contactId + 
-          "role='" + role + '\'' + 
+          "createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", contactId=" + contactId +
+          ", role='" + role + '\'' +
           "}";
   }
 

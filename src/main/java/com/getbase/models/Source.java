@@ -44,11 +44,11 @@ public class Source {
   @Override
   public String toString() {
     return "Source{" +
-          "id=" + id + 
-          "creatorId=" + creatorId + 
-          "createdAt='" + createdAt + '\'' + 
-          "updatedAt='" + updatedAt + '\'' + 
-          "name='" + name + '\'' + 
+          "id=" + id +
+          ", creatorId=" + creatorId +
+          ", createdAt='" + createdAt + '\'' +
+          ", updatedAt='" + updatedAt + '\'' +
+          ", name='" + name + '\'' +
           "}";
   }
 

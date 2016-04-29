@@ -109,19 +109,19 @@ public class Task {
   @Override
   public String toString() {
     return "Task{" +
-          "id=" + id + 
-          "creatorId=" + creatorId + 
-          "completedAt=" + completedAt + 
-          "createdAt=" + createdAt + 
-          "overdue=" + overdue + 
-          "updatedAt=" + updatedAt + 
-          "ownerId=" + ownerId + 
-          "resourceId=" + resourceId + 
-          "completed=" + completed + 
-          "content='" + content + '\'' + 
-          "dueDate=" + dueDate + 
-          "remindAt=" + remindAt + 
-          "resourceType='" + resourceType + '\'' + 
+          "id=" + id +
+          ", creatorId=" + creatorId +
+          ", completedAt=" + completedAt +
+          ", createdAt=" + createdAt +
+          ", overdue=" + overdue +
+          ", updatedAt=" + updatedAt +
+          ", ownerId=" + ownerId +
+          ", resourceId=" + resourceId +
+          ", completed=" + completed +
+          ", content='" + content + '\'' +
+          ", dueDate=" + dueDate +
+          ", remindAt=" + remindAt +
+          ", resourceType='" + resourceType + '\'' +
           "}";
   }
 

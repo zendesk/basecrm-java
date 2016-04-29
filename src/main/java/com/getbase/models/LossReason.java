@@ -45,11 +45,11 @@ public class LossReason {
   @Override
   public String toString() {
     return "LossReason{" +
-          "id=" + id + 
-          "creatorId=" + creatorId + 
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "name='" + name + '\'' + 
+          "id=" + id +
+          ", creatorId=" + creatorId +
+          ", createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", name='" + name + '\'' +
           "}";
   }
 

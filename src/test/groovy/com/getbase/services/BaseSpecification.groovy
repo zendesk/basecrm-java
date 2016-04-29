@@ -169,4 +169,31 @@ abstract class BaseSpecification  extends Specification {
 
         return task;
     }
+
+    def createProduct(attributes = [:]) {
+        def productAttributes = [
+            "name": "Enterprise Plan",
+            "sku": "enterprise-plan",
+            "description": "Includes more storage options",
+            "active": true,
+            "prices": [
+                [
+                    "amount": "1599.99",
+                    "currency": "USD"
+                ],
+                [
+                    "amount": "3599.99",
+                    "currency": "PLN"
+                ]
+            ],
+            "cost": "999.99",
+            "cost_currency": "USD",
+            "max_discount": 15,
+            "max_markup": 5,
+        ]
+        productAttributes << attributes
+        def product = client.products().create(productAttributes);
+
+        return product;
+    }
 }

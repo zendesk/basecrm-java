@@ -63,13 +63,13 @@ public class Note {
   @Override
   public String toString() {
     return "Note{" +
-          "id=" + id + 
-          "creatorId=" + creatorId + 
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "resourceId=" + resourceId + 
-          "content='" + content + '\'' + 
-          "resourceType='" + resourceType + '\'' + 
+          "id=" + id +
+          ", creatorId=" + creatorId +
+          ", createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", resourceId=" + resourceId +
+          ", content='" + content + '\'' +
+          ", resourceType='" + resourceType + '\'' +
           "}";
   }
 

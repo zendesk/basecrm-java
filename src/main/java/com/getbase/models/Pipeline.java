@@ -40,10 +40,10 @@ public class Pipeline {
   @Override
   public String toString() {
     return "Pipeline{" +
-          "id=" + id + 
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "name='" + name + '\'' + 
+          "id=" + id +
+          ", createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", name='" + name + '\'' +
           "}";
   }
 

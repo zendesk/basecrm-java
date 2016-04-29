@@ -64,14 +64,14 @@ public class User {
   @Override
   public String toString() {
     return "User{" +
-          "id=" + id + 
-          "confirmed=" + confirmed + 
-          "createdAt=" + createdAt + 
-          "role='" + role + '\'' + 
-          "status='" + status + '\'' + 
-          "updatedAt=" + updatedAt + 
-          "email='" + email + '\'' + 
-          "name='" + name + '\'' + 
+          "id=" + id +
+          ", confirmed=" + confirmed +
+          ", createdAt=" + createdAt +
+          ", role='" + role + '\'' +
+          ", status='" + status + '\'' +
+          ", updatedAt=" + updatedAt +
+          ", email='" + email + '\'' +
+          ", name='" + name + '\'' +
           "}";
   }
 

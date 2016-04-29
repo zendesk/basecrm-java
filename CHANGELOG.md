@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### v1.3.2 (2016-04-29)
+
+**Features and Improvements**
+
+* [Products API](https://developers.getbase.com/docs/rest/reference/products) support [#19](https://github.com/basecrm/basecrm-java/pull/19)
+
+* toString for models is more readable [#19](https://github.com/basecrm/basecrm-java/pull/19)
+
 ### v1.3.1 (2016-03-24)
 
 **Bug Fixes**

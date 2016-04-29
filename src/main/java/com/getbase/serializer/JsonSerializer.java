@@ -55,7 +55,7 @@ public abstract class JsonSerializer {
 
     static class MetaEnvelope extends Envelope{
         @JsonView(Views.ReadWrite.class)
-        Map meta = new HashMap<String, String>(1);
+        Map<String, String> meta = new HashMap<String, String>(1);
 
         MetaEnvelope(Object entity, String type) {
             super(entity);

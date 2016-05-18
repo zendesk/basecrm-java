@@ -63,10 +63,10 @@ public abstract class HttpClient {
             }
         }
 
-        builder.header("Accept", "application/json").
-                header("Authorization", "Bearer " + this.config.getAccessToken()).
-                header("User-Agent", this.config.getUserAgent()).
-                header("X-Client-Type", "api");
+        authorizationStrategy(builder)
+                .header("Accept", "application/json")
+                .header("User-Agent", this.config.getUserAgent())
+                .header("X-Client-Type", "api");
 
 
         if (body != null) {
@@ -84,6 +84,10 @@ public abstract class HttpClient {
         }
 
         return response;
+    }
+
+    protected Request.Builder authorizationStrategy(Request.Builder requestBuilder) {
+        return requestBuilder.header("Authorization", "Bearer " + this.config.getAccessToken());
     }
 
     public abstract Response rawRequest(Request request);

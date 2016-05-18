@@ -2,10 +2,9 @@ package com.getbase.http
 
 import com.fasterxml.jackson.annotation.JsonView
 import com.getbase.models.Lead
-import com.getbase.serializer.Views
 import com.getbase.serializer.JsonSerializer
+import com.getbase.serializer.Views
 import spock.lang.Specification
-
 
 class JsonSerializerTest extends Specification {
     static class Tag {

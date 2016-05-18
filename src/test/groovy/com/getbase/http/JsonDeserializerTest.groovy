@@ -1,6 +1,5 @@
 package com.getbase.http
 
-import com.getbase.models.Address
 import com.getbase.models.Lead
 import com.getbase.serializer.JsonDeserializer
 import org.joda.time.DateTime

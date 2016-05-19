@@ -86,6 +86,7 @@ public abstract class HttpClient {
         return response;
     }
 
+    // Override this method if you want to use custom authorization method
     protected Request.Builder applyAuthorization(Request.Builder requestBuilder) {
         return requestBuilder.header("Authorization", "Bearer " + this.config.getAccessToken());
     }

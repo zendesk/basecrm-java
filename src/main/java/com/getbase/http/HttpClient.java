@@ -63,7 +63,7 @@ public abstract class HttpClient {
             }
         }
 
-        authorizationStrategy(builder)
+        applyAuthorization(builder)
                 .header("Accept", "application/json")
                 .header("User-Agent", this.config.getUserAgent())
                 .header("X-Client-Type", "api");
@@ -86,7 +86,7 @@ public abstract class HttpClient {
         return response;
     }
 
-    protected Request.Builder authorizationStrategy(Request.Builder requestBuilder) {
+    protected Request.Builder applyAuthorization(Request.Builder requestBuilder) {
         return requestBuilder.header("Authorization", "Bearer " + this.config.getAccessToken());
     }
 

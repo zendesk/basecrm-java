@@ -7,8 +7,6 @@ class CustomAuthorizationHttpClientTest extends Specification {
 
     def authorizationHeader = "CustomAuthorizationHeader"
     def testToken = "this-1s-t3st-t0ken"
-    Request finalRequest
-
 
     def "Authorization strategy replaces Authorization header"() {
         given:
@@ -18,24 +16,26 @@ class CustomAuthorizationHttpClientTest extends Specification {
         client.request(HttpMethod.GET, "/dummy.json", [:], null)
 
         then:
-        finalRequest.headers[authorizationHeader] == testToken
-        finalRequest.headers["Authorization"] == null
+        client.requestCaptured.headers[authorizationHeader] == testToken
+        client.requestCaptured.headers["Authorization"] == null
     }
 
     class CustomAuthorizationHttpClient extends com.getbase.http.jersey.HttpClient {
+
+        Request requestCaptured
 
         CustomAuthorizationHttpClient() {
             super(Configuration.getDefault())
         }
 
         @Override
-        protected Request.Builder authorizationStrategy(Request.Builder requestBuilder) {
+        protected Request.Builder applyAuthorization(Request.Builder requestBuilder) {
             return requestBuilder.header(authorizationHeader, testToken);
         }
 
         @Override
         Response rawRequest(Request request) {
-            finalRequest = request
+            requestCaptured = request
             return new Response(201, null);
         }
 

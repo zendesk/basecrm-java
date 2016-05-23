@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 1.3.3 (2016-05-23)
+
+**Features and Improvements**
+
+* HttpClient opened for authentication extenstions [#21](https://github.com/basecrm/basecrm-java/pull/21)
+
 ### v1.3.2 (2016-04-29)
 
 **Features and Improvements**

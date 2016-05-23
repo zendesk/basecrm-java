@@ -15,7 +15,7 @@ apply plugin: 'com.jfrog.bintray'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
-version = '1.3.2'
+version = '1.3.3'
 group = 'com.getbase'
 
 repositories {

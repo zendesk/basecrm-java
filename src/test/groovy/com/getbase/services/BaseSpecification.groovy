@@ -78,7 +78,7 @@ abstract class BaseSpecification  extends Specification {
             'currency': "EUR",
             'hot': true,
             'name': 'Website Redesign' +  nextRand(),
-            'value': 1000,
+            'value': 1000.0,
             'tags': ["important"],
             'contact_id': createContact().id,
         ]

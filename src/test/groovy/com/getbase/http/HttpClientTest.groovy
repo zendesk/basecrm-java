@@ -15,7 +15,7 @@ class HttpClientTest extends Specification {
         long id
 
         long getId() {
-             id
+            id
         }
     }
 
@@ -25,12 +25,20 @@ class HttpClientTest extends Specification {
         token
     }
 
+    def getBaseUrl() {
+        def baseUrl = System.getenv("BASECRM_BASE_URL")
+        if (baseUrl == null || baseUrl.isEmpty())
+            baseUrl = Configuration.PRODUCTION_URL
+        baseUrl
+    }
+
     def getConfiguration() {
-        new Configuration.Builder().
-                verbose().
-                accessToken(getAccessToken()).
-                userAgent(Configuration.DEFAULT_USER_AGENT + "+tests").
-                build()
+        new Configuration.Builder()
+                .verbose()
+                .baseUrl(baseUrl)
+                .accessToken(getAccessToken())
+                .userAgent(Configuration.DEFAULT_USER_AGENT + "+tests")
+                .build()
     }
 
 

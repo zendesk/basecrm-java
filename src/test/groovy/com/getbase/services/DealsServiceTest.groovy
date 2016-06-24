@@ -2,15 +2,14 @@
 
 package com.getbase.services
 
-import spock.lang.Shared
-
 import com.getbase.models.Deal
+import spock.lang.Shared
 
 class DealsServiceTest extends BaseSpecification {
 
-    @Shared def deal = deal ?: createDeal()
+    @Shared
+    def deal = deal ?: createDeal()
 
-  
 
     def "List - with params"() {
         when:
@@ -27,7 +26,7 @@ class DealsServiceTest extends BaseSpecification {
         then:
         deals.size() > 0
     }
-  
+
     def "Create - with attributes"() {
         when:
         def newDeal = createDeal()
@@ -35,11 +34,18 @@ class DealsServiceTest extends BaseSpecification {
         then:
         newDeal instanceof Deal
     }
-  
-  
+
+    def "Create - with decimal value attributes"() {
+        when:
+        def newDeal = createDecimalDeal()
+
+        then:
+        newDeal instanceof Deal
+    }
+
     def "Get"() {
         given:
-        def searched = deal 
+        def searched = deal
 
         when:
         def found = client.deals().get(searched.id)
@@ -48,7 +54,7 @@ class DealsServiceTest extends BaseSpecification {
         found instanceof Deal
         found.id == searched.id
     }
-  
+
 
     def "Update - with Lead entity"() {
         when:
@@ -57,7 +63,7 @@ class DealsServiceTest extends BaseSpecification {
         then:
         updated instanceof Deal
     }
-  
+
     def "Delete"() {
         given:
         def newDeal = createDeal()

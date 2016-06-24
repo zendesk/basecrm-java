@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.math.BigDecimal;
 
 import static com.getbase.utils.Precondition.*;
 
@@ -28,7 +29,7 @@ public class Deal {
   protected @JsonView(Views.ReadWrite.class) String currency;
   protected @JsonView(Views.ReadWrite.class) Boolean hot;
   protected @JsonView(Views.ReadWrite.class) String name;
-  protected @JsonView(Views.ReadWrite.class) Long value;
+  protected @JsonView(Views.ReadWrite.class) BigDecimal value;
   protected @JsonView(Views.ReadWrite.class) List<String> tags = new ArrayList<String>();
   protected @JsonView(Views.ReadWrite.class) Map<String, Object> customFields = new HashMap<String, Object>();
 
@@ -91,7 +92,7 @@ public class Deal {
     return this.name;
   }
 
-  public Long getValue() {
+  public BigDecimal getValue() {
     return this.value;
   }
 
@@ -135,7 +136,7 @@ public class Deal {
     this.name = name;
   }
 
-  public void setValue(long value) {
+  public void setValue(BigDecimal value) {
     this.value = value;
   }
 

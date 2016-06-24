@@ -7,6 +7,7 @@ import com.getbase.utils.BiPredicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.math.BigDecimal;
 
 public class SyncProcess {
 

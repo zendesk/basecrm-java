@@ -103,7 +103,7 @@ redesign.setContactId(coffeeShop.getId());
 redesign.setName("Website redesign");
 Deal newDeal  = client.deals().create(redesign);
 
-newDeal.setValue(1000);
+newDeal.setValue(new BigDecimal("1000.00"));
 newDeal.setCurrency("USD");
 client.deals().update(newDeal);
 ```

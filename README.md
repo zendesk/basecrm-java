@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.getbase:basecrm-java:1.3.3"
+  compile "com.getbase:basecrm-java:1.4.0"
 }
 ```
 
@@ -45,7 +45,7 @@ The following builder options are available while instantiating a client:
 
  * __accessToken__: Personal access token
  * __baseUrl__: Base url for the api. Default: `https://api.getbase.com`
- * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.3.3`
+ * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.4.0`
  * __timeout__: Request timeout. Default: `30` seconds
  * __verbose__: Verbose/debug mode. Default: `false`
  * __verifySSL__: Whether to skip SSL verification or not. Default: `true`
@@ -103,7 +103,7 @@ redesign.setContactId(coffeeShop.getId());
 redesign.setName("Website redesign");
 Deal newDeal  = client.deals().create(redesign);
 
-newDeal.setValue(1000);
+newDeal.setValue(new BigDecimal("1000.00"));
 newDeal.setCurrency("USD");
 client.deals().update(newDeal);
 ```

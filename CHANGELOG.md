@@ -1,6 +1,13 @@
 ## CHANGELOG
 
-### 1.3.3 (2016-05-23)
+### v1.4.0 (2016-06-24)
+
+**Features and Improvements**
+
+* Support for decimal deal value  [#23](https://github.com/basecrm/basecrm-java/pull/23)
+  Important: Deal value type has been changed to BigDecimal
+
+### v1.3.3 (2016-05-23)
 
 **Features and Improvements**
 

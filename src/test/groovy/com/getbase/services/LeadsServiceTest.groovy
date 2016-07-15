@@ -68,4 +68,17 @@ class LeadsServiceTest extends BaseSpecification {
         then:
         result
     }
+
+    def "Lead source setting"() {
+        given:
+        def lead = createLead()
+        def leadSource = createLeadSource()
+
+        when:
+        lead.sourceId = leadSource.id
+        client.leads().update(lead)
+
+        then:
+        client.leads().get(lead.id).sourceId == leadSource.id
+    }
 }

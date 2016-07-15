@@ -19,6 +19,7 @@ public class Lead {
   protected @JsonView(Views.ReadOnly.class) DateTime createdAt;
   protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
   protected @JsonView(Views.ReadWrite.class) Long ownerId;
+  protected @JsonView(Views.ReadWrite.class) Long sourceId;
   protected @JsonView(Views.ReadWrite.class) Address address;
   protected @JsonView(Views.ReadWrite.class) String description;
   protected @JsonView(Views.ReadWrite.class) String email;
@@ -60,6 +61,10 @@ public class Lead {
 
   public Long getOwnerId() {
     return this.ownerId;
+  }
+
+  public Long getSourceId() {
+    return this.sourceId;
   }
 
   public Address getAddress() {
@@ -228,6 +233,7 @@ public class Lead {
           ", createdAt=" + createdAt +
           ", updatedAt=" + updatedAt +
           ", ownerId=" + ownerId +
+          ", sourceId=" + sourceId +
           ", address=" + address +
           ", description='" + description + '\'' +
           ", email='" + email + '\'' +

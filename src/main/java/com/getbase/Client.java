@@ -20,6 +20,7 @@ public class Client {
     private NotesService notesService;
     private PipelinesService pipelinesService;
     private SourcesService sourcesService;
+    private LeadSourcesService leadSourcesService;
     private StagesService stagesService;
     private TagsService tagsService;
     private TasksService tasksService;
@@ -105,6 +106,13 @@ public class Client {
             this.sourcesService = new SourcesService(this.httpClient);
         }
         return this.sourcesService;
+    }
+
+    public LeadSourcesService leadSources() {
+        if (this.leadSourcesService == null) {
+            this.leadSourcesService = new LeadSourcesService(this.httpClient);
+        }
+        return this.leadSourcesService;
     }
    
     public StagesService stages() {

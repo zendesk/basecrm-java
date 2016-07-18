@@ -272,6 +272,7 @@ public class Lead {
     if (createdAt != null ? !createdAt.equals(lead.createdAt) : lead.createdAt != null) return false;
     if (updatedAt != null ? !updatedAt.equals(lead.updatedAt) : lead.updatedAt != null) return false;
     if (ownerId != null ? !ownerId.equals(lead.ownerId) : lead.ownerId != null) return false;
+    if (sourceId != null ? !sourceId.equals(lead.sourceId) : lead.sourceId != null) return false;
     if (address != null ? !address.equals(lead.address) : lead.address != null) return false;
     if (description != null ? !description.equals(lead.description) : lead.description != null) return false;
     if (email != null ? !email.equals(lead.email) : lead.email != null) return false;
@@ -303,6 +304,7 @@ public class Lead {
     result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
     result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
     result = 31 * result + (ownerId != null ? ownerId.hashCode() : 0);
+    result = 31 * result + (sourceId != null ? sourceId.hashCode() : 0);
     result = 31 * result + (address != null ? address.hashCode() : 0);
     result = 31 * result + (description != null ? description.hashCode() : 0);
     result = 31 * result + (email != null ? email.hashCode() : 0);

@@ -147,6 +147,10 @@ public class Lead {
     this.ownerId = ownerId;
   }
 
+  public void setSourceId(Long sourceId) {
+    this.sourceId = sourceId;
+  }
+
   public void setAddress(Address address) {
     this.address = address;
   }

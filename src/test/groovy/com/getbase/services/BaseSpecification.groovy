@@ -165,6 +165,16 @@ abstract class BaseSpecification extends Specification {
         return source;
     }
 
+    def createLeadSource(attributes = [:]) {
+        def sourceAttributes = [
+                'name': 'Word of mouth' + nextRand(),
+        ]
+        sourceAttributes << attributes
+        def source = client.leadSources().create(sourceAttributes);
+
+        return source;
+    }
+
     def createTag(attributes = [:]) {
         def tagAttributes = [
                 'name'         : 'publisher' + nextRand(),

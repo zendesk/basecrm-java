@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.1 (2016-07-18)
+
+**Features and Improvements**
+
+* Support for lead sources  [#25](https://github.com/basecrm/basecrm-java/pull/25)
+
 ### v1.4.0 (2016-06-24)
 
 **Features and Improvements**

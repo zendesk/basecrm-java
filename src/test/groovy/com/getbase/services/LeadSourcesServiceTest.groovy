@@ -47,7 +47,7 @@ class LeadSourcesServiceTest extends BaseSpecification {
     }
   
 
-    def "Update - with Lead entity"() {
+    def "Update - with Source entity"() {
         when:
         def updated = client.leadSources().update(source)
 

@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.getbase:basecrm-java:1.4.0"
+  compile "com.getbase:basecrm-java:1.4.1"
 }
 ```
 
@@ -45,7 +45,7 @@ The following builder options are available while instantiating a client:
 
  * __accessToken__: Personal access token
  * __baseUrl__: Base url for the api. Default: `https://api.getbase.com`
- * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.4.0`
+ * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.4.1`
  * __timeout__: Request timeout. Default: `30` seconds
  * __verbose__: Verbose/debug mode. Default: `false`
  * __verifySSL__: Whether to skip SSL verification or not. Default: `true`
@@ -276,6 +276,19 @@ Actions:
 * Retrieve a single source - `client.sources().get()`
 * Update a source - `client.sources().update()`
 * Delete a source - `client.sources().delete()`
+
+### Lead Source
+
+```java
+client.leadSources(); // => com.getbase.services.LeadSourcesService
+```
+
+Actions:
+* Retrieve all lead sources - `client.leadSources().list()`
+* Create a lead source - `client.leadSources().create()`
+* Retrieve a single lead source - `client.leadSources().get()`
+* Update a lead source - `client.leadSources().update()`
+* Delete a lead source - `client.leadSources().delete()`
 
 ### Stage
 

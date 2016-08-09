@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### v1.4.2 (2016-08-09)
+
+**Features and Improvements**
+
+* MDC setup for HttpClient requests [#26](https://github.com/basecrm/basecrm-java/pull/26)
+    * properties: baseClientMethod, baseClientUrl
+
 ### v1.4.1 (2016-07-18)
 
 **Features and Improvements**

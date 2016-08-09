@@ -5,6 +5,7 @@ import com.getbase.exceptions.*;
 import com.getbase.serializer.JsonDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.util.List;
 import java.util.Map;
@@ -52,38 +53,53 @@ public abstract class HttpClient {
                             Map<String, Object> params,
                             Map<String, String> headers,
                             String body) {
-        Request.Builder builder = new Request.Builder().
-                method(method).
-                url(this.config.getBaseUrl() + url);
+        setupMDC(method, url);
 
+        try {
+            Request.Builder builder = new Request.Builder().
+                    method(method).
+                    url(this.config.getBaseUrl() + url);
 
-        if (params != null) {
-            for (Map.Entry<String, Object> q : params.entrySet()) {
-                builder.param(q.getKey(), q.getValue());
+            if (params != null) {
+                for (Map.Entry<String, Object> q : params.entrySet()) {
+                    builder.param(q.getKey(), q.getValue());
+                }
             }
+
+            applyAuthorization(builder)
+                    .header("Accept", "application/json")
+                    .header("User-Agent", this.config.getUserAgent())
+                    .header("X-Client-Type", "api");
+
+            if (body != null) {
+                builder.header("Content-Type", "application/json").body(body);
+            }
+
+            if (headers != null) {
+                builder.headers(headers);
+            }
+
+            Response response = rawRequest(builder.build());
+
+            if (response.getHttpStatus() < 200 || response.getHttpStatus() >= 300) {
+                handleErrorResponse(response);
+            }
+
+            return response;
+
+        } finally {
+            cleanMDC();
         }
+    }
 
-        applyAuthorization(builder)
-                .header("Accept", "application/json")
-                .header("User-Agent", this.config.getUserAgent())
-                .header("X-Client-Type", "api");
+    private void setupMDC(HttpMethod method, String url) {
+        MDC.put("baseClientMethod", method.name());
+        MDC.put("baseClientUrl", url);
+    }
 
-
-        if (body != null) {
-            builder.header("Content-Type", "application/json").body(body);
-        }
-
-        if (headers != null) {
-            builder.headers(headers);
-        }
-
-        Response response = rawRequest(builder.build());
-
-        if (response.getHttpStatus() < 200 || response.getHttpStatus() >= 300) {
-            handleErrorResponse(response);
-        }
-
-        return response;
+    private void cleanMDC() {
+        MDC.remove("baseClientMethod");
+        MDC.remove("baseClientUrl");
     }
 
     // Override this method if you want to use custom authorization method

@@ -53,53 +53,36 @@ public abstract class HttpClient {
                             Map<String, Object> params,
                             Map<String, String> headers,
                             String body) {
-        setupMDC(method, url);
+        Request.Builder builder = new Request.Builder().
+                method(method).
+                url(this.config.getBaseUrl() + url);
 
-        try {
-            Request.Builder builder = new Request.Builder().
-                    method(method).
-                    url(this.config.getBaseUrl() + url);
-
-            if (params != null) {
-                for (Map.Entry<String, Object> q : params.entrySet()) {
-                    builder.param(q.getKey(), q.getValue());
-                }
+        if (params != null) {
+            for (Map.Entry<String, Object> q : params.entrySet()) {
+                builder.param(q.getKey(), q.getValue());
             }
-
-            applyAuthorization(builder)
-                    .header("Accept", "application/json")
-                    .header("User-Agent", this.config.getUserAgent())
-                    .header("X-Client-Type", "api");
-
-            if (body != null) {
-                builder.header("Content-Type", "application/json").body(body);
-            }
-
-            if (headers != null) {
-                builder.headers(headers);
-            }
-
-            Response response = rawRequest(builder.build());
-
-            if (response.getHttpStatus() < 200 || response.getHttpStatus() >= 300) {
-                handleErrorResponse(response);
-            }
-
-            return response;
-
-        } finally {
-            cleanMDC();
         }
-    }
 
-    private void setupMDC(HttpMethod method, String url) {
-        MDC.put("baseClientMethod", method.name());
-        MDC.put("baseClientUrl", url);
-    }
+        applyAuthorization(builder)
+                .header("Accept", "application/json")
+                .header("User-Agent", this.config.getUserAgent())
+                .header("X-Client-Type", "api");
 
-    private void cleanMDC() {
-        MDC.remove("baseClientMethod");
-        MDC.remove("baseClientUrl");
+        if (body != null) {
+            builder.header("Content-Type", "application/json").body(body);
+        }
+
+        if (headers != null) {
+            builder.headers(headers);
+        }
+
+        Response response = rawRequest(builder.build());
+
+        if (response.getHttpStatus() < 200 || response.getHttpStatus() >= 300) {
+            handleErrorResponse(response, method, url);
+        }
+
+        return response;
     }
 
     // Override this method if you want to use custom authorization method
@@ -109,17 +92,19 @@ public abstract class HttpClient {
 
     public abstract Response rawRequest(Request request);
 
-    private void handleErrorResponse(Response response) throws ResourceException, RequestException, ServerException {
+    private void handleErrorResponse(Response response, HttpMethod httpMethod, String url)
+            throws ResourceException, RequestException, ServerException {
+
         int responseCode = response.getHttpStatus();
 
         if (responseCode == 422) {
-            throw new ResourceException(responseCode, tryGetRequestId(response), tryGetErrors(response));
+            throw new ResourceException(responseCode, tryGetRequestId(response), httpMethod, url, tryGetErrors(response));
         } else if (responseCode == 429) {
             throw new RateLimitException();
         } else if (responseCode >= 400 && responseCode < 500) {
-            throw new RequestException(responseCode, tryGetRequestId(response), tryGetErrors(response));
+            throw new RequestException(responseCode, tryGetRequestId(response), httpMethod, url,  tryGetErrors(response));
         } else if (responseCode >= 500 && responseCode < 600) {
-            throw new ServerException(responseCode, tryGetRequestId(response), tryGetErrors(response));
+            throw new ServerException(responseCode, tryGetRequestId(response), httpMethod, url,  tryGetErrors(response));
         } else {
             throw new UnknownResponseException("Unhandled HTTP error " + response, response);
         }
@@ -137,4 +122,5 @@ public abstract class HttpClient {
             return emptyList();
         }
     }
+
 }

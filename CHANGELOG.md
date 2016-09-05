@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+
+### v1.4.3 (2016-09-01)
+
+**Features and Improvements**
+
+* BaseException has context of HTTP method and URL, MDC setup for HttpClient requests removed [#27](https://github.com/basecrm/basecrm-java/pull/27)
+
 ### v1.4.2 (2016-08-09)
 
 **Features and Improvements**

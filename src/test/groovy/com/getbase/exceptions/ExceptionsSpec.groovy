@@ -1,5 +1,6 @@
 package com.getbase.exceptions
 
+import com.getbase.http.HttpMethod
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -12,10 +13,10 @@ class ExceptionsSpec extends Specification {
         exception.getMessage() == expected
 
         where:
-        exception                                               | expected
-        new RequestException(401, "logref", [ baseError() ])    | "httpStatus=401, logref='logref', errors=BaseError{code='111', message='error message', details='error details', resource='error resource', field='null'}"
-        new ResourceException(422, "logref", [ baseError() ])   | "httpStatus=422, logref='logref', errors=BaseError{code='111', message='error message', details='error details', resource='error resource', field='null'}"
-        new ServerException(506, "logref", [ baseError() ])     | "httpStatus=506, logref='logref', errors=BaseError{code='111', message='error message', details='error details', resource='error resource', field='null'}"
+        exception                                                                               | expected
+        new RequestException(401, "logref", HttpMethod.GET, "/v2/contact", [ baseError() ])     | "httpStatus=401, logref='logref', httpMethod=GET, url=/v2/contact, errors=BaseError{code='111', message='error message', details='error details', resource='error resource', field='null'}"
+        new ResourceException(422, "logref", HttpMethod.GET, "/v2/contact", [ baseError() ])    | "httpStatus=422, logref='logref', httpMethod=GET, url=/v2/contact, errors=BaseError{code='111', message='error message', details='error details', resource='error resource', field='null'}"
+        new ServerException(506, "logref", HttpMethod.GET, "/v2/contact", [ baseError() ])      | "httpStatus=506, logref='logref', httpMethod=GET, url=/v2/contact, errors=BaseError{code='111', message='error message', details='error details', resource='error resource', field='null'}"
     }
 
     def baseError() {

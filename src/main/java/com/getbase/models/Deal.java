@@ -32,6 +32,10 @@ public class Deal {
   protected @JsonView(Views.ReadWrite.class) BigDecimal value;
   protected @JsonView(Views.ReadWrite.class) List<String> tags = new ArrayList<String>();
   protected @JsonView(Views.ReadWrite.class) Map<String, Object> customFields = new HashMap<String, Object>();
+  protected @JsonView(Views.ReadWrite.class) DateTime lastStageChangeAt;
+  protected @JsonView(Views.ReadOnly.class) Long lastStageChangeById;
+  protected @JsonView(Views.ReadOnly.class) DateTime lastActivityAt;
+  protected @JsonView(Views.ReadWrite.class) DateTime estimatedCloseDate;
 
   public Deal() {
   }
@@ -104,6 +108,22 @@ public class Deal {
     return this.customFields;
   }
 
+  public DateTime getLastStageChangeAt() {
+    return this.lastStageChangeAt;
+  }
+
+  public Long getLastStageChangeById() {
+    return this.lastStageChangeById;
+  }
+
+  public DateTime getLastActivityAt() {
+    return this.lastActivityAt;
+  }
+
+  public DateTime getEstimatedCloseDate() {
+    return this.estimatedCloseDate;
+  }
+
   public void setContactId(long contactId) {
     this.contactId = contactId;
   }
@@ -150,6 +170,14 @@ public class Deal {
     this.customFields = customFields;
   }
 
+  public void setLastStageChangeAt(DateTime lastStageChangeAt) {
+    this.lastStageChangeAt = lastStageChangeAt;
+  }
+
+  public void setEstimatedCloseDate(DateTime estimatedCloseDate) {
+    this.estimatedCloseDate = estimatedCloseDate;
+  }
+
   @Override
   public String toString() {
     return "Deal{" +
@@ -170,6 +198,10 @@ public class Deal {
           ", value=" + value +
           ", tags=" + tags +
           ", customFields=" + customFields +
+          ", lastStageChangeAt=" + lastStageChangeAt +
+          ", lastStageChangeById=" + lastStageChangeById +
+          ", lastActivityAt=" + lastActivityAt +
+          ", estimatedCloseDate=" + estimatedCloseDate +
           "}";
   }
 
@@ -197,6 +229,10 @@ public class Deal {
     if (value != null ? !value.equals(deal.value) : deal.value != null) return false;
     if (!tags.equals(deal.tags)) return false;
     if (!customFields.equals(deal.customFields)) return false;
+    if (lastStageChangeAt != null ? !lastStageChangeAt.equals(deal.lastStageChangeAt) : deal.lastStageChangeAt != null) return false;
+    if (lastStageChangeById != null ? !lastStageChangeById.equals(deal.lastStageChangeById) : deal.lastStageChangeById != null) return false;
+    if (lastActivityAt != null ? !lastActivityAt.equals(deal.lastActivityAt) : deal.lastActivityAt != null) return false;
+    if (estimatedCloseDate != null ? !estimatedCloseDate.equals(deal.estimatedCloseDate) : deal.estimatedCloseDate != null) return false;
 
     return true;
   }
@@ -221,6 +257,10 @@ public class Deal {
     result = 31 * result + (value != null ? value.hashCode() : 0);
     result = 31 * result + tags.hashCode();
     result = 31 * result + customFields.hashCode();
+    result = 31 * result + (lastStageChangeAt != null ? lastStageChangeAt.hashCode() : 0);
+    result = 31 * result + (lastStageChangeById != null ? lastStageChangeById.hashCode() : 0);
+    result = 31 * result + (lastActivityAt != null ? lastActivityAt.hashCode() : 0);
+    result = 31 * result + (estimatedCloseDate != null ? estimatedCloseDate.hashCode() : 0);
     return result;
   }
 }

@@ -17,6 +17,7 @@ public class User {
   protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
   protected @JsonView(Views.ReadWrite.class) String email;
   protected @JsonView(Views.ReadWrite.class) String name;
+  protected @JsonView(Views.ReadOnly.class) DateTime deletedAt;
 
   public User() {
   }
@@ -61,6 +62,10 @@ public class User {
     this.name = name;
   }
 
+  public DateTime getDeletedAt() {
+    return this.deletedAt;
+  }
+
   @Override
   public String toString() {
     return "User{" +
@@ -72,6 +77,7 @@ public class User {
           ", updatedAt=" + updatedAt +
           ", email='" + email + '\'' +
           ", name='" + name + '\'' +
+          ", deletedAt='" + deletedAt + '\'' +
           "}";
   }
 
@@ -90,6 +96,7 @@ public class User {
     if (updatedAt != null ? !updatedAt.equals(user.updatedAt) : user.updatedAt != null) return false;
     if (email != null ? !email.equals(user.email) : user.email != null) return false;
     if (name != null ? !name.equals(user.name) : user.name != null) return false;
+    if (deletedAt != null ? !deletedAt.equals(user.deletedAt) : user.deletedAt != null) return false;
 
     return true;
   }
@@ -105,6 +112,7 @@ public class User {
     result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
     result = 31 * result + (email != null ? email.hashCode() : 0);
     result = 31 * result + (name != null ? name.hashCode() : 0);
+    result = 31 * result + (deletedAt != null ? deletedAt.hashCode() : 0);
     return result;
   }
 }

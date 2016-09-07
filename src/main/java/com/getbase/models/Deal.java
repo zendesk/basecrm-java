@@ -32,7 +32,7 @@ public class Deal {
   protected @JsonView(Views.ReadWrite.class) BigDecimal value;
   protected @JsonView(Views.ReadWrite.class) List<String> tags = new ArrayList<String>();
   protected @JsonView(Views.ReadWrite.class) Map<String, Object> customFields = new HashMap<String, Object>();
-  protected @JsonView(Views.ReadWrite.class) DateTime lastStageChangeAt;
+  protected @JsonView(Views.ReadOnly.class) DateTime lastStageChangeAt;
   protected @JsonView(Views.ReadOnly.class) Long lastStageChangeById;
   protected @JsonView(Views.ReadOnly.class) DateTime lastActivityAt;
   protected @JsonView(Views.ReadWrite.class) DateTime estimatedCloseDate;
@@ -168,10 +168,6 @@ public class Deal {
   public void setCustomFields(Map<String, Object> customFields) {
     checkNotNull(customFields, "customFields must not be null.");
     this.customFields = customFields;
-  }
-
-  public void setLastStageChangeAt(DateTime lastStageChangeAt) {
-    this.lastStageChangeAt = lastStageChangeAt;
   }
 
   public void setEstimatedCloseDate(DateTime estimatedCloseDate) {

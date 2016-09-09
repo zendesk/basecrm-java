@@ -13,7 +13,7 @@ public class Source {
   protected @JsonView(Views.ReadOnly.class) String createdAt;
   protected @JsonView(Views.ReadOnly.class) String updatedAt;
   protected @JsonView(Views.ReadWrite.class) String name;
-  protected @JsonView(Views.ReadOnly.class) String resourceType;
+  protected @JsonView(Views.ReadWrite.class) String resourceType;
 
   public Source() {
   }
@@ -44,6 +44,10 @@ public class Source {
 
   public String getResourceType() {
     return this.resourceType;
+  }
+
+  public void setResourceType(String resourceType) {
+    this.resourceType = resourceType;
   }
 
   @Override

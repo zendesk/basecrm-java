@@ -86,6 +86,8 @@ abstract class BaseSpecification extends Specification {
                 'value'     : 1000.0,
                 'tags'      : ["important"],
                 'contact_id': createContact().id,
+                'last_stage_change_at' : "2014-09-27T16:32:56+00:00",
+                'estimated_close_date' :"2014-09-27T16:32:56+00:00",
         ]
         dealAttributes << attributes
         def deal = client.deals().create(dealAttributes);
@@ -101,6 +103,8 @@ abstract class BaseSpecification extends Specification {
                 'value'     : '1000.25',
                 'tags'      : ["important"],
                 'contact_id': createContact().id,
+                'last_stage_change_at' : "2014-09-27T16:32:56+00:00",
+                'estimated_close_date' :"2014-09-27T16:32:56+00:00",
         ]
         dealAttributes << attributes
         def deal = client.deals().create(dealAttributes);

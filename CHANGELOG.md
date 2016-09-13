@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### v1.4.4 (2016-09-13)
+
+**Features and Improvements**
+
+* Extra properties added to Deal, Source and User models [#28](https://github.com/basecrm/basecrm-java/pull/28)
 
 ### v1.4.3 (2016-09-01)
 

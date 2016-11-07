@@ -55,7 +55,7 @@ public class LineItemsService extends BaseService {
         checkArgument(orderId > 0, "orderId must be a valid id");
         checkArgument(id > 0, "id must be a valid id");
 
-        String url = String.format(Locale.US, "/v2/orders/%d/line_items/%s", orderId, id);
+        String url = String.format(Locale.US, "/v2/orders/%d/line_items/%d", orderId, id);
         return JsonDeserializer.deserialize(this.httpClient.get(url, null).getBody(), LineItem.class);
     }
 

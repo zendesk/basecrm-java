@@ -26,6 +26,8 @@ public class Client {
     private TasksService tasksService;
     private UsersService usersService;
     private ProductsService productsService;
+    private OrdersService ordersService;
+    private LineItemsService lineItemsService;
     private SyncService syncService;
 
     public Client(Configuration config) {
@@ -150,10 +152,25 @@ public class Client {
         return this.productsService;
     }
 
+    public OrdersService orders() {
+        if (this.ordersService == null) {
+            this.ordersService = new OrdersService(this.httpClient);
+        }
+        return this.ordersService;
+    }
+
+    public LineItemsService lineItems() {
+        if (this.lineItemsService == null) {
+            this.lineItemsService = new LineItemsService(this.httpClient);
+        }
+        return this.lineItemsService;
+    }
+
     public SyncService sync() {
         if (this.syncService == null) {
             this.syncService = new SyncService(this.httpClient);
         }
         return this.syncService;
     }
+
 }

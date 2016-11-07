@@ -13,6 +13,7 @@ public class Pipeline {
   protected @JsonView(Views.ReadOnly.class) DateTime createdAt;
   protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
   protected @JsonView(Views.ReadWrite.class) String name;
+  protected @JsonView(Views.ReadWrite.class) Boolean disabled;
 
   public Pipeline() {
   }
@@ -33,6 +34,10 @@ public class Pipeline {
     return this.name;
   }
 
+  public Boolean getDisabled() {
+    return this.disabled;
+  }
+
   public void setName(String name) {
     this.name = name;
   }
@@ -44,6 +49,7 @@ public class Pipeline {
           ", createdAt=" + createdAt +
           ", updatedAt=" + updatedAt +
           ", name='" + name + '\'' +
+          ", disabled='" + disabled + '\'' +
           "}";
   }
 
@@ -58,6 +64,7 @@ public class Pipeline {
     if (createdAt != null ? !createdAt.equals(pipeline.createdAt) : pipeline.createdAt != null) return false;
     if (updatedAt != null ? !updatedAt.equals(pipeline.updatedAt) : pipeline.updatedAt != null) return false;
     if (name != null ? !name.equals(pipeline.name) : pipeline.name != null) return false;
+    if (disabled != null ? !disabled.equals(pipeline.disabled) : pipeline.disabled != null) return false;
 
     return true;
   }
@@ -69,6 +76,7 @@ public class Pipeline {
     result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
     result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
     result = 31 * result + (name != null ? name.hashCode() : 0);
+    result = 31 * result + (disabled != null ? disabled.hashCode() : 0);
     return result;
   }
 }

@@ -241,10 +241,10 @@ abstract class BaseSpecification extends Specification {
     }
 
     def createLineItem(order = null, attributes = [:]) {
+        def product = createProduct()
         def lineItemAttributes = [
-                "product_id"    : createProduct().id,
-                "value"         : "1599.99",
-                "currency"      : "USD",
+                "product_id"    : product.id,
+                "currency"      : product.prices.first().currency,
                 "variation"     : "0.00",
                 "quantity"      : 10,
         ]

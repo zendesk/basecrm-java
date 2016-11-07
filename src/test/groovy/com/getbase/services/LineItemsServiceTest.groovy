@@ -3,6 +3,7 @@ package com.getbase.services
 import com.getbase.models.LineItem
 import com.getbase.models.Order
 import spock.lang.Shared
+import spock.lang.Unroll
 
 class LineItemsServiceTest extends BaseSpecification {
 
@@ -44,11 +45,39 @@ class LineItemsServiceTest extends BaseSpecification {
     }
 
     def "Create - with attributes"() {
+        given:
+        def product = createProduct()
+
         when:
-        def newLineItem = createLineItem()
+        def newLineItem = createLineItem(order, [
+                'product_id'    : product.id,
+                'currency'      : product.prices.first().currency
+        ])
 
         then:
         newLineItem instanceof LineItem
+        Objects.equals(newLineItem.price, product.prices.first().amount)
+    }
+
+    @Unroll
+    def "Create - with #variation"() {
+        given:
+        def product = createProduct()
+
+        when:
+        def newLineItem = createLineItem(order, [
+                'product_id'    : product.id,
+                'currency'      : product.prices.first().currency,
+                'variation'     : variation_value
+        ])
+
+        then:
+        Objects.equals(newLineItem.value, new BigDecimal(expected))
+
+        where:
+        variation   | variation_value | expected
+        "markup"    | 2               | "3671.99"
+        "discount"  | -2              | "3527.99"
     }
 
     def "Get"() {

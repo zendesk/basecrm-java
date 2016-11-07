@@ -230,4 +230,26 @@ abstract class BaseSpecification extends Specification {
 
         return product;
     }
+
+    def createOrder(attributes = [:]) {
+        def orderAttributes = [
+                "deal_id"   : createDeal().id,
+                "discount"  : 5,
+        ]
+        orderAttributes << attributes
+        return client.orders().create(orderAttributes)
+    }
+
+    def createLineItem(order = null, attributes = [:]) {
+        def lineItemAttributes = [
+                "product_id"    : createProduct().id,
+                "value"         : "1599.99",
+                "currency"      : "USD",
+                "variation"     : "0.00",
+                "quantity"      : 10,
+        ]
+        lineItemAttributes << attributes
+        return client.lineItems().create((order ?: createOrder()).id, lineItemAttributes)
+    }
+
 }

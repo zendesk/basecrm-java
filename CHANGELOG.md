@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### v1.4.5 (2016-11-08)
+
+**Features and Improvements**
+
+* [Orders API](https://developers.getbase.com/docs/rest/reference/orders) support [#32](https://github.com/basecrm/basecrm-java/pull/32)
+* [Line Items API](https://developers.getbase.com/docs/rest/reference/line_items) support [#32](https://github.com/basecrm/basecrm-java/pull/32)
+* Pipeline disabled property exposed [#30](https://github.com/basecrm/basecrm-java/pull/30)
+
 ### v1.4.4 (2016-09-13)
 
 **Features and Improvements**

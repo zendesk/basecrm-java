@@ -56,7 +56,7 @@ class LineItemsServiceTest extends BaseSpecification {
 
         then:
         newLineItem instanceof LineItem
-        Objects.equals(newLineItem.price, product.prices.first().amount)
+        newLineItem.price == product.prices.first().amount
     }
 
     @Unroll
@@ -72,7 +72,7 @@ class LineItemsServiceTest extends BaseSpecification {
         ])
 
         then:
-        Objects.equals(newLineItem.value, new BigDecimal(expected))
+        newLineItem.value == new BigDecimal(expected)
 
         where:
         variation   | variation_value | expected

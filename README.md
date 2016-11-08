@@ -12,7 +12,7 @@ The library is available via [JCenter](https://bintray.com/bintray/jcenter). To 
 repositories {
     jcenter()
     maven {
-        url  "http://dl.bintray.com/basecrm/maven"
+        url  "https://dl.bintray.com/basecrm/maven"
     }
 }
 

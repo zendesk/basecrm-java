@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.6 (2017-06-19)
+
+**Features and Improvements**
+
+* Do not subclass java.util.logging.Logger as Google App Engine SM disallows it [#33](https://github.com/basecrm/basecrm-java/pull/33)
+
 ### v1.4.5 (2016-11-08)
 
 **Features and Improvements**

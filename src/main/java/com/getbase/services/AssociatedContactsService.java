@@ -10,7 +10,6 @@ import com.getbase.serializer.Views;
 
 import java.util.*;
 
-import static com.getbase.utils.Lists.asList;
 import static com.getbase.utils.Precondition.*;
 
 
@@ -43,7 +42,7 @@ public class AssociatedContactsService extends BaseService {
   public AssociatedContact create(long dealId, Map<String, Object> attributes) {
     checkArgument(dealId > 0, "dealId must be a valid id");
     checkNotNull(attributes, "attributes parameter must not be null");
-    
+
     String url = String.format(Locale.US, "/v2/deals/%d/associated_contacts", dealId);
     String serialized = JsonSerializer.serialize(attributes);
     return JsonDeserializer.deserialize(this.httpClient.post(url, serialized).getBody(), AssociatedContact.class);
@@ -53,7 +52,7 @@ public class AssociatedContactsService extends BaseService {
   public boolean delete(long dealId, long contactId) {
     checkArgument(dealId > 0, "dealId must be a valid id");
     checkArgument(contactId > 0, "contactId must be a valid id");
-    
+
     String url = String.format(Locale.US, "/v2/deals/%d/associated_contacts/%d", dealId, contactId);
     return this.httpClient.delete(url, null).getHttpStatus() == 204;
   }
@@ -83,15 +82,6 @@ public class AssociatedContactsService extends BaseService {
 
     public SearchCriteria sortBy(String criteria) {
       return sortBy(criteria, "asc");
-    }
-
-    public SearchCriteria ids(List<Long> ids) {
-      queryParams.put("ids", ids);
-      return this;
-    }
-
-    public SearchCriteria ids(Long... ids) {
-      return ids(asList(ids));
     }
 
     public Map<String, Object> asMap() {

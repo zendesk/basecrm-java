@@ -7,6 +7,7 @@ import com.getbase.models.LossReason;
 import com.getbase.serializer.JsonDeserializer;
 import com.getbase.serializer.JsonSerializer;
 import com.getbase.serializer.Views;
+import com.getbase.utils.Joiner;
 
 import java.util.*;
 
@@ -110,7 +111,7 @@ public class LossReasonsService extends BaseService {
     }
 
     public SearchCriteria ids(List<Long> ids) {
-      queryParams.put("ids", ids);
+      queryParams.put("ids", Joiner.join(",", ids));
       return this;
     }
 

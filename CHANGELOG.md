@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.7 (2017-09-06)
+
+**Bug Fixes**
+
+* Handling the ids parameter in SearchCriteria [#34](https://github.com/basecrm/basecrm-java/pull/34)
+
 ### v1.4.6 (2017-06-19)
 
 **Features and Improvements**
@@ -51,7 +57,7 @@
 
 **Features and Improvements**
 
-* HttpClient opened for authentication extenstions [#21](https://github.com/basecrm/basecrm-java/pull/21)
+* HttpClient opened for authentication extensions [#21](https://github.com/basecrm/basecrm-java/pull/21)
 
 ### v1.3.2 (2016-04-29)
 

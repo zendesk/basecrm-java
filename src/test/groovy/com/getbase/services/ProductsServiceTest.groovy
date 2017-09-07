@@ -1,15 +1,11 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
 import com.getbase.models.Product
+import spock.lang.Shared
 
 class ProductsServiceTest extends BaseSpecification {
 
     @Shared def product = product ?: createProduct()
-
 
     def "List - with params"() {
         when:
@@ -26,7 +22,19 @@ class ProductsServiceTest extends BaseSpecification {
         then:
         products.size() > 0
     }
-  
+
+    def "List - by ids"() {
+        given:
+        def productsIds = (0..3).collect { createProduct() }*.id
+
+        when:
+        def products = client.products().list(new ProductsService.SearchCriteria().ids(productsIds))
+
+        then:
+        products.size() == 4
+        products*.id == productsIds
+    }
+
     def "Create - with attributes"() {
         when:
         def newProduct = createProduct()
@@ -34,11 +42,10 @@ class ProductsServiceTest extends BaseSpecification {
         then:
         newProduct instanceof Product
     }
-  
-  
+
     def "Get"() {
         given:
-        def searched = product 
+        def searched = product
 
         when:
         def found = client.products().get(searched.id)
@@ -47,7 +54,6 @@ class ProductsServiceTest extends BaseSpecification {
         found instanceof Product
         found.id == searched.id
     }
-  
 
     def "Update - with Lead entity"() {
         when:
@@ -56,7 +62,7 @@ class ProductsServiceTest extends BaseSpecification {
         then:
         updated instanceof Product
     }
-  
+
     def "Delete"() {
         given:
         def newProduct = createProduct()
@@ -67,4 +73,5 @@ class ProductsServiceTest extends BaseSpecification {
         then:
         result
     }
+
 }

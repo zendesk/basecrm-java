@@ -1,16 +1,11 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
 import com.getbase.models.Task
+import spock.lang.Shared
 
 class TasksServiceTest extends BaseSpecification {
 
     @Shared def task = task ?: createTask()
-
-  
 
     def "List - with params"() {
         when:
@@ -27,7 +22,19 @@ class TasksServiceTest extends BaseSpecification {
         then:
         tasks.size() > 0
     }
-  
+
+    def "List - by ids"() {
+        given:
+        def tasksIds = (0..3).collect { createTask() }*.id
+
+        when:
+        def tasks = client.tasks().list(new TasksService.SearchCriteria().ids(tasksIds))
+
+        then:
+        tasks.size() == 4
+        tasks*.id == tasksIds
+    }
+
     def "Create - with attributes"() {
         when:
         def newTask = createTask()
@@ -35,11 +42,10 @@ class TasksServiceTest extends BaseSpecification {
         then:
         newTask instanceof Task
     }
-  
-  
+
     def "Get"() {
         given:
-        def searched = task 
+        def searched = task
 
         when:
         def found = client.tasks().get(searched.id)
@@ -48,7 +54,6 @@ class TasksServiceTest extends BaseSpecification {
         found instanceof Task
         found.id == searched.id
     }
-  
 
     def "Update - with Lead entity"() {
         when:
@@ -57,7 +62,7 @@ class TasksServiceTest extends BaseSpecification {
         then:
         updated instanceof Task
     }
-  
+
     def "Delete"() {
         given:
         def newTask = createTask()
@@ -68,4 +73,5 @@ class TasksServiceTest extends BaseSpecification {
         then:
         result
     }
+
 }

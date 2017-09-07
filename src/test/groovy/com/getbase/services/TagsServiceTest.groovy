@@ -1,16 +1,11 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
 import com.getbase.models.Tag
+import spock.lang.Shared
 
 class TagsServiceTest extends BaseSpecification {
 
     @Shared def tag = tag ?: createTag()
-
-  
 
     def "List - with params"() {
         when:
@@ -27,7 +22,19 @@ class TagsServiceTest extends BaseSpecification {
         then:
         tags.size() > 0
     }
-  
+
+    def "List - by ids"() {
+        given:
+        def tagsIds = (0..3).collect { createTag() }*.id
+
+        when:
+        def tags = client.tags().list(new TagsService.SearchCriteria().ids(tagsIds))
+
+        then:
+        tags.size() == 4
+        tags*.id == tagsIds
+    }
+
     def "Create - with attributes"() {
         when:
         def newTag = createTag()
@@ -35,11 +42,10 @@ class TagsServiceTest extends BaseSpecification {
         then:
         newTag instanceof Tag
     }
-  
-  
+
     def "Get"() {
         given:
-        def searched = tag 
+        def searched = tag
 
         when:
         def found = client.tags().get(searched.id)
@@ -48,7 +54,6 @@ class TagsServiceTest extends BaseSpecification {
         found instanceof Tag
         found.id == searched.id
     }
-  
 
     def "Update - with Lead entity"() {
         when:
@@ -57,7 +62,7 @@ class TagsServiceTest extends BaseSpecification {
         then:
         updated instanceof Tag
     }
-  
+
     def "Delete"() {
         given:
         def newTag = createTag()
@@ -68,4 +73,5 @@ class TagsServiceTest extends BaseSpecification {
         then:
         result
     }
+
 }

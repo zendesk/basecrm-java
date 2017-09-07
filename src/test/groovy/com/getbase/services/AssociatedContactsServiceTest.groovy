@@ -1,16 +1,11 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
 import com.getbase.models.AssociatedContact
+import spock.lang.Shared
 
 class AssociatedContactsServiceTest extends BaseSpecification {
 
     @Shared def associatedContact = associatedContact ?: createAssociatedContact()
-
-  
 
     def "List - with params"() {
         when:
@@ -27,7 +22,7 @@ class AssociatedContactsServiceTest extends BaseSpecification {
         then:
         associatedContacts.size() > 0
     }
-  
+
     def "Create - with attributes"() {
         when:
         def newAssociatedContact = createAssociatedContact()
@@ -35,7 +30,7 @@ class AssociatedContactsServiceTest extends BaseSpecification {
         then:
         newAssociatedContact instanceof AssociatedContact
     }
-  
+
     def "Delete"() {
         given:
         def newAssociatedContact = createAssociatedContact()
@@ -46,4 +41,5 @@ class AssociatedContactsServiceTest extends BaseSpecification {
         then:
         result
     }
+
 }

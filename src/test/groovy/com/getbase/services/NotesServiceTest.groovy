@@ -1,16 +1,11 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
 import com.getbase.models.Note
+import spock.lang.Shared
 
 class NotesServiceTest extends BaseSpecification {
 
     @Shared def note = note ?: createNote()
-
-  
 
     def "List - with params"() {
         when:
@@ -27,7 +22,19 @@ class NotesServiceTest extends BaseSpecification {
         then:
         notes.size() > 0
     }
-  
+
+    def "List - by ids"() {
+        given:
+        def notesIds = (0..3).collect { createNote() }*.id
+
+        when:
+        def notes = client.notes().list(new NotesService.SearchCriteria().ids(notesIds))
+
+        then:
+        notes.size() == 4
+        notes*.id == notesIds
+    }
+
     def "Create - with attributes"() {
         when:
         def newNote = createNote()
@@ -35,11 +42,10 @@ class NotesServiceTest extends BaseSpecification {
         then:
         newNote instanceof Note
     }
-  
-  
+
     def "Get"() {
         given:
-        def searched = note 
+        def searched = note
 
         when:
         def found = client.notes().get(searched.id)
@@ -48,7 +54,6 @@ class NotesServiceTest extends BaseSpecification {
         found instanceof Note
         found.id == searched.id
     }
-  
 
     def "Update - with Lead entity"() {
         when:
@@ -57,7 +62,7 @@ class NotesServiceTest extends BaseSpecification {
         then:
         updated instanceof Note
     }
-  
+
     def "Delete"() {
         given:
         def newNote = createNote()
@@ -68,4 +73,5 @@ class NotesServiceTest extends BaseSpecification {
         then:
         result
     }
+
 }

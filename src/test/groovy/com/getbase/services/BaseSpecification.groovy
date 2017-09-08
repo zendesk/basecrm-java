@@ -4,6 +4,7 @@ package com.getbase.services
 
 import com.getbase.Client
 import com.getbase.Configuration
+import com.getbase.models.Order
 import spock.lang.Specification
 
 abstract class BaseSpecification extends Specification {
@@ -252,4 +253,16 @@ abstract class BaseSpecification extends Specification {
         return client.lineItems().create((order ?: createOrder()).id, lineItemAttributes)
     }
 
+    def List<Order> deleteAllOrders() {
+        client.orders().list(new OrdersService.SearchCriteria().page(1).perPage(100)).each { order ->
+            deleteLineItemsForOrder(order)
+            client.orders().delete(order.id)
+        }
+    }
+
+    def deleteLineItemsForOrder(Order order) {
+        client.lineItems().list(order.id, new LineItemsService.SearchCriteria().page(1).page(100)).each { lineItem ->
+            client.lineItems().delete(order.id, lineItem.id)
+        }
+    }
 }

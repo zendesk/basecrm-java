@@ -1,16 +1,11 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
 import com.getbase.models.Contact
+import spock.lang.Shared
 
 class ContactsServiceTest extends BaseSpecification {
 
     @Shared def contact = contact ?: createContact()
-
-  
 
     def "List - with params"() {
         when:
@@ -27,7 +22,16 @@ class ContactsServiceTest extends BaseSpecification {
         then:
         contacts.size() > 0
     }
-  
+
+    def "List - by ids"() {
+        when:
+        def contacts = client.contacts().list(new ContactsService.SearchCriteria().ids([contact.id]))
+
+        then:
+        contacts.size() == 1
+        contacts[0].id == contact.id
+    }
+
     def "Create - with attributes"() {
         when:
         def newContact = createContact()
@@ -35,11 +39,10 @@ class ContactsServiceTest extends BaseSpecification {
         then:
         newContact instanceof Contact
     }
-  
-  
+
     def "Get"() {
         given:
-        def searched = contact 
+        def searched = contact
 
         when:
         def found = client.contacts().get(searched.id)
@@ -48,7 +51,7 @@ class ContactsServiceTest extends BaseSpecification {
         found instanceof Contact
         found.id == searched.id
     }
-  
+
 
     def "Update - with Lead entity"() {
         when:
@@ -57,7 +60,7 @@ class ContactsServiceTest extends BaseSpecification {
         then:
         updated instanceof Contact
     }
-  
+
     def "Delete"() {
         given:
         def newContact = createContact()
@@ -68,4 +71,5 @@ class ContactsServiceTest extends BaseSpecification {
         then:
         result
     }
+
 }

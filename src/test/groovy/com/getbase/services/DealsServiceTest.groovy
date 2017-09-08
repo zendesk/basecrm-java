@@ -1,5 +1,3 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
 import com.getbase.models.Deal
@@ -9,7 +7,6 @@ class DealsServiceTest extends BaseSpecification {
 
     @Shared
     def deal = deal ?: createDeal()
-
 
     def "List - with params"() {
         when:
@@ -25,6 +22,15 @@ class DealsServiceTest extends BaseSpecification {
 
         then:
         deals.size() > 0
+    }
+
+    def "List - by ids"() {
+        when:
+        def deals = client.deals().list(new DealsService.SearchCriteria().ids([deal.id]))
+
+        then:
+        deals.size() == 1
+        deals*.id == [deal.id]
     }
 
     def "Create - with attributes"() {
@@ -55,7 +61,6 @@ class DealsServiceTest extends BaseSpecification {
         found.id == searched.id
     }
 
-
     def "Update - with Lead entity"() {
         when:
         def updated = client.deals().update(deal)
@@ -74,4 +79,5 @@ class DealsServiceTest extends BaseSpecification {
         then:
         result
     }
+
 }

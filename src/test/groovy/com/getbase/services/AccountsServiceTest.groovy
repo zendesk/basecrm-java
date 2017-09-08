@@ -1,16 +1,12 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
 import com.getbase.models.Account
+import spock.lang.Shared
 
 class AccountsServiceTest extends BaseSpecification {
 
     @Shared def account = account ?: client.accounts().self()
 
-    
     def "Self"() {
         when:
         def account = client.accounts().self()
@@ -19,4 +15,5 @@ class AccountsServiceTest extends BaseSpecification {
         account instanceof Account
         account.id > 0
     }
+
 }

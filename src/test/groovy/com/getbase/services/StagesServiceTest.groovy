@@ -1,15 +1,6 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
-import com.getbase.models.Stage
-
 class StagesServiceTest extends BaseSpecification {
-
-
-  
 
     def "List - with params"() {
         when:
@@ -26,4 +17,17 @@ class StagesServiceTest extends BaseSpecification {
         then:
         stages.size() > 0
     }
+
+    def "List - by ids"() {
+        given:
+        def stagesIds = client.stages().list(["page": 1])*.id
+
+        when:
+        def stages = client.stages().list(new StagesService.SearchCriteria().ids(stagesIds))
+
+        then:
+        stages.size() == stagesIds.size()
+        stages*.id == stagesIds
+    }
+
 }

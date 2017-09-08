@@ -1,16 +1,11 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
 import com.getbase.models.Source
+import spock.lang.Shared
 
 class SourcesServiceTest extends BaseSpecification {
 
     @Shared def source = source ?: createSource()
-
-  
 
     def "List - with params"() {
         when:
@@ -27,7 +22,19 @@ class SourcesServiceTest extends BaseSpecification {
         then:
         sources.size() > 0
     }
-  
+
+    def "List - by ids"() {
+        given:
+        def sourcesIds = (0..3).collect { createSource() }*.id
+
+        when:
+        def sources = client.sources().list(new SourcesService.SearchCriteria().ids(sourcesIds))
+
+        then:
+        sources.size() == 4
+        sources*.id == sourcesIds
+    }
+
     def "Create - with attributes"() {
         when:
         def newSource = createSource()
@@ -35,11 +42,10 @@ class SourcesServiceTest extends BaseSpecification {
         then:
         newSource instanceof Source
     }
-  
-  
+
     def "Get"() {
         given:
-        def searched = source 
+        def searched = source
 
         when:
         def found = client.sources().get(searched.id)
@@ -48,7 +54,6 @@ class SourcesServiceTest extends BaseSpecification {
         found instanceof Source
         found.id == searched.id
     }
-  
 
     def "Update - with Lead entity"() {
         when:
@@ -57,7 +62,7 @@ class SourcesServiceTest extends BaseSpecification {
         then:
         updated instanceof Source
     }
-  
+
     def "Delete"() {
         given:
         def newSource = createSource()
@@ -68,4 +73,5 @@ class SourcesServiceTest extends BaseSpecification {
         then:
         result
     }
+
 }

@@ -106,18 +106,4 @@ class LineItemsServiceTest extends BaseSpecification {
     def cleanupSpec() {
         deleteAllOrders()
     }
-
-    private List<Order> deleteAllOrders() {
-        client.orders().list(new OrdersService.SearchCriteria().page(1).perPage(100)).each { order ->
-            deleteLineItemsForOrder(order)
-            client.orders().delete(order.id)
-        }
-    }
-
-    def deleteLineItemsForOrder(Order order) {
-        client.lineItems().list(order.id, new LineItemsService.SearchCriteria().page(1).page(100)).each { lineItem ->
-            client.lineItems().delete(order.id, lineItem.id)
-        }
-    }
-
 }

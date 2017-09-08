@@ -1,15 +1,6 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.services
 
-import spock.lang.Shared
-
-import com.getbase.models.Pipeline
-
 class PipelinesServiceTest extends BaseSpecification {
-
-
-  
 
     def "List - with params"() {
         when:
@@ -26,4 +17,17 @@ class PipelinesServiceTest extends BaseSpecification {
         then:
         pipelines.size() > 0
     }
+
+    def "List - by ids"() {
+        given:
+        def pipelinesIds = client.pipelines().list(["page": 1])*.id
+
+        when:
+        def pipelines = client.pipelines().list(new PipelinesService.SearchCriteria().ids(pipelinesIds))
+
+        then:
+        pipelines.size() == pipelinesIds.size()
+        pipelines*.id == pipelinesIds
+    }
+
 }

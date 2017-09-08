@@ -5,7 +5,8 @@ import spock.lang.Shared
 
 class OrdersServiceTest extends BaseSpecification {
 
-    @Shared def order = order ?: createOrder()
+    @Shared
+    def order = order ?: createOrder()
 
     def "List - with params"() {
         when:
@@ -17,28 +18,25 @@ class OrdersServiceTest extends BaseSpecification {
 
     def "List - with query param builder"() {
         when:
-        def orders = client.orders().list(new OrdersService.SearchCriteria().page(1).perPage(1))
+        def orders = client.orders().list(new OrdersService.SearchCriteria().page(1).perPage(100))
 
         then:
         orders.size() > 0
 
         when:
-        orders = client.orders().list(new OrdersService.SearchCriteria().page(2).perPage(1))
+        orders = client.orders().list(new OrdersService.SearchCriteria().page(2).perPage(100))
 
         then:
         orders.size() == 0
     }
 
     def "List - by ids"() {
-        given:
-        def ordersIds = (0..3).collect { createOrder() }*.id
-
         when:
-        def orders = client.orders().list(new OrdersService.SearchCriteria().ids(ordersIds))
+        def orders = client.orders().list(new OrdersService.SearchCriteria().ids([order.id]))
 
         then:
-        orders.size() == 4
-        orders*.id == ordersIds
+        orders.size() == 1
+        orders[0].id == order.id
     }
 
     def "Create - with attributes"() {
@@ -82,9 +80,7 @@ class OrdersServiceTest extends BaseSpecification {
     }
 
     def cleanupSpec() {
-        client.orders().list(new OrdersService.SearchCriteria().page(1).perPage(100)).each {
-            client.orders().delete(it.id)
-        }
+        deleteAllOrders()
     }
 
 }

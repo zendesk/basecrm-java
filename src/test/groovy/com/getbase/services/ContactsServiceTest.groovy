@@ -24,15 +24,12 @@ class ContactsServiceTest extends BaseSpecification {
     }
 
     def "List - by ids"() {
-        given:
-        def contactsIds = (0..3).collect { createContact() }*.id
-
         when:
-        def contacts = client.contacts().list(new ContactsService.SearchCriteria().ids(contactsIds))
+        def contacts = client.contacts().list(new ContactsService.SearchCriteria().ids([contact.id]))
 
         then:
-        contacts.size() == 4
-        contacts*.id == contactsIds
+        contacts.size() == 1
+        contacts[0].id == contact.id
     }
 
     def "Create - with attributes"() {

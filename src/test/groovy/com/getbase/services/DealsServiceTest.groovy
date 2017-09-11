@@ -69,6 +69,16 @@ class DealsServiceTest extends BaseSpecification {
         updated instanceof Deal
     }
 
+    def "Update - customizedWinLikelihood"() {
+        when:
+        deal.setCustomizedWinLikelihood(15)
+        def updated = client.deals().update(deal)
+
+        then:
+        updated instanceof Deal
+        updated.getCustomizedWinLikelihood() == 15
+    }
+
     def "Delete"() {
         given:
         def newDeal = createDeal()

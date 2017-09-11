@@ -36,6 +36,7 @@ public class Deal {
   protected @JsonView(Views.ReadOnly.class) Long lastStageChangeById;
   protected @JsonView(Views.ReadOnly.class) DateTime lastActivityAt;
   protected @JsonView(Views.ReadWrite.class) DateTime estimatedCloseDate;
+  protected @JsonView(Views.ReadWrite.class) Integer customizedWinLikelihood;
 
   public Deal() {
   }
@@ -124,6 +125,11 @@ public class Deal {
     return this.estimatedCloseDate;
   }
 
+  public Integer getCustomizedWinLikelihood() {
+    return this.customizedWinLikelihood;
+  }
+
+
   public void setContactId(long contactId) {
     this.contactId = contactId;
   }
@@ -178,6 +184,11 @@ public class Deal {
     this.estimatedCloseDate = estimatedCloseDate;
   }
 
+  public void setCustomizedWinLikelihood(int customizedWinLikelihood) {
+    this.customizedWinLikelihood = customizedWinLikelihood;
+  }
+
+
   @Override
   public String toString() {
     return "Deal{" +
@@ -202,7 +213,8 @@ public class Deal {
           ", lastStageChangeById=" + lastStageChangeById +
           ", lastActivityAt=" + lastActivityAt +
           ", estimatedCloseDate=" + estimatedCloseDate +
-          "}";
+          ", customizedWinLikelihood=" + customizedWinLikelihood +
+            "}";
   }
 
   @Override
@@ -233,6 +245,7 @@ public class Deal {
     if (lastStageChangeById != null ? !lastStageChangeById.equals(deal.lastStageChangeById) : deal.lastStageChangeById != null) return false;
     if (lastActivityAt != null ? !lastActivityAt.equals(deal.lastActivityAt) : deal.lastActivityAt != null) return false;
     if (estimatedCloseDate != null ? !estimatedCloseDate.equals(deal.estimatedCloseDate) : deal.estimatedCloseDate != null) return false;
+    if (customizedWinLikelihood != null ? !customizedWinLikelihood.equals(deal.customizedWinLikelihood) : deal.customizedWinLikelihood != null) return false;
 
     return true;
   }
@@ -261,6 +274,8 @@ public class Deal {
     result = 31 * result + (lastStageChangeById != null ? lastStageChangeById.hashCode() : 0);
     result = 31 * result + (lastActivityAt != null ? lastActivityAt.hashCode() : 0);
     result = 31 * result + (estimatedCloseDate != null ? estimatedCloseDate.hashCode() : 0);
+    result = 31 * result + (customizedWinLikelihood != null ? customizedWinLikelihood.hashCode() : 0);
+
     return result;
   }
 }

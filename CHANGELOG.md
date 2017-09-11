@@ -5,6 +5,9 @@
 **Bug Fixes**
 
 * Handling the ids parameter in SearchCriteria [#34](https://github.com/basecrm/basecrm-java/pull/34)
+
+**Features and Improvements**
+
 * Added deal.customizedWinLikelihood [#35](https://github.com/basecrm/basecrm-java/pull/35)
 
 ### v1.4.6 (2017-06-19)

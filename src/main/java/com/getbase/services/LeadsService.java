@@ -12,7 +12,8 @@ import com.getbase.utils.Joiner;
 import java.util.*;
 
 import static com.getbase.utils.Lists.asList;
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkArgument;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 
 public class LeadsService extends BaseService {

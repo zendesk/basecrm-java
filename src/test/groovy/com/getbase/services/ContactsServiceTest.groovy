@@ -25,6 +25,7 @@ class ContactsServiceTest extends BaseSpecification {
 
     def "List - by ids"() {
         when:
+        sleep(1000)
         def contacts = client.contacts().list(new ContactsService.SearchCriteria().ids([contact.id]))
 
         then:

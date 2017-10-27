@@ -26,6 +26,7 @@ class DealsServiceTest extends BaseSpecification {
 
     def "List - by ids"() {
         when:
+        sleep(1000)
         def deals = client.deals().list(new DealsService.SearchCriteria().ids([deal.id]))
 
         then:

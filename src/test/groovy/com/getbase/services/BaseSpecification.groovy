@@ -5,9 +5,12 @@ package com.getbase.services
 import com.getbase.Client
 import com.getbase.Configuration
 import com.getbase.models.Order
+import com.google.common.util.concurrent.RateLimiter
 import spock.lang.Specification
 
 abstract class BaseSpecification extends Specification {
+    private static final RateLimiter rateLimiter = RateLimiter.create(10 - 2)
+
     def getAccessToken() {
         def token = System.getenv("BASECRM_ACCESS_TOKEN")
         if (token == null || token.isEmpty())
@@ -32,6 +35,7 @@ abstract class BaseSpecification extends Specification {
     }
 
     def getClient() {
+        rateLimiter.acquire()
         new Client(configuration)
     }
 

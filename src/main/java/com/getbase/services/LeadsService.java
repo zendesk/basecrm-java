@@ -8,17 +8,15 @@ import com.getbase.serializer.JsonDeserializer;
 import com.getbase.serializer.JsonSerializer;
 import com.getbase.serializer.Views;
 import com.getbase.utils.Joiner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 import static com.getbase.utils.Lists.asList;
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkArgument;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 
 public class LeadsService extends BaseService {
-  private static final Logger log = LoggerFactory.getLogger(LeadsService.class);
   public LeadsService(HttpClient httpClient) {
     super(httpClient);
   }
@@ -29,9 +27,7 @@ public class LeadsService extends BaseService {
   }
 
   public List<Lead> list(SearchCriteria criteria) {
-    List<Lead> tbr = list(criteria.asMap());
-    log.info("LeadsService.list={}", tbr);
-    return tbr;
+    return list(criteria.asMap());
   }
 
 
@@ -116,7 +112,6 @@ public class LeadsService extends BaseService {
     }
 
     public SearchCriteria ids(List<Long> ids) {
-      log.info("find ids by:{}", Joiner.join(",", ids));
       queryParams.put("ids", Joiner.join(",", ids));
       return this;
     }

@@ -27,9 +27,6 @@ class LeadsServiceTest extends BaseSpecification {
         when:
         sleep(1000)
         def leads = client.leads().list(new LeadsService.SearchCriteria().ids([lead.id]))
-        print("debug mode on")
-        print(leads)
-        print("debug mode off")
 
         then:
         leads.size() == 1

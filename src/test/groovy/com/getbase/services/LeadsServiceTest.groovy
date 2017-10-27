@@ -25,6 +25,7 @@ class LeadsServiceTest extends BaseSpecification {
 
     def "List - by ids"() {
         when:
+        sleep(1000)
         def leads = client.leads().list(new LeadsService.SearchCriteria().ids([lead.id]))
         print("debug mode on")
         print(leads)

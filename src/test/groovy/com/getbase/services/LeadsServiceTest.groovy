@@ -26,6 +26,9 @@ class LeadsServiceTest extends BaseSpecification {
     def "List - by ids"() {
         when:
         def leads = client.leads().list(new LeadsService.SearchCriteria().ids([lead.id]))
+        print("debug mode on")
+        print(leads)
+        print("debug mode off")
 
         then:
         leads.size() == 1

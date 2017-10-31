@@ -39,6 +39,8 @@ class ContactsServiceTest extends BaseSpecification {
 
         then:
         newContact instanceof Contact
+        newContact.contactId == null
+        newContact.parentOrganizationId == null
     }
 
     def "Get"() {

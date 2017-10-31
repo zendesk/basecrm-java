@@ -1,5 +1,15 @@
 ## CHANGELOG
 
+### v1.4.8 (2017-10-31)
+
+**Bug Fixes**
+
+* Preserving null contactId value returned from service [#37](https://github.com/basecrm/basecrm-java/issues/37)
+
+**Features and Improvements**
+
+* Added contact.parentOrganizationId [#36](https://github.com/basecrm/basecrm-java/pull/36)
+
 ### v1.4.7 (2017-09-11)
 
 **Bug Fixes**

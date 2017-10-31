@@ -2,6 +2,7 @@
 
 package com.getbase.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.getbase.serializer.Views;
 import org.joda.time.DateTime;
@@ -20,6 +21,7 @@ public class Contact {
   protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
   protected @JsonView(Views.ReadWrite.class) Long contactId;
   protected @JsonView(Views.ReadWrite.class) Long ownerId;
+  protected @JsonView(Views.ReadWrite.class) @JsonInclude(JsonInclude.Include.ALWAYS) Long parentOrganizationId;
   protected @JsonView(Views.ReadWrite.class) Address address;
   protected @JsonView(Views.ReadWrite.class) String customerStatus;
   protected @JsonView(Views.ReadWrite.class) String description;
@@ -63,6 +65,10 @@ public class Contact {
 
   public Long getContactId() {
     return this.contactId;
+  }
+
+  public Long getParentOrganizationId() {
+    return this.parentOrganizationId;
   }
 
   public Long getOwnerId() {
@@ -153,8 +159,12 @@ public class Contact {
     return this.customFields;
   }
 
-  public void setContactId(long contactId) {
+  public void setContactId(Long contactId) {
     this.contactId = contactId;
+  }
+
+  public void setParentOrganizationId(Long parentOrganizationId) {
+    this.parentOrganizationId = parentOrganizationId;
   }
 
   public void setOwnerId(long ownerId) {
@@ -255,6 +265,7 @@ public class Contact {
           ", createdAt=" + createdAt +
           ", updatedAt=" + updatedAt +
           ", contactId=" + contactId +
+          ", parentOrganizationId=" + parentOrganizationId +
           ", ownerId=" + ownerId +
           ", address=" + address +
           ", customerStatus='" + customerStatus + '\'' +
@@ -292,6 +303,7 @@ public class Contact {
     if (createdAt != null ? !createdAt.equals(contact.createdAt) : contact.createdAt != null) return false;
     if (updatedAt != null ? !updatedAt.equals(contact.updatedAt) : contact.updatedAt != null) return false;
     if (contactId != null ? !contactId.equals(contact.contactId) : contact.contactId != null) return false;
+    if (parentOrganizationId != null ? !parentOrganizationId.equals(contact.parentOrganizationId) : contact.parentOrganizationId != null) return false;
     if (ownerId != null ? !ownerId.equals(contact.ownerId) : contact.ownerId != null) return false;
     if (address != null ? !address.equals(contact.address) : contact.address != null) return false;
     if (customerStatus != null ? !customerStatus.equals(contact.customerStatus) : contact.customerStatus != null) return false;
@@ -326,6 +338,7 @@ public class Contact {
     result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
     result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
     result = 31 * result + (contactId != null ? contactId.hashCode() : 0);
+    result = 31 * result + (parentOrganizationId != null ? parentOrganizationId.hashCode() : 0);
     result = 31 * result + (ownerId != null ? ownerId.hashCode() : 0);
     result = 31 * result + (address != null ? address.hashCode() : 0);
     result = 31 * result + (customerStatus != null ? customerStatus.hashCode() : 0);

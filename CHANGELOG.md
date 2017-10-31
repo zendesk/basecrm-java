@@ -8,7 +8,7 @@
 
 **Features and Improvements**
 
-* Added contact.parentOrganizationId [#36](https://github.com/basecrm/basecrm-java/pull/36)
+* Added contact.parentOrganizationId [#38](https://github.com/basecrm/basecrm-java/pull/38)
 
 ### v1.4.7 (2017-09-11)
 

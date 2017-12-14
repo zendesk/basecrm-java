@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.9 (2017-12-14)
+
+**Features and Improvements**
+
+* New properties added to User model [#39](https://github.com/basecrm/basecrm-java/issues/39)
+
 ### v1.4.8 (2017-10-31)
 
 **Bug Fixes**

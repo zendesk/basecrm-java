@@ -1,14 +1,14 @@
-// WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
-
 package com.getbase.models;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.getbase.serializer.Views;
 import org.joda.time.DateTime;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
+
   protected @JsonView(Views.ReadOnly.class) Long id;
   protected @JsonView(Views.ReadOnly.class) Boolean confirmed;
   protected @JsonView(Views.ReadOnly.class) DateTime createdAt;
@@ -18,6 +18,12 @@ public class User {
   protected @JsonView(Views.ReadWrite.class) String email;
   protected @JsonView(Views.ReadWrite.class) String name;
   protected @JsonView(Views.ReadOnly.class) DateTime deletedAt;
+  protected @JsonView(Views.ReadOnly.class) Long reportsTo;
+  protected @JsonView(Views.ReadOnly.class) String timezone;
+  protected @JsonView(Views.ReadOnly.class) String phoneNumber;
+  protected @JsonView(Views.ReadOnly.class) String teamName;
+  protected @JsonView(Views.ReadOnly.class) Group group;
+  protected @JsonView(Views.ReadOnly.class) List<Role> roles = new ArrayList<Role>();
 
   public User() {
   }
@@ -66,6 +72,30 @@ public class User {
     return this.deletedAt;
   }
 
+  public Long getReportsTo() {
+    return this.reportsTo;
+  }
+
+  public String getTimezone() {
+    return this.timezone;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public String getTeamName() {
+    return teamName;
+  }
+
+  public Group getGroup() {
+    return this.group;
+  }
+
+  public List<Role> getRoles() {
+    return this.roles;
+  }
+
   @Override
   public String toString() {
     return "User{" +
@@ -78,6 +108,12 @@ public class User {
           ", email='" + email + '\'' +
           ", name='" + name + '\'' +
           ", deletedAt='" + deletedAt + '\'' +
+          ", reportsTo='" + reportsTo + '\'' +
+          ", timezone='" + timezone + '\'' +
+          ", phoneNumber='" + phoneNumber + '\'' +
+          ", teamName='" + teamName + '\'' +
+          ", group='" + group + '\'' +
+          ", roles=" + roles +
           "}";
   }
 
@@ -97,6 +133,12 @@ public class User {
     if (email != null ? !email.equals(user.email) : user.email != null) return false;
     if (name != null ? !name.equals(user.name) : user.name != null) return false;
     if (deletedAt != null ? !deletedAt.equals(user.deletedAt) : user.deletedAt != null) return false;
+    if (reportsTo != null ? !reportsTo.equals(user.reportsTo) : user.reportsTo != null) return false;
+    if (timezone != null ? !timezone.equals(user.timezone) : user.timezone != null) return false;
+    if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
+    if (teamName != null ? !teamName.equals(user.teamName) : user.teamName != null) return false;
+    if (group != null ? !group.equals(user.group) : user.group != null) return false;
+    if (!roles.equals(user.roles)) return false;
 
     return true;
   }
@@ -113,6 +155,107 @@ public class User {
     result = 31 * result + (email != null ? email.hashCode() : 0);
     result = 31 * result + (name != null ? name.hashCode() : 0);
     result = 31 * result + (deletedAt != null ? deletedAt.hashCode() : 0);
+    result = 31 * result + (reportsTo != null ? reportsTo.hashCode() : 0);
+    result = 31 * result + (timezone != null ? timezone.hashCode() : 0);
+    result = 31 * result + (group != null ? group.hashCode() : 0);
+    result = 31 * result + roles.hashCode();
     return result;
   }
+
+  public static class Group {
+
+    protected @JsonView(Views.ReadOnly.class) Long id;
+
+    protected @JsonView(Views.ReadOnly.class) String name;
+
+    public Group() {
+    }
+
+    public Long getId() {
+      return this.id;
+    }
+
+    public String getName() {
+      return this.name;
+    }
+
+    @Override
+    public String toString() {
+      return "Group{" +
+              "id=" + id +
+              ", name='" + name + '\'' +
+              '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+
+      Group group = (Group) o;
+
+      if (id != null ? !id.equals(group.id) : group.id != null) return false;
+      if (name != null ? !name.equals(group.name) : group.name != null) return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int result = id != null ? id.hashCode() : 0;
+      result = 31 * result + (id != null ? id.hashCode() : 0);
+      result = 31 * result + (name != null ? name.hashCode() : 0);
+      return result;
+    }
+
+  }
+
+  public static class Role {
+
+    protected @JsonView(Views.ReadOnly.class) Long id;
+
+    protected @JsonView(Views.ReadOnly.class) String name;
+
+    public Role() {
+    }
+
+    public Long getId() {
+      return this.id;
+    }
+
+    public String getName() {
+      return this.name;
+    }
+
+    @Override
+    public String toString() {
+      return "Role{" +
+              "id=" + id +
+              ", name='" + name + '\'' +
+              '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+
+      Role role = (Role) o;
+
+      if (id != null ? !id.equals(role.id) : role.id != null) return false;
+      if (name != null ? !name.equals(role.name) : role.name != null) return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int result = id != null ? id.hashCode() : 0;
+      result = 31 * result + (id != null ? id.hashCode() : 0);
+      result = 31 * result + (name != null ? name.hashCode() : 0);
+      return result;
+    }
+
+  }
+
 }

@@ -4,7 +4,7 @@
 
 **Features and Improvements**
 
-* New properties added to User model [#39](https://github.com/basecrm/basecrm-java/issues/39)
+* New properties added to the User model [#39](https://github.com/basecrm/basecrm-java/issues/39)
 
 ### v1.4.8 (2017-10-31)
 

@@ -157,6 +157,8 @@ public class User {
     result = 31 * result + (deletedAt != null ? deletedAt.hashCode() : 0);
     result = 31 * result + (reportsTo != null ? reportsTo.hashCode() : 0);
     result = 31 * result + (timezone != null ? timezone.hashCode() : 0);
+    result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+    result = 31 * result + (teamName != null ? teamName.hashCode() : 0);
     result = 31 * result + (group != null ? group.hashCode() : 0);
     result = 31 * result + roles.hashCode();
     return result;

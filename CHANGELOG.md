@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.10 (2018-01-02)
+
+**Features and Improvements**
+
+* New property (`invited`) added to the User model [#40](https://github.com/basecrm/basecrm-java/issues/40)
+
 ### v1.4.9 (2017-12-14)
 
 **Features and Improvements**

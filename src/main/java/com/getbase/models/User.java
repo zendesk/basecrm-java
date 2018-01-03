@@ -24,6 +24,7 @@ public class User {
   protected @JsonView(Views.ReadOnly.class) String teamName;
   protected @JsonView(Views.ReadOnly.class) Group group;
   protected @JsonView(Views.ReadOnly.class) List<Role> roles = new ArrayList<Role>();
+  protected @JsonView(Views.ReadOnly.class) Boolean invited;
 
   public User() {
   }
@@ -96,6 +97,10 @@ public class User {
     return this.roles;
   }
 
+  public Boolean isInvited() {
+    return this.invited;
+  }
+
   @Override
   public String toString() {
     return "User{" +
@@ -114,6 +119,7 @@ public class User {
           ", teamName='" + teamName + '\'' +
           ", group='" + group + '\'' +
           ", roles=" + roles +
+          ", invited=" + invited +
           "}";
   }
 
@@ -139,6 +145,7 @@ public class User {
     if (teamName != null ? !teamName.equals(user.teamName) : user.teamName != null) return false;
     if (group != null ? !group.equals(user.group) : user.group != null) return false;
     if (!roles.equals(user.roles)) return false;
+    if (invited != null ? !invited.equals(user.invited) : user.invited != null) return false;
 
     return true;
   }
@@ -161,6 +168,7 @@ public class User {
     result = 31 * result + (teamName != null ? teamName.hashCode() : 0);
     result = 31 * result + (group != null ? group.hashCode() : 0);
     result = 31 * result + roles.hashCode();
+    result = 31 * result + (invited != null ? invited.hashCode() : 0);
     return result;
   }
 

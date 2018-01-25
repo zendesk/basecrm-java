@@ -11,26 +11,43 @@ import static com.getbase.utils.Precondition.checkNotNull;
 
 public class Call {
     protected @JsonView(Views.ReadOnly.class) Long id;
+    protected @JsonView(Views.ReadOnly.class) DateTime createdAt;
+    protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
     protected @JsonView(Views.ReadWrite.class) Long userId;
     protected @JsonView(Views.ReadWrite.class) String summary;
-    protected @JsonView(Views.ReadWrite.class) Long recordingUrl;
+    protected @JsonView(Views.ReadWrite.class) String recordingUrl;
     protected @JsonView(Views.ReadWrite.class) Long outcomeId;
     protected @JsonView(Views.ReadWrite.class) Long duration;
     protected @JsonView(Views.ReadWrite.class) String phoneNumber;
     protected @JsonView(Views.ReadWrite.class) Boolean incoming;
     protected @JsonView(Views.ReadWrite.class) Boolean missed;
     protected @JsonView(Views.ReadWrite.class) String resourceType;
-    protected @JsonView(Views.ReadOnly.class) Long resourceId;
-    protected @JsonView(Views.ReadWrite.class) List<String> associatedDealIds = new ArrayList<String>();
-    protected @JsonView(Views.ReadOnly.class) DateTime madeAt;
-    protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
-    protected @JsonView(Views.ReadOnly.class) String externalId;
+    protected @JsonView(Views.ReadWrite.class) Long resourceId;
+    protected @JsonView(Views.ReadWrite.class) List<Long> associatedDealIds = new ArrayList<Long>();
+    protected @JsonView(Views.ReadWrite.class) DateTime madeAt;
+    protected @JsonView(Views.ReadWrite.class) String externalId;
 
     public Call() {
     }
 
     public Long getId() {
         return id;
+    }
+
+    public DateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(DateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public DateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(DateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Long getUserId() {
@@ -49,11 +66,11 @@ public class Call {
         this.summary = summary;
     }
 
-    public Long getRecordingUrl() {
+    public String getRecordingUrl() {
         return recordingUrl;
     }
 
-    public void setRecordingUrl(Long recordingUrl) {
+    public void setRecordingUrl(String recordingUrl) {
         this.recordingUrl = recordingUrl;
     }
 
@@ -113,12 +130,11 @@ public class Call {
         this.resourceId = resourceId;
     }
 
-    public List<String> getAssociatedDealIds() {
+    public List<Long> getAssociatedDealIds() {
         return associatedDealIds;
     }
 
-    public void setAssociatedDealIds(List<String> associatedDealIds) {
-        checkNotNull(associatedDealIds, "associatedDealIds must not be null.");
+    public void setAssociatedDealIds(List<Long> associatedDealIds) {
         this.associatedDealIds = associatedDealIds;
     }
 
@@ -128,14 +144,6 @@ public class Call {
 
     public void setMadeAt(DateTime madeAt) {
         this.madeAt = madeAt;
-    }
-
-    public DateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(DateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public String getExternalId() {
@@ -154,6 +162,8 @@ public class Call {
         Call call = (Call) o;
 
         if (id != null ? !id.equals(call.id) : call.id != null) return false;
+        if (createdAt != null ? !createdAt.equals(call.createdAt) : call.createdAt != null) return false;
+        if (updatedAt != null ? !updatedAt.equals(call.updatedAt) : call.updatedAt != null) return false;
         if (userId != null ? !userId.equals(call.userId) : call.userId != null) return false;
         if (summary != null ? !summary.equals(call.summary) : call.summary != null) return false;
         if (recordingUrl != null ? !recordingUrl.equals(call.recordingUrl) : call.recordingUrl != null) return false;
@@ -167,13 +177,14 @@ public class Call {
         if (associatedDealIds != null ? !associatedDealIds.equals(call.associatedDealIds) : call.associatedDealIds != null)
             return false;
         if (madeAt != null ? !madeAt.equals(call.madeAt) : call.madeAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(call.updatedAt) : call.updatedAt != null) return false;
         return externalId != null ? externalId.equals(call.externalId) : call.externalId == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
+        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (summary != null ? summary.hashCode() : 0);
         result = 31 * result + (recordingUrl != null ? recordingUrl.hashCode() : 0);
@@ -186,7 +197,6 @@ public class Call {
         result = 31 * result + (resourceId != null ? resourceId.hashCode() : 0);
         result = 31 * result + (associatedDealIds != null ? associatedDealIds.hashCode() : 0);
         result = 31 * result + (madeAt != null ? madeAt.hashCode() : 0);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         result = 31 * result + (externalId != null ? externalId.hashCode() : 0);
         return result;
     }
@@ -195,9 +205,11 @@ public class Call {
     public String toString() {
         return "Call{" +
                 "id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 ", userId=" + userId +
                 ", summary='" + summary + '\'' +
-                ", recordingUrl=" + recordingUrl +
+                ", recordingUrl='" + recordingUrl + '\'' +
                 ", outcomeId=" + outcomeId +
                 ", duration=" + duration +
                 ", phoneNumber='" + phoneNumber + '\'' +
@@ -207,7 +219,6 @@ public class Call {
                 ", resourceId=" + resourceId +
                 ", associatedDealIds=" + associatedDealIds +
                 ", madeAt=" + madeAt +
-                ", updatedAt=" + updatedAt +
                 ", externalId='" + externalId + '\'' +
                 '}';
     }

@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.11 (2018-01-25)
+
+**Features and Improvements**
+
+* `Call` model added [#41](https://github.com/basecrm/basecrm-java/pull/41)
+
 ### v1.4.10 (2018-01-02)
 
 **Features and Improvements**

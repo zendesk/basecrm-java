@@ -269,4 +269,15 @@ abstract class BaseSpecification extends Specification {
             client.lineItems().delete(order.id, lineItem.id)
         }
     }
+
+    def createCall(attributes = [:]) {
+        def callAttributes = [
+                'phone_number' : '+44-208-1234567'
+        ]
+        callAttributes << attributes
+        def call = client.calls().create(callAttributes);
+
+        return call
+    }
+
 }

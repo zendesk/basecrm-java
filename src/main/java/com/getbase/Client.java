@@ -29,6 +29,8 @@ public class Client {
     private OrdersService ordersService;
     private LineItemsService lineItemsService;
     private SyncService syncService;
+    private CallsService callsService;
+    private CallOutcomesService callOutcomesService;
 
     public Client(Configuration config) {
         this(config, new com.getbase.http.jersey.HttpClient(config));
@@ -171,6 +173,20 @@ public class Client {
             this.syncService = new SyncService(this.httpClient);
         }
         return this.syncService;
+    }
+
+    public CallsService calls() {
+        if (this.callsService == null) {
+            this.callsService = new CallsService(this.httpClient);
+        }
+        return this.callsService;
+    }
+
+    public CallOutcomesService callOutcomes() {
+        if (this.callOutcomesService == null) {
+            this.callOutcomesService = new CallOutcomesService(this.httpClient);
+        }
+        return this.callOutcomesService;
     }
 
 }

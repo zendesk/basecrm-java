@@ -7,7 +7,6 @@ import com.getbase.utils.BiPredicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.math.BigDecimal;
 
 public class SyncProcess {
 
@@ -41,7 +40,7 @@ public class SyncProcess {
     }
 
 
-    private boolean init() {
+    public boolean init() {
         // Set up a new synchronization session for a UUID for the device
         session = sessionManager.getSession(deviceUUID);
         if (session == null) {
@@ -56,14 +55,14 @@ public class SyncProcess {
         return false;
     }
 
-    private boolean fetchMore() {
+    public boolean fetchMore() {
         nextItems = this.client.sync().fetch(this.deviceUUID, session.getId());
 
         return nextItems != null;
     }
 
     // Drain the main queue until there is no more data (empty array)
-    private void process() {
+    public void process() {
         List<String> ackKeys = new ArrayList<String>(nextItems.size());
 
         // Notify about new data

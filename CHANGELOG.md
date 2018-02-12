@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.12 (2018-02-12)
+
+**Features and Improvements**
+
+* `SyncProcess` is now more controllable [#42](https://github.com/basecrm/basecrm-java/pull/42)
+
 ### v1.4.11 (2018-01-25)
 
 **Features and Improvements**

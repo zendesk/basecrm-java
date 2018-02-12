@@ -104,7 +104,7 @@ class SyncTest extends Specification {
         })
 
         then:
-        !status
+        status
     }
 
     def "FetchInternal"() {

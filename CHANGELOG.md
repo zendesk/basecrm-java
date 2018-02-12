@@ -4,7 +4,7 @@
 
 **Features and Improvements**
 
-* `SyncProcess` is now more controllable [#42](https://github.com/basecrm/basecrm-java/pull/42)
+* `Sync` supports `timeToRunInMillis` constructor parameter, to specify max time it is allowed to run [#42](https://github.com/basecrm/basecrm-java/pull/42)
 
 ### v1.4.11 (2018-01-25)
 

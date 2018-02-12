@@ -12,12 +12,19 @@ import static com.getbase.utils.Precondition.checkNotNull;
 public class Sync {
     protected final Client client;
     protected final String deviceUUID;
+    protected final long timeToRunInMillis;
+
     protected final StreamObservable streamObservable;
     private SessionManager sessionManager;
 
     public Sync(Client client, String deviceUUID) {
+        this(client, deviceUUID, Long.MAX_VALUE);
+    }
+
+    public Sync(Client client, String deviceUUID, long timeToRunInMillis) {
         this.client = client;
         this.deviceUUID = deviceUUID;
+        this.timeToRunInMillis = timeToRunInMillis;
         this.streamObservable = new StreamObservable();
         sessionManager = new SessionManager();
     }
@@ -52,10 +59,6 @@ public class Sync {
         return fetchInternal(predicate);
     }
 
-    public SyncProcess newSyncProcess() {
-        return newSyncProcess(streamObservable);
-    }
-
     protected boolean fetchInternal(BiPredicate<Meta, Map<String, Object>> predicate) {
         return newSyncProcess(predicate).run();
     }
@@ -63,7 +66,7 @@ public class Sync {
     private SyncProcess newSyncProcess(BiPredicate<Meta, Map<String, Object>> predicate) {
         checkNotNull(predicate, "predicate parameter must not be null");
 
-        return new SyncProcess(client, deviceUUID, sessionManager, predicate);
+        return new SyncProcess(client, deviceUUID, sessionManager, predicate, timeToRunInMillis);
     }
 
     private static class StreamObservable implements BiPredicate<Meta, Map<String, Object>> {

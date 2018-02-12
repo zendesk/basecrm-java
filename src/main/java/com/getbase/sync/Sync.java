@@ -52,12 +52,18 @@ public class Sync {
         return fetchInternal(predicate);
     }
 
+    public SyncProcess newSyncProcess() {
+        return newSyncProcess(streamObservable);
+    }
+
     protected boolean fetchInternal(BiPredicate<Meta, Map<String, Object>> predicate) {
+        return newSyncProcess(predicate).run();
+    }
+
+    private SyncProcess newSyncProcess(BiPredicate<Meta, Map<String, Object>> predicate) {
         checkNotNull(predicate, "predicate parameter must not be null");
 
-        SyncProcess syncProcess = new SyncProcess(client, deviceUUID, sessionManager, predicate);
-        
-        return syncProcess.run();
+        return new SyncProcess(client, deviceUUID, sessionManager, predicate);
     }
 
     private static class StreamObservable implements BiPredicate<Meta, Map<String, Object>> {

@@ -20,47 +20,40 @@ public class SyncProcess {
     private Session session;
     private List<Map<String, Object>> nextItems;
 
+    private long timeToRunInMillis;
+
     public SyncProcess(Client client, String deviceUUID, SessionManager sessionManager,
-                       BiPredicate<Meta, Map<String, Object>> predicate) {
+                       BiPredicate<Meta, Map<String, Object>> predicate,
+                       long timeToRunInMillis) {
         this.client = client;
         this.deviceUUID = deviceUUID;
         this.sessionManager = sessionManager;
         this.predicate = predicate;
-    }
-
-    public boolean run() {
-        if (!init()) {
-            return false;
-        }
-
-        while (fetchMore()) {
-            process();
-        }
-
-        sessionManager.clearSession(deviceUUID);
-        return true;
+        this.timeToRunInMillis = timeToRunInMillis;
     }
 
     /**
-     * @param timeToRunInMillis - maximum time to run for sync process
      * @return true if sync was full - there are no more elements to fetch, false otherwise
      */
-    public boolean run(final long timeToRunInMillis) {
+    public boolean run() {
         long startTime = currentTimeMillis();
 
-        if (!init()) {
-            return true;
-        }
-
-        while (fetchMore()) {
-            process();
-            if (currentTimeMillis() - startTime >= timeToRunInMillis) {
-                return false;
+        try {
+            if (!init()) {
+                return true;
             }
-        }
 
-        sessionManager.clearSession(deviceUUID);
-        return true;
+            while (fetchMore()) {
+                if (currentTimeMillis() - startTime >= timeToRunInMillis) {
+                    return false;
+                }
+                process();
+            }
+
+            return true;
+        } finally {
+            sessionManager.clearSession(deviceUUID);
+        }
     }
 
     private boolean init() {

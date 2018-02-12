@@ -20,7 +20,7 @@ class SyncProcessTest extends Specification {
     def session = new Session(sessionId, [])
 
     def setup() {
-        syncProcess = new SyncProcess(client, deviceUUID, sessionManager, { x, y -> true })
+        syncProcess = new SyncProcess(client, deviceUUID, sessionManager, { x, y -> true }, Long.MAX_VALUE)
         client.syncService = syncService
     }
 

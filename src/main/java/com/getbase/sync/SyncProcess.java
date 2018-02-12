@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.currentTimeMillis;
+
 public class SyncProcess {
 
     private Client client;
@@ -39,8 +41,29 @@ public class SyncProcess {
         return true;
     }
 
+    /**
+     * @param timeToRunInMillis - maximum time to run for sync process
+     * @return true if sync was full - there are no more elements to fetch, false otherwise
+     */
+    public boolean run(final long timeToRunInMillis) {
+        long startTime = currentTimeMillis();
 
-    public boolean init() {
+        if (!init()) {
+            return true;
+        }
+
+        while (fetchMore()) {
+            process();
+            if (currentTimeMillis() - startTime >= timeToRunInMillis) {
+                return false;
+            }
+        }
+
+        sessionManager.clearSession(deviceUUID);
+        return true;
+    }
+
+    private boolean init() {
         // Set up a new synchronization session for a UUID for the device
         session = sessionManager.getSession(deviceUUID);
         if (session == null) {
@@ -55,14 +78,14 @@ public class SyncProcess {
         return false;
     }
 
-    public boolean fetchMore() {
+    private boolean fetchMore() {
         nextItems = this.client.sync().fetch(this.deviceUUID, session.getId());
 
         return nextItems != null;
     }
 
     // Drain the main queue until there is no more data (empty array)
-    public void process() {
+    private void process() {
         List<String> ackKeys = new ArrayList<String>(nextItems.size());
 
         // Notify about new data

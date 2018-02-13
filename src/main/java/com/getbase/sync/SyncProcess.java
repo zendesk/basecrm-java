@@ -23,6 +23,11 @@ public class SyncProcess {
     private long timeToRunInMillis;
 
     public SyncProcess(Client client, String deviceUUID, SessionManager sessionManager,
+                       BiPredicate<Meta, Map<String, Object>> predicate) {
+        this(client, deviceUUID, sessionManager, predicate, Long.MAX_VALUE);
+    }
+
+    public SyncProcess(Client client, String deviceUUID, SessionManager sessionManager,
                        BiPredicate<Meta, Map<String, Object>> predicate,
                        long timeToRunInMillis) {
         this.client = client;

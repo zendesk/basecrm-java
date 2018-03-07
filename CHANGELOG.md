@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v1.4.13 (2018-03-07)
+**Bug Fixes**
+* Serialize dealId as writable attribute for create/update [#44](https://github.com/basecrm/basecrm-java/pull/44)
+
 ### v1.4.12 (2018-02-12)
 
 **Features and Improvements**

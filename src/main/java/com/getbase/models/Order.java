@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 public class Order {
 
     protected @JsonView(Views.ReadOnly.class) Long id;
-    protected @JsonView(Views.ReadOnly.class) Long dealId;
+    protected @JsonView(Views.ReadWrite.class) Long dealId;
     protected @JsonView(Views.ReadWrite.class) Long discount;
     protected @JsonView(Views.ReadOnly.class) DateTime createdAt;
     protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;

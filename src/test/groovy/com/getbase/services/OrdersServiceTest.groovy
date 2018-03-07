@@ -61,7 +61,7 @@ class OrdersServiceTest extends BaseSpecification {
 
     def "Update"() {
         when:
-        order.dealId = createDeal().id
+        order.discount = 15
         def updated = client.orders().update(order)
 
         then:

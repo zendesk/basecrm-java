@@ -202,6 +202,19 @@ Actions:
 * Update a deal - `client.deals().update()`
 * Delete a deal - `client.deals().delete()`
 
+### DealUnqualifiedReason
+
+```java
+client.dealUnqualifiedReasons(); // => com.getbase.services.DealUnqualifiedReasonsService
+```
+
+Actions:
+* Retrieve all deal unqualified reasons - `client.dealUnqualifiedReasons().list()`
+* Create a deal unqualified reason - `client.dealUnqualifiedReasons().create()`
+* Retrieve a single deal unqualified reason - `client.dealUnqualifiedReasons().get()`
+* Update a deal unqualified reason - `client.dealUnqualifiedReasons().update()`
+* Delete a deal unqualified reason - `client.dealUnqualifiedReasons().delete()`
+
 ### Lead
 
 ```java
@@ -214,6 +227,15 @@ Actions:
 * Retrieve a single lead - `client.leads().get()`
 * Update a lead - `client.leads().update()`
 * Delete a lead - `client.leads().delete()`
+
+### LeadUnqualifiedReason
+
+```java
+client.leadUnqualifiedReasons(); // => com.getbase.services.LeadUnqualifiedReasonsService
+```
+
+Actions:
+* Retrieve all lead unqualified reasons - `client.leadUnqualifiedReasons().list()`
 
 ### LossReason
 

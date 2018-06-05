@@ -15,7 +15,9 @@ public class Client {
     private AssociatedContactsService associatedContactsService;
     private ContactsService contactsService;
     private DealsService dealsService;
+    private DealUnqualifiedReasonsService dealUnqualifiedReasonsService;
     private LeadsService leadsService;
+    private LeadUnqualifiedReasonsService leadUnqualifiedReasonsService;
     private LossReasonsService lossReasonsService;
     private NotesService notesService;
     private PipelinesService pipelinesService;
@@ -76,12 +78,26 @@ public class Client {
         }
         return this.dealsService;
     }
-   
+
+    public DealUnqualifiedReasonsService dealUnqualifiedReasons() {
+        if (this.dealUnqualifiedReasonsService == null) {
+            this.dealUnqualifiedReasonsService = new DealUnqualifiedReasonsService(this.httpClient);
+        }
+        return this.dealUnqualifiedReasonsService;
+    }
+
     public LeadsService leads() {
         if (this.leadsService == null) {
             this.leadsService = new LeadsService(this.httpClient);
         }
         return this.leadsService;
+    }
+
+    public LeadUnqualifiedReasonsService leadUnqualifiedReasons() {
+        if (this.leadUnqualifiedReasonsService == null) {
+            this.leadUnqualifiedReasonsService = new LeadUnqualifiedReasonsService(this.httpClient);
+        }
+        return this.leadUnqualifiedReasonsService;
     }
    
     public LossReasonsService lossReasons() {

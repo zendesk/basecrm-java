@@ -45,16 +45,16 @@ abstract class BaseSpecification extends Specification {
 
 
     def createAssociatedContact(attributes = [:]) {
-        def dealId = createDeal().id;
+        def dealId = createDeal().id
         def associatedContactAttributes = [
                 'role'      : "involved",
                 'contact_id': createContact().id,
         ]
         associatedContactAttributes << attributes
-        def associatedContact = client.associatedContacts().create(dealId, associatedContactAttributes);
+        def associatedContact = client.associatedContacts().create(dealId, associatedContactAttributes)
 
         associatedContact.metaClass.dealId = dealId
-        return associatedContact;
+        return associatedContact
     }
 
     def createContact(attributes = [:]) {
@@ -78,9 +78,9 @@ abstract class BaseSpecification extends Specification {
                 'tags'           : ["important"],
         ]
         contactAttributes << attributes
-        def contact = client.contacts().create(contactAttributes);
+        def contact = client.contacts().create(contactAttributes)
 
-        return contact;
+        return contact
     }
 
     def createDeal(attributes = [:]) {
@@ -95,9 +95,9 @@ abstract class BaseSpecification extends Specification {
                 'estimated_close_date' :"2014-09-27T16:32:56Z",
         ]
         dealAttributes << attributes
-        def deal = client.deals().create(dealAttributes);
+        def deal = client.deals().create(dealAttributes)
 
-        return deal;
+        return deal
     }
 
     def createDecimalDeal(attributes = [:]) {
@@ -112,9 +112,19 @@ abstract class BaseSpecification extends Specification {
                 'estimated_close_date' :"2014-09-27T16:32:56Z",
         ]
         dealAttributes << attributes
-        def deal = client.deals().create(dealAttributes);
+        def deal = client.deals().create(dealAttributes)
 
-        return deal;
+        return deal
+    }
+
+    def createDealUnqualifiedReason(attributes = [:]) {
+        def dealUnqualifiedReasonAttributes = [
+            'name': 'We were too expensive' +  nextRand(),
+        ]
+        dealUnqualifiedReasonAttributes << attributes
+        def dealUnqualifiedReason = client.dealUnqualifiedReasons().create(dealUnqualifiedReasonAttributes)
+
+        return dealUnqualifiedReason
     }
 
     def createLead(attributes = [:]) {
@@ -137,9 +147,9 @@ abstract class BaseSpecification extends Specification {
                 'tags'       : ["important"],
         ]
         leadAttributes << attributes
-        def lead = client.leads().create(leadAttributes);
+        def lead = client.leads().create(leadAttributes)
 
-        return lead;
+        return lead
     }
 
     def createLossReason(attributes = [:]) {
@@ -147,9 +157,9 @@ abstract class BaseSpecification extends Specification {
                 'name': 'We were too expensive' + nextRand(),
         ]
         lossReasonAttributes << attributes
-        def lossReason = client.lossReasons().create(lossReasonAttributes);
+        def lossReason = client.lossReasons().create(lossReasonAttributes)
 
-        return lossReason;
+        return lossReason
     }
 
     def createNote(attributes = [:]) {
@@ -159,9 +169,9 @@ abstract class BaseSpecification extends Specification {
                 'resource_type': 'contact',
         ]
         noteAttributes << attributes
-        def note = client.notes().create(noteAttributes);
+        def note = client.notes().create(noteAttributes)
 
-        return note;
+        return note
     }
 
     def createSource(attributes = [:]) {
@@ -169,9 +179,9 @@ abstract class BaseSpecification extends Specification {
                 'name': 'Word of mouth' + nextRand(),
         ]
         sourceAttributes << attributes
-        def source = client.sources().create(sourceAttributes);
+        def source = client.sources().create(sourceAttributes)
 
-        return source;
+        return source
     }
 
     def createLeadSource(attributes = [:]) {
@@ -179,9 +189,9 @@ abstract class BaseSpecification extends Specification {
                 'name': 'Word of mouth' + nextRand(),
         ]
         sourceAttributes << attributes
-        def source = client.leadSources().create(sourceAttributes);
+        def source = client.leadSources().create(sourceAttributes)
 
-        return source;
+        return source
     }
 
     def createTag(attributes = [:]) {
@@ -190,9 +200,9 @@ abstract class BaseSpecification extends Specification {
                 'resource_type': 'contact',
         ]
         tagAttributes << attributes
-        def tag = client.tags().create(tagAttributes);
+        def tag = client.tags().create(tagAttributes)
 
-        return tag;
+        return tag
     }
 
     def createTask(attributes = [:]) {
@@ -204,9 +214,9 @@ abstract class BaseSpecification extends Specification {
                 'resource_type': 'contact',
         ]
         taskAttributes << attributes
-        def task = client.tasks().create(taskAttributes);
+        def task = client.tasks().create(taskAttributes)
 
-        return task;
+        return task
     }
 
     def createProduct(attributes = [:]) {
@@ -231,9 +241,9 @@ abstract class BaseSpecification extends Specification {
                 "max_markup"   : 5,
         ]
         productAttributes << attributes
-        def product = client.products().create(productAttributes);
+        def product = client.products().create(productAttributes)
 
-        return product;
+        return product
     }
 
     def createOrder(attributes = [:]) {
@@ -275,7 +285,7 @@ abstract class BaseSpecification extends Specification {
                 'phone_number' : '+44-208-1234567'
         ]
         callAttributes << attributes
-        def call = client.calls().create(callAttributes);
+        def call = client.calls().create(callAttributes)
 
         return call
     }

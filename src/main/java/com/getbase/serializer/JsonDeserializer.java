@@ -1,7 +1,7 @@
 package com.getbase.serializer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.getbase.exceptions.BaseError;
 import com.getbase.exceptions.SerializationException;
 

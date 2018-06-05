@@ -1,7 +1,6 @@
 package com.getbase.sync;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonValueInstantiator;
 import com.getbase.serializer.Views;
 import com.getbase.utils.Word;
 

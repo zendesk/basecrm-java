@@ -7,11 +7,11 @@ import com.getbase.serializer.Views;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 public class Lead {
   protected @JsonView(Views.ReadOnly.class) Long id;

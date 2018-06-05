@@ -10,7 +10,8 @@ import com.getbase.serializer.Views;
 
 import java.util.*;
 
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkArgument;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 
 public class AssociatedContactsService extends BaseService {

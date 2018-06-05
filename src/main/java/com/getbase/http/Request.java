@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 public class Request {
     private HttpMethod method = HttpMethod.GET;

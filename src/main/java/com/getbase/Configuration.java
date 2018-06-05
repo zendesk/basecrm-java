@@ -1,6 +1,6 @@
 package com.getbase;
 
-import static com.getbase.BaseCRM.*;
+import static com.getbase.BaseCRM.VERSION;
 
 public class Configuration {
 

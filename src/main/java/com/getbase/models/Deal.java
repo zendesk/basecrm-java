@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.getbase.serializer.Views;
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 public class Deal {
   protected @JsonView(Views.ReadOnly.class) Long id;

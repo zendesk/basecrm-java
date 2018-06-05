@@ -1,7 +1,6 @@
 package com.getbase.services
 
 import com.getbase.models.LineItem
-import com.getbase.models.Order
 import spock.lang.Shared
 import spock.lang.Unroll
 

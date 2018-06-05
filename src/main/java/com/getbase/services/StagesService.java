@@ -5,14 +5,14 @@ package com.getbase.services;
 import com.getbase.http.HttpClient;
 import com.getbase.models.Stage;
 import com.getbase.serializer.JsonDeserializer;
-import com.getbase.serializer.JsonSerializer;
-import com.getbase.serializer.Views;
 import com.getbase.utils.Joiner;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.getbase.utils.Lists.asList;
-import static com.getbase.utils.Precondition.*;
 
 
 public class StagesService extends BaseService {

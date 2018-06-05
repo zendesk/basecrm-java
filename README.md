@@ -237,6 +237,18 @@ client.leadUnqualifiedReasons(); // => com.getbase.services.LeadUnqualifiedReaso
 Actions:
 * Retrieve all lead unqualified reasons - `client.leadUnqualifiedReasons().list()`
 
+### LineItem
+
+```java
+client.lineItems(); // => com.getbase.services.LineItemsService
+```
+
+Actions:
+* Retrieve order's line items - `client.lineItems().list()`
+* Create a line item - `client.lineItems().create()`
+* Retrieve a single line item - `client.lineItems().get()`
+* Delete a line item - `client.lineItems().delete()`
+
 ### LossReason
 
 ```java
@@ -263,6 +275,19 @@ Actions:
 * Update a note - `client.notes().update()`
 * Delete a note - `client.notes().delete()`
 
+### Order
+
+```java
+client.orders(); // => com.getbase.services.OrdersService
+```
+
+Actions:
+* Retrieve all orders - `client.orders().list()`
+* Create an order - `client.orders().create()`
+* Retrieve a single order - `client.orders().get()`
+* Update an order - `client.orders().update()`
+* Delete an order - `client.orders().delete()`
+
 ### Pipeline
 
 ```java
@@ -271,7 +296,6 @@ client.pipelines(); // => com.getbase.services.PipelinesService
 
 Actions:
 * Retrieve all pipelines - `client.pipelines().list()`
-
 
 ### Product
 

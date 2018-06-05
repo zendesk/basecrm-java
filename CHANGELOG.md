@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### v1.4.14 (2018-06-06)
+
+**Features and Improvements**
+
+* `LeadUnqualifiedReason`, `DealUnqualifiedReason` models added
+
+
 ### v1.4.13 (2018-03-07)
 **Bug Fixes**
 * Serialize dealId as writable attribute for create/update [#44](https://github.com/basecrm/basecrm-java/pull/44)

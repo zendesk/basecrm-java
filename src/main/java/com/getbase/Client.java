@@ -13,26 +13,26 @@ public class Client {
 
     private AccountsService accountsService;
     private AssociatedContactsService associatedContactsService;
+    private CallsService callsService;
+    private CallOutcomesService callOutcomesService;
     private ContactsService contactsService;
     private DealsService dealsService;
     private DealUnqualifiedReasonsService dealUnqualifiedReasonsService;
     private LeadsService leadsService;
     private LeadUnqualifiedReasonsService leadUnqualifiedReasonsService;
+    private LineItemsService lineItemsService;
     private LossReasonsService lossReasonsService;
     private NotesService notesService;
+    private OrdersService ordersService;
     private PipelinesService pipelinesService;
+    private ProductsService productsService;
     private SourcesService sourcesService;
     private LeadSourcesService leadSourcesService;
     private StagesService stagesService;
     private TagsService tagsService;
     private TasksService tasksService;
     private UsersService usersService;
-    private ProductsService productsService;
-    private OrdersService ordersService;
-    private LineItemsService lineItemsService;
     private SyncService syncService;
-    private CallsService callsService;
-    private CallOutcomesService callOutcomesService;
 
     public Client(Configuration config) {
         this(config, new com.getbase.http.jersey.HttpClient(config));
@@ -50,19 +50,33 @@ public class Client {
     public HttpClient getHttpClient() {
         return this.httpClient;
     }
-   
+
     public AccountsService accounts() {
         if (this.accountsService == null) {
             this.accountsService = new AccountsService(this.httpClient);
         }
         return this.accountsService;
     }
-   
+
     public AssociatedContactsService associatedContacts() {
         if (this.associatedContactsService == null) {
             this.associatedContactsService = new AssociatedContactsService(this.httpClient);
         }
         return this.associatedContactsService;
+    }
+
+    public CallsService calls() {
+        if (this.callsService == null) {
+            this.callsService = new CallsService(this.httpClient);
+        }
+        return this.callsService;
+    }
+
+    public CallOutcomesService callOutcomes() {
+        if (this.callOutcomesService == null) {
+            this.callOutcomesService = new CallOutcomesService(this.httpClient);
+        }
+        return this.callOutcomesService;
     }
    
     public ContactsService contacts() {
@@ -71,7 +85,7 @@ public class Client {
         }
         return this.contactsService;
     }
-   
+
     public DealsService deals() {
         if (this.dealsService == null) {
             this.dealsService = new DealsService(this.httpClient);
@@ -99,28 +113,49 @@ public class Client {
         }
         return this.leadUnqualifiedReasonsService;
     }
-   
+
+    public LineItemsService lineItems() {
+        if (this.lineItemsService == null) {
+            this.lineItemsService = new LineItemsService(this.httpClient);
+        }
+        return this.lineItemsService;
+    }
+
     public LossReasonsService lossReasons() {
         if (this.lossReasonsService == null) {
             this.lossReasonsService = new LossReasonsService(this.httpClient);
         }
         return this.lossReasonsService;
     }
-   
+
     public NotesService notes() {
         if (this.notesService == null) {
             this.notesService = new NotesService(this.httpClient);
         }
         return this.notesService;
     }
-   
+
+    public OrdersService orders() {
+        if (this.ordersService == null) {
+            this.ordersService = new OrdersService(this.httpClient);
+        }
+        return this.ordersService;
+    }
+
     public PipelinesService pipelines() {
         if (this.pipelinesService == null) {
             this.pipelinesService = new PipelinesService(this.httpClient);
         }
         return this.pipelinesService;
     }
-   
+
+    public ProductsService products() {
+        if (this.productsService == null) {
+            this.productsService = new ProductsService(this.httpClient);
+        }
+        return this.productsService;
+    }
+
     public SourcesService sources() {
         if (this.sourcesService == null) {
             this.sourcesService = new SourcesService(this.httpClient);
@@ -141,47 +176,26 @@ public class Client {
         }
         return this.stagesService;
     }
-   
+
     public TagsService tags() {
         if (this.tagsService == null) {
             this.tagsService = new TagsService(this.httpClient);
         }
         return this.tagsService;
     }
-   
+
     public TasksService tasks() {
         if (this.tasksService == null) {
             this.tasksService = new TasksService(this.httpClient);
         }
         return this.tasksService;
     }
-   
+
     public UsersService users() {
         if (this.usersService == null) {
             this.usersService = new UsersService(this.httpClient);
         }
         return this.usersService;
-    }
-   
-    public ProductsService products() {
-        if (this.productsService == null) {
-            this.productsService = new ProductsService(this.httpClient);
-        }
-        return this.productsService;
-    }
-
-    public OrdersService orders() {
-        if (this.ordersService == null) {
-            this.ordersService = new OrdersService(this.httpClient);
-        }
-        return this.ordersService;
-    }
-
-    public LineItemsService lineItems() {
-        if (this.lineItemsService == null) {
-            this.lineItemsService = new LineItemsService(this.httpClient);
-        }
-        return this.lineItemsService;
     }
 
     public SyncService sync() {
@@ -190,19 +204,4 @@ public class Client {
         }
         return this.syncService;
     }
-
-    public CallsService calls() {
-        if (this.callsService == null) {
-            this.callsService = new CallsService(this.httpClient);
-        }
-        return this.callsService;
-    }
-
-    public CallOutcomesService callOutcomes() {
-        if (this.callOutcomesService == null) {
-            this.callOutcomesService = new CallOutcomesService(this.httpClient);
-        }
-        return this.callOutcomesService;
-    }
-
 }

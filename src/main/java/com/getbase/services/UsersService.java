@@ -5,14 +5,12 @@ package com.getbase.services;
 import com.getbase.http.HttpClient;
 import com.getbase.models.User;
 import com.getbase.serializer.JsonDeserializer;
-import com.getbase.serializer.JsonSerializer;
-import com.getbase.serializer.Views;
 import com.getbase.utils.Joiner;
 
 import java.util.*;
 
 import static com.getbase.utils.Lists.asList;
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkArgument;
 
 
 public class UsersService extends BaseService {

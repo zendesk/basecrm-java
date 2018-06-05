@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.getbase.serializer.Views;
 import org.joda.time.DateTime;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
 
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 public class Product {
   protected @JsonView(Views.ReadOnly.class) Long id;

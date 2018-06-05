@@ -5,12 +5,6 @@ package com.getbase.services;
 import com.getbase.http.HttpClient;
 import com.getbase.models.Account;
 import com.getbase.serializer.JsonDeserializer;
-import com.getbase.serializer.JsonSerializer;
-import com.getbase.serializer.Views;
-
-import java.util.*;
-
-import static com.getbase.utils.Precondition.*;
 
 
 public class AccountsService extends BaseService {

@@ -7,8 +7,6 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.getbase.utils.Precondition.checkNotNull;
-
 public class Call {
     protected @JsonView(Views.ReadOnly.class) Long id;
     protected @JsonView(Views.ReadOnly.class) DateTime createdAt;

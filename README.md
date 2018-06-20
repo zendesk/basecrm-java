@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.getbase:basecrm-java:1.4.12"
+  compile "com.getbase:basecrm-java:1.4.15"
 }
 ```
 
@@ -175,6 +175,31 @@ Actions:
 * Retrieve deal's associated contacts - `client.associatedContacts().list()`
 * Create an associated contact - `client.associatedContacts().create()`
 * Remove an associated contact - `client.associatedContacts().delete()`
+
+### Call
+
+```java
+client.calls(); // => com.getbase.services.CallsService
+```
+
+Actions:
+* Retrieve all calls - `client.calls().list()`
+* Create a call - `client.calls().create()`
+* Retrieve a single call - `client.calls().get()`
+* Update a call - `client.calls().update()`
+* Delete a call - `client.calls().delete()`
+
+### Collaboration
+
+```java
+client.collaborations(); // => com.getbase.services.CollaborationsService
+```
+
+Actions:
+* Retrieve all collaborations - `client.collaborations().list()`
+* Create a collaboration - `client.collaborations().create()`
+* Retrieve a single collaboration - `client.collaborations().get()`
+* Delete a collaboration - `client.collaborations().delete()`
 
 ### Contact
 

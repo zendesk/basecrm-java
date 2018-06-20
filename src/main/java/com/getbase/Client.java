@@ -3,7 +3,28 @@
 package com.getbase;
 
 import com.getbase.http.HttpClient;
-import com.getbase.services.*;
+import com.getbase.services.AccountsService;
+import com.getbase.services.AssociatedContactsService;
+import com.getbase.services.CallOutcomesService;
+import com.getbase.services.CallsService;
+import com.getbase.services.CollaborationsService;
+import com.getbase.services.ContactsService;
+import com.getbase.services.DealUnqualifiedReasonsService;
+import com.getbase.services.DealsService;
+import com.getbase.services.LeadSourcesService;
+import com.getbase.services.LeadUnqualifiedReasonsService;
+import com.getbase.services.LeadsService;
+import com.getbase.services.LineItemsService;
+import com.getbase.services.LossReasonsService;
+import com.getbase.services.NotesService;
+import com.getbase.services.OrdersService;
+import com.getbase.services.PipelinesService;
+import com.getbase.services.ProductsService;
+import com.getbase.services.SourcesService;
+import com.getbase.services.StagesService;
+import com.getbase.services.TagsService;
+import com.getbase.services.TasksService;
+import com.getbase.services.UsersService;
 import com.getbase.sync.SyncService;
 
 public class Client {
@@ -15,6 +36,7 @@ public class Client {
     private AssociatedContactsService associatedContactsService;
     private CallsService callsService;
     private CallOutcomesService callOutcomesService;
+    private CollaborationsService collaborationsService;
     private ContactsService contactsService;
     private DealsService dealsService;
     private DealUnqualifiedReasonsService dealUnqualifiedReasonsService;
@@ -78,7 +100,14 @@ public class Client {
         }
         return this.callOutcomesService;
     }
-   
+
+    public CollaborationsService collaborations() {
+        if (this.collaborationsService == null) {
+            this.collaborationsService = new CollaborationsService(this.httpClient);
+        }
+        return this.collaborationsService;
+    }
+
     public ContactsService contacts() {
         if (this.contactsService == null) {
             this.contactsService = new ContactsService(this.httpClient);
@@ -169,7 +198,7 @@ public class Client {
         }
         return this.leadSourcesService;
     }
-   
+
     public StagesService stages() {
         if (this.stagesService == null) {
             this.stagesService = new StagesService(this.httpClient);
@@ -204,4 +233,5 @@ public class Client {
         }
         return this.syncService;
     }
+
 }

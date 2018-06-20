@@ -57,6 +57,19 @@ abstract class BaseSpecification extends Specification {
         return associatedContact
     }
 
+    def createCollaboration(attributes = [:]) {
+        def contact = createContact()
+
+        def collaborationAttributes = [
+                'resource_type'  : 'contact',
+                'resource_id'    : contact.id,
+                'collaborator_id': contact.ownerId,
+        ]
+
+        collaborationAttributes << attributes
+        client.collaborations().create(collaborationAttributes)
+    }
+
     def createContact(attributes = [:]) {
         def contactAttributes = [
                 'description'    : "I know him via Tom",
@@ -85,14 +98,14 @@ abstract class BaseSpecification extends Specification {
 
     def createDeal(attributes = [:]) {
         def dealAttributes = [
-                'currency'  : "EUR",
-                'hot'       : true,
-                'name'      : 'Website Redesign' + nextRand(),
-                'value'     : 1000.0,
-                'tags'      : ["important"],
-                'contact_id': createContact().id,
-                'last_stage_change_at' : "2014-09-27T16:32:56Z",
-                'estimated_close_date' :"2014-09-27T16:32:56Z",
+                'currency'            : "EUR",
+                'hot'                 : true,
+                'name'                : 'Website Redesign' + nextRand(),
+                'value'               : 1000.0,
+                'tags'                : ["important"],
+                'contact_id'          : createContact().id,
+                'last_stage_change_at': "2014-09-27T16:32:56Z",
+                'estimated_close_date': "2014-09-27T16:32:56Z",
         ]
         dealAttributes << attributes
         def deal = client.deals().create(dealAttributes)
@@ -102,14 +115,14 @@ abstract class BaseSpecification extends Specification {
 
     def createDecimalDeal(attributes = [:]) {
         def dealAttributes = [
-                'currency'  : "EUR",
-                'hot'       : true,
-                'name'      : 'Website Redesign' + nextRand(),
-                'value'     : '1000.25',
-                'tags'      : ["important"],
-                'contact_id': createContact().id,
-                'last_stage_change_at' : "2014-09-27T16:32:56Z",
-                'estimated_close_date' :"2014-09-27T16:32:56Z",
+                'currency'            : "EUR",
+                'hot'                 : true,
+                'name'                : 'Website Redesign' + nextRand(),
+                'value'               : '1000.25',
+                'tags'                : ["important"],
+                'contact_id'          : createContact().id,
+                'last_stage_change_at': "2014-09-27T16:32:56Z",
+                'estimated_close_date': "2014-09-27T16:32:56Z",
         ]
         dealAttributes << attributes
         def deal = client.deals().create(dealAttributes)
@@ -119,7 +132,7 @@ abstract class BaseSpecification extends Specification {
 
     def createDealUnqualifiedReason(attributes = [:]) {
         def dealUnqualifiedReasonAttributes = [
-            'name': 'We were too expensive' +  nextRand(),
+                'name': 'We were too expensive' + nextRand(),
         ]
         dealUnqualifiedReasonAttributes << attributes
         def dealUnqualifiedReason = client.dealUnqualifiedReasons().create(dealUnqualifiedReasonAttributes)
@@ -248,8 +261,8 @@ abstract class BaseSpecification extends Specification {
 
     def createOrder(attributes = [:]) {
         def orderAttributes = [
-                "deal_id"   : createDeal().id,
-                "discount"  : 5,
+                "deal_id" : createDeal().id,
+                "discount": 5,
         ]
         orderAttributes << attributes
         return client.orders().create(orderAttributes)
@@ -258,10 +271,10 @@ abstract class BaseSpecification extends Specification {
     def createLineItem(order = null, attributes = [:]) {
         def product = createProduct()
         def lineItemAttributes = [
-                "product_id"    : product.id,
-                "currency"      : product.prices.first().currency,
-                "variation"     : "0.00",
-                "quantity"      : 10,
+                "product_id": product.id,
+                "currency"  : product.prices.first().currency,
+                "variation" : "0.00",
+                "quantity"  : 10,
         ]
         lineItemAttributes << attributes
         return client.lineItems().create((order ?: createOrder()).id, lineItemAttributes)
@@ -282,7 +295,7 @@ abstract class BaseSpecification extends Specification {
 
     def createCall(attributes = [:]) {
         def callAttributes = [
-                'phone_number' : '+44-208-1234567'
+                'phone_number': '+44-208-1234567'
         ]
         callAttributes << attributes
         def call = client.calls().create(callAttributes)

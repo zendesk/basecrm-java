@@ -45,7 +45,7 @@ The following builder options are available while instantiating a client:
 
  * __accessToken__: Personal access token
  * __baseUrl__: Base url for the api. Default: `https://api.getbase.com`
- * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.4.12`
+ * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.4.15`
  * __timeout__: Request timeout. Default: `30` seconds
  * __verbose__: Verbose/debug mode. Default: `false`
  * __verifySSL__: Whether to skip SSL verification or not. Default: `true`
@@ -188,6 +188,15 @@ Actions:
 * Retrieve a single call - `client.calls().get()`
 * Update a call - `client.calls().update()`
 * Delete a call - `client.calls().delete()`
+
+### Call Outcome
+
+```java
+client.callOutcomes(); // => com.getbase.services.CallOutcomesService
+```
+
+Actions:
+* Retrieve all call outcomes - `client.callOutcomes().list()`
 
 ### Collaboration
 

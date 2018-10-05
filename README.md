@@ -405,6 +405,16 @@ Actions:
 * Update a task - `client.tasks().update()`
 * Delete a task - `client.tasks().delete()`
 
+### TextMessage
+
+```java
+client.textMessages(); // => com.getbase.services.TextMessagesService
+```
+
+Actions:
+* Retrieve text messages - `client.textMessages().list()`
+* Retrieve a single text message - `client.textMessages().get()`
+
 ### User
 
 ```java
@@ -415,6 +425,24 @@ Actions:
 * Retrieve all users - `client.users().list()`
 * Retrieve a single user - `client.users().get()`
 * Retrieve an authenticating user - `client.users().self()`
+
+### Visit
+
+```java
+client.visits(); // => com.getbase.services.VisitsService
+```
+
+Actions:
+* Retrieve visits - `client.visits().list()`
+
+### VisitOutcome
+
+```java
+client.visitOutcomes(); // => com.getbase.services.VisitOutcomesService
+```
+
+Actions:
+* Retrieve visit outcomes - `client.visitOutcomes().list()`
 
 ## Advanced Topic - Sync session sharing
 For more advanced use cases when user wants to make data synchronization faster using multiple threads or processes (or uses micro-services instances) it is possible to share a single session between Sync instances.

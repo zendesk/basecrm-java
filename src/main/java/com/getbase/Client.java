@@ -24,7 +24,10 @@ import com.getbase.services.SourcesService;
 import com.getbase.services.StagesService;
 import com.getbase.services.TagsService;
 import com.getbase.services.TasksService;
+import com.getbase.services.TextMessagesService;
 import com.getbase.services.UsersService;
+import com.getbase.services.VisitsService;
+import com.getbase.services.VisitOutcomesService;
 import com.getbase.sync.SyncService;
 
 public class Client {
@@ -53,7 +56,10 @@ public class Client {
     private StagesService stagesService;
     private TagsService tagsService;
     private TasksService tasksService;
+    private TextMessagesService textMessagesService;
     private UsersService usersService;
+    private VisitsService visitsService;
+    private VisitOutcomesService visitOutcomesService;
     private SyncService syncService;
 
     public Client(Configuration config) {
@@ -220,6 +226,13 @@ public class Client {
         return this.tasksService;
     }
 
+    public TextMessagesService textMessages() {
+        if (this.textMessagesService == null) {
+            this.textMessagesService = new TextMessagesService(this.httpClient);
+        }
+        return this.textMessagesService;
+    }
+
     public UsersService users() {
         if (this.usersService == null) {
             this.usersService = new UsersService(this.httpClient);
@@ -234,4 +247,17 @@ public class Client {
         return this.syncService;
     }
 
+    public VisitsService visits() {
+        if (this.visitsService == null) {
+            this.visitsService = new VisitsService(this.httpClient);
+        }
+        return this.visitsService;
+    }
+
+    public VisitOutcomesService visitOutcomes() {
+        if (this.visitOutcomesService == null) {
+            this.visitOutcomesService = new VisitOutcomesService(this.httpClient);
+        }
+        return this.visitOutcomesService;
+    }
 }

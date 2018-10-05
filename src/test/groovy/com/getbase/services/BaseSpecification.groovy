@@ -303,4 +303,7 @@ abstract class BaseSpecification extends Specification {
         return call
     }
 
+    def createTextMessage() {
+
+    }
 }

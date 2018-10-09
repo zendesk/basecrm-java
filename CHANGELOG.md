@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.16 (2018-10-09)
+
+**Features and Improvements**
+
+* `TextMessage`, `Visit` and `VisitOutcome` models added
+
 ### v1.4.15 (2018-06-20)
 
 **Features and Improvements**

@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 public class CallOutcome {
     protected @JsonView(Views.ReadOnly.class) Long id;
     protected @JsonView(Views.ReadOnly.class) Long creatorId;
+    protected @JsonView(Views.ReadOnly.class) String name;
     protected @JsonView(Views.ReadOnly.class) DateTime createdAt;
     protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
 
@@ -19,6 +20,10 @@ public class CallOutcome {
 
     public Long getCreatorId() {
         return creatorId;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public DateTime getCreatedAt() {
@@ -38,6 +43,7 @@ public class CallOutcome {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (creatorId != null ? !creatorId.equals(that.creatorId) : that.creatorId != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
         return updatedAt != null ? updatedAt.equals(that.updatedAt) : that.updatedAt == null;
     }
@@ -46,6 +52,7 @@ public class CallOutcome {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (creatorId != null ? creatorId.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         return result;
@@ -56,10 +63,10 @@ public class CallOutcome {
         return "CallOutcome{" +
                 "id=" + id +
                 ", creatorId=" + creatorId +
+                ", name=" + name +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
     }
 
 }
-

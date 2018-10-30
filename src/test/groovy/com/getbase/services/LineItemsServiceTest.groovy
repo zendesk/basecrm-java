@@ -23,12 +23,6 @@ class LineItemsServiceTest extends BaseSpecification {
 
         then:
         lineItems.size() > 0
-
-        when:
-        lineItems = client.lineItems().list(order.id, new LineItemsService.SearchCriteria().page(2).perPage(1))
-
-        then:
-        lineItems.size() == 0
     }
 
     def "List - by ids"() {

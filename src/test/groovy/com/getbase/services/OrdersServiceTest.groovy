@@ -22,12 +22,6 @@ class OrdersServiceTest extends BaseSpecification {
 
         then:
         orders.size() > 0
-
-        when:
-        orders = client.orders().list(new OrdersService.SearchCriteria().page(2).perPage(100))
-
-        then:
-        orders.size() == 0
     }
 
     def "List - by ids"() {

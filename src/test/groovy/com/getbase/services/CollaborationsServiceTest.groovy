@@ -22,12 +22,6 @@ class CollaborationsServiceTest extends BaseSpecification {
 
         then:
         collaborations.size() > 0
-
-        when:
-        collaborations = client.collaborations().list(new CollaborationsService.SearchCriteria().page(2).perPage(100))
-
-        then:
-        collaborations.size() == 0
     }
 
     def "List - by ids"() {

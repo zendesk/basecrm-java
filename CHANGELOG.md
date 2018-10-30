@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.17 (2018-10-30)
+
+**Features and Improvements**
+
+* Added missing `name` field  to `CallOutcome`
+
 ### v1.4.16 (2018-10-09)
 
 **Features and Improvements**

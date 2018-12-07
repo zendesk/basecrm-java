@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.18 (2018-12-07)
+
+**Features and Improvements**
+
+* Added missing `visited_at` field  to `Visit`
+
 ### v1.4.17 (2018-10-30)
 
 **Features and Improvements**

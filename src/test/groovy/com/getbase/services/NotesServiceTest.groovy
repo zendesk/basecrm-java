@@ -28,6 +28,7 @@ class NotesServiceTest extends BaseSpecification {
         def notesIds = (0..3).collect { createNote() }*.id
 
         when:
+        sleep(1000)
         def notes = client.notes().list(new NotesService.SearchCriteria().ids(notesIds))
 
         then:

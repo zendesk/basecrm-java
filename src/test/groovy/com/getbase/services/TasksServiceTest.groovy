@@ -28,6 +28,7 @@ class TasksServiceTest extends BaseSpecification {
         def tasksIds = (0..3).collect { createTask() }*.id
 
         when:
+        sleep(1000)
         def tasks = client.tasks().list(new TasksService.SearchCriteria().ids(tasksIds))
 
         then:

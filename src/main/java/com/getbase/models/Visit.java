@@ -43,7 +43,7 @@ public class Visit {
   }
 
   public DateTime getVisitedAt() {
-    return this.createdAt;
+    return this.visitedAt;
   }
 
   public String getRepLocationVerificationStatus() {

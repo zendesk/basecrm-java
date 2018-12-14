@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.4.20 (2018-12-14)
+
+**Features and Improvements**
+
+* Added `associated_deal_id` to `CallsService.SearchCriteria`
+
 ### v1.4.19 (2018-12-11)
 
 **Features and Improvements**

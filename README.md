@@ -539,11 +539,11 @@ Finally you need to pass your `Builder` when constructing a `Client`.
  Client client = new Client(config, httpClient);
 ```
 
-## License
-MIT
-
 ## Bug Reports
 Report [here](https://github.com/basecrm/basecrm-java/issues).
 
-## Contact
-BaseCRM developers (developers@getbase.com)
+## Copyright and license
+
+Copyright 2020 Zendesk
+
+Licensed under the [Apache License, Version 2.0](LICENSE)

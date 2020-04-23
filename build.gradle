@@ -89,7 +89,7 @@ bintray {
         websiteUrl = 'https://github.com/basecrm/basecrm-java'
         issueTrackerUrl = 'https://github.com/basecrm/basecrm-java/issues'
         vcsUrl = 'https://github.com/basecrm/basecrm-java.git'
-        licenses = ['MIT']
+        licenses = ['Apache License 2.0']
         labels = ['base crm', 'api', 'http', 'v2', 'client', 'HTTP client']
         publicDownloadNumbers = true
     }

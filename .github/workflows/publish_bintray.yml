@@ -6,7 +6,6 @@ name: Publish package to bintray
 on:
   push:
     tags: v*
-    branches: [ld/publish-github-action]
 
 jobs:
   publish:

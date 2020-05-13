@@ -67,7 +67,7 @@ publishing {
 
 bintray {
     user = System.getenv('BINTRAY_USER') || (hasProperty('BINTRAY_USERNAME') ? BINTRAY_USERNAME : "")
-    key = System.getenv('BINTRAY_PASSWORD') || (hasProperty('BINTRAY_PASSWORD') ? BINTRAY_PASSWORD : "")
+    key = System.getenv('BINTRAY_KEY') || (hasProperty('BINTRAY_PASSWORD') ? BINTRAY_PASSWORD : "")
 
     publications = ['mavenJava']
 

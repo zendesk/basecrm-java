@@ -15,7 +15,7 @@ apply plugin: 'com.jfrog.bintray'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
-version = '0.0.1-test'
+version = '1.4.20'
 group = 'com.getbase'
 
 repositories {
@@ -66,8 +66,8 @@ publishing {
 }
 
 bintray {
-    user = System.getenv('BINTRAY_USER') || (hasProperty('BINTRAY_USERNAME') ? BINTRAY_USERNAME : "")
-    key = System.getenv('BINTRAY_KEY') || (hasProperty('BINTRAY_PASSWORD') ? BINTRAY_PASSWORD : "")
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
 
     publications = ['mavenJava']
 

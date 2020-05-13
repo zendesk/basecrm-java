@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### v1.4.21 (2020-05-13)
+
+* Changed license to Apache License 2
+* Updated metadata after moving repository to zendesk organization
+
 ### v1.4.20 (2018-12-14)
 
 **Features and Improvements**

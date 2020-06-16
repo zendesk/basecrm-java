@@ -16,6 +16,7 @@ public class Note {
   protected @JsonView(Views.ReadWrite.class) Long resourceId;
   protected @JsonView(Views.ReadWrite.class) String content;
   protected @JsonView(Views.ReadWrite.class) String resourceType;
+  protected @JsonView(Views.ReadWrite.class) String type;
 
   public Note() {
   }
@@ -52,6 +53,14 @@ public class Note {
     this.resourceId = resourceId;
   }
 
+  public String getType() {
+    return this.type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
   public void setContent(String content) {
     this.content = content;
   }
@@ -70,6 +79,7 @@ public class Note {
           ", resourceId=" + resourceId +
           ", content='" + content + '\'' +
           ", resourceType='" + resourceType + '\'' +
+          ", type='" + type + '\'' +
           "}";
   }
 
@@ -86,6 +96,7 @@ public class Note {
     if (updatedAt != null ? !updatedAt.equals(note.updatedAt) : note.updatedAt != null) return false;
     if (resourceId != null ? !resourceId.equals(note.resourceId) : note.resourceId != null) return false;
     if (content != null ? !content.equals(note.content) : note.content != null) return false;
+    if (type != null ? !type.equals(note.type) : note.type != null) return false;
     if (resourceType != null ? !resourceType.equals(note.resourceType) : note.resourceType != null) return false;
 
     return true;
@@ -101,6 +112,7 @@ public class Note {
     result = 31 * result + (resourceId != null ? resourceId.hashCode() : 0);
     result = 31 * result + (content != null ? content.hashCode() : 0);
     result = 31 * result + (resourceType != null ? resourceType.hashCode() : 0);
+    result = 31 * result + (type != null ? type.hashCode() : 0);
     return result;
   }
 }

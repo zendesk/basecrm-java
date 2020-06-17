@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+
+### v1.4.22 (2020-06-16)
+
+**Features and Improvements**
+
+* Added missing `type` field to `Note`
+
 ### v1.4.21 (2020-05-13)
 
 * Changed license to Apache License 2

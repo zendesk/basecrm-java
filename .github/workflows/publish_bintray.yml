@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: zendesk/checkout@v2
     - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+      uses: zendesk/setup-java@v1
       with:
         java-version: 1.8
     - name: Grant execute permission for gradlew

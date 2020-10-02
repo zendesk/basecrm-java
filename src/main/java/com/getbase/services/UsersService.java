@@ -102,6 +102,11 @@ public class UsersService extends BaseService {
       return this;
     }
 
+    public SearchCriteria zendeskUserId(long zendeskUserId) {
+      queryParams.put("zendesk_user_id", zendeskUserId);
+      return this;
+    }
+
     public Map<String, Object> asMap() {
       return Collections.unmodifiableMap(queryParams);
     }

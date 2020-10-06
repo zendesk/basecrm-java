@@ -26,6 +26,12 @@ public class User {
   protected @JsonView(Views.ReadOnly.class) List<Role> roles = new ArrayList<Role>();
   protected @JsonView(Views.ReadOnly.class) Boolean invited;
 
+  /**
+   * WARNING!
+   * This param is a subject to change. Use only when really necessary.
+   */
+  protected @JsonView(Views.ReadOnly.class) Long zendeskUserId;
+
   public User() {
   }
 
@@ -101,6 +107,14 @@ public class User {
     return this.invited;
   }
 
+  /**
+   * WARNING!
+   * This param is a subject to change. Use only when really necessary.
+   */
+  public Long getZendeskUserId() {
+    return this.zendeskUserId;
+  }
+
   @Override
   public String toString() {
     return "User{" +
@@ -120,6 +134,7 @@ public class User {
           ", group='" + group + '\'' +
           ", roles=" + roles +
           ", invited=" + invited +
+          ", zendeskUserId=" + zendeskUserId +
           "}";
   }
 
@@ -146,6 +161,7 @@ public class User {
     if (group != null ? !group.equals(user.group) : user.group != null) return false;
     if (!roles.equals(user.roles)) return false;
     if (invited != null ? !invited.equals(user.invited) : user.invited != null) return false;
+    if (zendeskUserId != null ? !zendeskUserId.equals(user.zendeskUserId) : user.zendeskUserId != null) return false;
 
     return true;
   }
@@ -169,6 +185,7 @@ public class User {
     result = 31 * result + (group != null ? group.hashCode() : 0);
     result = 31 * result + roles.hashCode();
     result = 31 * result + (invited != null ? invited.hashCode() : 0);
+    result = 31 * result + (zendeskUserId != null ? zendeskUserId.hashCode() : 0);
     return result;
   }
 

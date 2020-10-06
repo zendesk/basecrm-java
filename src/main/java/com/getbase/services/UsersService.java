@@ -102,6 +102,23 @@ public class UsersService extends BaseService {
       return this;
     }
 
+    /**
+     * WARNING!
+     * This search param is a subject to change. Use only when really necessary.
+     */
+    public SearchCriteria zendeskUserIds(List<Long> ids) {
+      queryParams.put("zendesk_user_ids", Joiner.join(",", ids));
+      return this;
+    }
+
+    /**
+     * WARNING!
+     * This search param is a subject to change. Use only when really necessary.
+     */
+    public SearchCriteria zendeskUserIds(Long... ids) {
+      return zendeskUserIds(asList(ids));
+    }
+
     public Map<String, Object> asMap() {
       return Collections.unmodifiableMap(queryParams);
     }

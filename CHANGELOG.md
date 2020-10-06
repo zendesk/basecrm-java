@@ -1,5 +1,17 @@
 ## CHANGELOG
 
+### v1.5.1 (2020-10-06)
+
+**Features and Improvements**
+
+* Added zendesk_user_id to User model.
+* Make User model searchable by zendesk_user_ids.
+
+### v1.5.0 (2020-10-06)
+
+**Features and Improvements**
+
+* Bumped Gradle to v6.6.
 
 ### v1.4.22 (2020-06-16)
 

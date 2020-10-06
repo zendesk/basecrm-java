@@ -25,6 +25,11 @@ public class User {
   protected @JsonView(Views.ReadOnly.class) Group group;
   protected @JsonView(Views.ReadOnly.class) List<Role> roles = new ArrayList<Role>();
   protected @JsonView(Views.ReadOnly.class) Boolean invited;
+
+  /**
+   * WARNING!
+   * This param is a subject to change. Use only when really necessary.
+   */
   protected @JsonView(Views.ReadOnly.class) Long zendeskUserId;
 
   public User() {
@@ -102,6 +107,10 @@ public class User {
     return this.invited;
   }
 
+  /**
+   * WARNING!
+   * This param is a subject to change. Use only when really necessary.
+   */
   public Long getZendeskUserId() {
     return this.zendeskUserId;
   }

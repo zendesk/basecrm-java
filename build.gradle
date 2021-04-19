@@ -6,7 +6,6 @@ apply plugin: 'signing'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
-
 version = '1.5.1'
 group = 'com.getbase'
 

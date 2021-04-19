@@ -25,7 +25,7 @@ jobs:
         SIGNING_SECRET_KEY_RING_FILE: ~/.keyring.gpg
       run: |
           git fetch --unshallow
-          sudo bash -c "echo '$GPG_KEY_CONTENTS' | base64 -d > '$SIGNING_SECRET_KEY_RING_FILE'"
+         echo '$GPG_KEY_CONTENTS' | base64 -d > '$SIGNING_SECRET_KEY_RING_FILE'
     - name: Publish to MavenCentral
       run: ./gradlew publish
       env:

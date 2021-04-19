@@ -5,8 +5,6 @@ name: Publish package to Maven central
 
 on:
   push:
-    branches:
-      - mpolak/gh-action-publish-maven-central
     tags: v*
 
 jobs:

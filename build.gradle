@@ -1,20 +1,12 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.1'
-    }
-}
-
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'signing'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
+
 version = '1.5.1'
 group = 'com.getbase'
 
@@ -37,7 +29,7 @@ dependencies {
     testCompile group: "cglib", name: "cglib-nodep", version: "3.1"
     testCompile group: "org.objenesis", name: "objenesis-parent", version: "1.2"
     testCompile group: "ch.qos.logback", name: "logback-classic", version: "1.1.3"
-    testCompile group: "com.google.guava", name:"guava", version:"23.0"
+    testCompile group: "com.google.guava", name: "guava", version: "23.0"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -54,36 +46,88 @@ artifacts {
     archives sourcesJar, javadocJar
 }
 
+ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID')
+ext["signing.password"] = System.getenv('SIGNING_PASSWORD')
+ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
+ext["ossrhUsername"] = System.getenv('OSSRH_USERNAME')
+ext["ossrhPassword"] = System.getenv('OSSRH_PASSWORD')
+ext["sonatypeStagingProfileId"] = System.getenv('SONATYPE_STAGING_PROFILE_ID')
+
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        maven(MavenPublication) {
             from components.java
 
             artifact sourcesJar
             artifact javadocJar
+
+            pom {
+                name = 'basecrm-java'
+                packaging = 'jar'
+                description = 'BaseCRM Official API V2 library client for Java'
+                url = 'https://github.com/zendesk/basecrm-java'
+
+                scm {
+                    connection = 'scm:git:git://github.com/zendesk/basecrm-java.git'
+                    developerConnection = 'scm:git:ssh://github.com:zendesk/basecrm-java.git'
+                    url = 'https://github.com/zendesk/basecrm-java'
+                }
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'iaintshine'
+                        name = 'Boguslaw Mista'
+                        email = 'bmista@zendesk.com'
+                        organization = 'Zendesk'
+                        organizationUrl = 'https://zendesk.com'
+                    }
+                    developer {
+                        id = 'pawelgocek'
+                        name = 'Pawel Gocek'
+                        email = 'pgocek@zendesk.com'
+                        organization = 'Zendesk'
+                        organizationUrl = 'https://zendesk.com'
+                    }
+                    developer {
+                        id = 'lukasz-raduj'
+                        name = 'Lukasz Raduj'
+                        email = 'lraduj@zendesk.com'
+                        organization = 'Zendesk'
+                        organizationUrl = 'https://zendesk.com'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            String releaseUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+            String snapshotUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotUrl : releaseUrl
+
+            credentials {
+                username ossrhUsername
+                password ossrhPassword
+            }
         }
     }
 }
 
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
+signing {
+    required { !version.endsWith('SNAPSHOT') }
+    sign publishing.publications
+}
 
-    publications = ['mavenJava']
-
-    dryRun = false
-    publish = true
-    pkg {
-        repo = 'maven'
-        userOrg = 'basecrm'
-        name = 'basecrm-java'
-        desc = 'BaseCRM Official API V2 library client for Java'
-        websiteUrl = 'https://github.com/zendesk/basecrm-java'
-        issueTrackerUrl = 'https://github.com/zendesk/basecrm-java/issues'
-        vcsUrl = 'https://github.com/zendesk/basecrm-java.git'
-        licenses = ['Apache License 2.0']
-        labels = ['base crm', 'api', 'http', 'v2', 'client', 'HTTP client']
-        publicDownloadNumbers = true
+publish {
+    doLast {
+        println "The published version: ${version}"
     }
 }
 

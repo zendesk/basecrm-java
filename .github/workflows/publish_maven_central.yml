@@ -11,7 +11,7 @@ on:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, zendesk-stable]
 
     steps:
     - uses: zendesk/checkout@v2

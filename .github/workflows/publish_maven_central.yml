@@ -24,12 +24,13 @@ jobs:
     - name: Prepare environment
       env:
         GPG_KEY_CONTENTS: ${{ secrets.GPG_KEY_CONTENTS }}
-        SIGNING_SECRET_KEY_RING_FILE: ~/.keyring.gpg
       run: |
         git fetch --unshallow
-        echo '$GPG_KEY_CONTENTS' | base64 -d > '$SIGNING_SECRET_KEY_RING_FILE'
+        echo "$GPG_KEY_CONTENTS" | base64 -d > $HOME/.keyring.gpg
     - name: Publish to MavenCentral
-      run: ./gradlew publish
+      run: |
+        export SIGNING_SECRET_KEY_RING_FILE=$HOME/.keyring.gpg
+        ./gradlew publish
       env:
         OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}

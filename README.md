@@ -4,16 +4,13 @@ BaseCRM Official API V2 library client for Java (1.6+)
 
 ## Installation
 
-The following intruction assume you have [Gradle Build System](http://gradle.org/) installed.
+The following instruction assume you have [Gradle Build System](http://gradle.org/) installed.
 
-The library is available via [JCenter](https://bintray.com/bintray/jcenter). To install, add the following content to your `build.gradle` file:
+The library is available via [Maven central](https://repo1.maven.org/maven2/com/getbase/). To install, add the following content to your `build.gradle` file:
 
 ```groovy
 repositories {
-    jcenter()
-    maven {
-        url  "https://dl.bintray.com/basecrm/maven"
-    }
+    mavenCentral()
 }
 
 dependencies {

@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### v1.5.2 (2021-06-28)
+
+**Features and Improvements**
+* Added possibility to set deal's 'addedOn' attribute
+
 ### v1.5.1 (2020-10-06)
 
 **Features and Improvements**
@@ -190,7 +195,7 @@
 * `com.getbase.sync.SessionManager` class to make feasible sharing single sync session between threads / nodes [#11](https://github.com/basecrm/basecrm-java/pull/11)
     * refer to README for details on Sync session sharing
 
-* HttpClient is sending additional header: "X-Client-Type: api" [#13](https://github.com/basecrm/basecrm-java/pull/13) 
+* HttpClient is sending additional header: "X-Client-Type: api" [#13](https://github.com/basecrm/basecrm-java/pull/13)
 
 * Api version prefix management moved from HttpClient to BaseService implementations [#13](https://github.com/basecrm/basecrm-java/pull/13)
 
@@ -211,7 +216,7 @@
 * Debug traces via SLF4J
     * basic tracing of every HTTP request, such as URL, status code and execution time (on DEBUG level)
     * tracing of sync progress - sync started/completed, number of items fetched, number of items left (on INFO and DEBUG levels)
-    * logs are published via SLF4J interface. Refer to README for instruction of how to setup logging binding for SLF4J 
+    * logs are published via SLF4J interface. Refer to README for instruction of how to setup logging binding for SLF4J
 
 * Jersey HTTP client now allows to plug-in a custom configuration and filters
     * refer to README for details on HTTP Client Instrumentation

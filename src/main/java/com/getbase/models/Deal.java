@@ -37,6 +37,7 @@ public class Deal {
   protected @JsonView(Views.ReadOnly.class) DateTime lastActivityAt;
   protected @JsonView(Views.ReadWrite.class) DateTime estimatedCloseDate;
   protected @JsonView(Views.ReadWrite.class) Integer customizedWinLikelihood;
+  protected @JsonView(Views.ReadWrite.class) DateTime addedOn;
 
   public Deal() {
   }
@@ -129,6 +130,9 @@ public class Deal {
     return this.customizedWinLikelihood;
   }
 
+  public DateTime getAddedOn() {
+    return this.addedOn;
+  }
 
   public void setContactId(long contactId) {
     this.contactId = contactId;
@@ -188,6 +192,9 @@ public class Deal {
     this.customizedWinLikelihood = customizedWinLikelihood;
   }
 
+  public void setAddedOn(DateTime addedOn) {
+    return this.addedOn = addedOn;
+  }
 
   @Override
   public String toString() {
@@ -214,6 +221,7 @@ public class Deal {
           ", lastActivityAt=" + lastActivityAt +
           ", estimatedCloseDate=" + estimatedCloseDate +
           ", customizedWinLikelihood=" + customizedWinLikelihood +
+          ", addedOn=" + addedOn +
             "}";
   }
 
@@ -246,6 +254,7 @@ public class Deal {
     if (lastActivityAt != null ? !lastActivityAt.equals(deal.lastActivityAt) : deal.lastActivityAt != null) return false;
     if (estimatedCloseDate != null ? !estimatedCloseDate.equals(deal.estimatedCloseDate) : deal.estimatedCloseDate != null) return false;
     if (customizedWinLikelihood != null ? !customizedWinLikelihood.equals(deal.customizedWinLikelihood) : deal.customizedWinLikelihood != null) return false;
+    if (addedOn != null ? !addedOn.equals(deal.addedOn) : deal.addedOn != null) return false;
 
     return true;
   }
@@ -275,6 +284,7 @@ public class Deal {
     result = 31 * result + (lastActivityAt != null ? lastActivityAt.hashCode() : 0);
     result = 31 * result + (estimatedCloseDate != null ? estimatedCloseDate.hashCode() : 0);
     result = 31 * result + (customizedWinLikelihood != null ? customizedWinLikelihood.hashCode() : 0);
+    result = 31 * result + (addedOn != null ? addedOn.hashCode() : 0);
 
     return result;
   }

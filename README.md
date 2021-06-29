@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.getbase:basecrm-java:1.5.1"
+  compile "com.getbase:basecrm-java:1.5.2"
 }
 ```
 
@@ -42,7 +42,7 @@ The following builder options are available while instantiating a client:
 
  * __accessToken__: Personal access token
  * __baseUrl__: Base url for the api. Default: `https://api.getbase.com`
- * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.5.1`
+ * __userAgent__: Default user-agent for all requests. Default: `BaseCRM/V2 Java/1.5.2`
  * __timeout__: Request timeout. Default: `30` seconds
  * __verbose__: Verbose/debug mode. Default: `false`
  * __verifySSL__: Whether to skip SSL verification or not. Default: `true`
@@ -522,9 +522,9 @@ public class InstrumentedHttpClientBuilder implements Builder {
         ClientConfig clientConfig = new ClientConfig();
 
         clientConfig.register(requestMetricsFilter);
-        
-        \\do additional client config here 
-        
+
+        \\do additional client config here
+
         return newClient(clientConfig);
     }
 }
